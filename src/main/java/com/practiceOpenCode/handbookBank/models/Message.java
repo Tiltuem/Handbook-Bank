@@ -1,9 +1,16 @@
 package com.practiceOpenCode.handbookBank.models;
 
+import com.practiceOpenCode.handbookBank.models.adapters.CreationReasonCodeAdapter;
+import com.practiceOpenCode.handbookBank.models.adapters.InformationTypeCodeAdapter;
+import com.practiceOpenCode.handbookBank.models.adapters.LocalDateAdapter;
+import com.practiceOpenCode.handbookBank.models.adapters.LocalDateTimeAdapter;
+import com.practiceOpenCode.handbookBank.models.directories.CreationReasonCode;
+import com.practiceOpenCode.handbookBank.models.directories.InformationTypeCode;
 import jakarta.persistence.*;
+import jakarta.xml.bind.annotation.*;
+import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import lombok.Data;
 
-import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -12,56 +19,60 @@ import java.util.List;
 @Entity
 @Table(name = "messages")
 @Data
+@XmlRootElement(name = "ED807")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Long id;
+    private long id;
 
-    @Column(name = "name")
-    private String name;
+    @XmlAttribute(name = "EDNo")
+    @Column(name = "ed_number")
+    private long edNumber;
 
-    @Column(name = "creation_date")
-    private Date dateOfCreated;
+    @XmlAttribute(name = "EDDate")
+    @XmlJavaTypeAdapter(LocalDateAdapter.class)
+    @Column(name = "ed_date")
+    private LocalDate edDate;
 
-    @Column(name = "file_name")
-    private String fileName;
+    @XmlAttribute(name = "EDAuthor")
+    @Column(name = "ed_author")
+    private long edAuthor;
 
-    @Column(name = "drafting_date_message")
-    private LocalDate draftingDateMessage;
+    @XmlAttribute(name = "EDReceiver")
+    @Column(name = "ed_receiver")
+    private long edReceiver;
 
-    @Column(name = "id_drafter_message")
-    private Long idDrafterMessage;
-
-    @Column(name = "id_recipient_message")
-    private Long idRecipientMessage;
-
+    @XmlAttribute(name = "CreationReason")
+    @XmlJavaTypeAdapter(CreationReasonCodeAdapter.class)
     @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-    @JoinColumn(name = "creation_reason_code")
-    private CreationReason creationReason;
+    @JoinColumn(name = "creation_reason_id")
+    private CreationReasonCode creationReasonCode;
 
-    @Column(name = "creation_date_message")
-    private LocalDateTime creationDateMessage;
+    @XmlAttribute(name = "CreationDateTime")
+    @XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
+    @Column(name = "creation_date_time")
+    private LocalDateTime creationDateTime;
 
+    @XmlAttribute(name = "InfoTypeCode")
+    @XmlJavaTypeAdapter(InformationTypeCodeAdapter.class)
     @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-    @JoinColumn(name = "info_type_code")
+    @JoinColumn(name = "information_type_code_id")
     private InformationTypeCode informationTypeCode;
 
-    @Column(name = "date_od")
-    private LocalDate dateOd;
+    @XmlAttribute(name = "BusinessDay")
+    @XmlJavaTypeAdapter(LocalDateAdapter.class)
+    @Column(name = "business_day")
+    private LocalDate businessDay;
 
-    @Column(name = "handbook_version")
-    private int handbookVersion;
+    @XmlAttribute(name = "DirectoryVersion")
+    @Column(name = "directory_version")
+    private int directoryVersion;
 
-    @Column(name = "matching_sign")
-    private boolean matchingSign;
-
-    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-    @JoinColumn(name = "username")
-    private User user;
-
-
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "message")
-    private List<Participant> participant = new ArrayList<>();
+    @XmlElement(name = "BICDirectoryEntry")
+    @OneToMany(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "bic_directory_entry_list_id")
+    private List<BICDirectoryEntry> bicDirectoryEntryList = new ArrayList<>();
 }
 
