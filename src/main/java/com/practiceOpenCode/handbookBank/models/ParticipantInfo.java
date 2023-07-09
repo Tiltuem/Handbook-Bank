@@ -8,11 +8,12 @@ import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "participant_info")
 @Data
-@XmlRootElement
+@XmlRootElement(namespace = "urn:cbr-ru:ed:v2.0")
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "ParticipantInfo")
 public class ParticipantInfo {
@@ -73,19 +74,19 @@ public class ParticipantInfo {
 
     @XmlAttribute(name = "PtType")
     @XmlJavaTypeAdapter(ParticipantTypeCodeAdapter.class)
-    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "participant_type_id")
     private ParticipantTypeCode participantTypeCode;
 
     @XmlAttribute(name = "Srvcs")
     @XmlJavaTypeAdapter(ServiceCsCodeAdapter.class)
-    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "service_cs_id")
     private ServiceCsCode serviceCsCode;
 
     @XmlAttribute(name = "XchType")
     @XmlJavaTypeAdapter(ExchangeParticipantCodeAdapter.class)
-    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "exchange_participant_id")
     private ExchangeParticipantCode exchangeParticipantCode;
 
@@ -95,11 +96,12 @@ public class ParticipantInfo {
 
     @XmlAttribute(name = "ParticipantStatus")
     @XmlJavaTypeAdapter(ParticipantStatusCodeAdapter.class)
-    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "participant_status_id")
     private ParticipantStatusCode participantStatusCode;
 
-    @XmlElement(name = "RstrList")
-    @OneToOne(cascade = CascadeType.REFRESH)
-    private RestrictionList restrictionList;
+    @XmlElement(name = "RstrList", namespace = "urn:cbr-ru:ed:v2.0")
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "restriction_list_id")
+    private List<RestrictionList> restrictionList;
 }

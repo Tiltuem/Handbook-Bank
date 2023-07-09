@@ -7,7 +7,7 @@ import lombok.Data;
 @Entity
 @Table(name = "swbic")
 @Data
-@XmlRootElement
+@XmlRootElement(namespace = "urn:cbr-ru:ed:v2.0")
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "SWBIC")
 public class Swbics {

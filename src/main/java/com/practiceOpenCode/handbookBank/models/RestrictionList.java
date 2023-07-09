@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "restriction_list")
 @Data
-@XmlRootElement
+@XmlRootElement(namespace = "urn:cbr-ru:ed:v2.0")
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "RstrList")
 public class RestrictionList {
@@ -24,7 +24,7 @@ public class RestrictionList {
 
     @XmlAttribute(name = "Rstr")
     @XmlJavaTypeAdapter(RestrictionCodeAdapter.class)
-    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "restriction_code_id")
     private RestrictionCode restrictionCode;
 

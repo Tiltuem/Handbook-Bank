@@ -17,9 +17,6 @@ public class InformationTypeCode {
     @Column(name = "code")
     private String code;
 
-    @Column(name = "description")
-    private String description;
-
     public InformationTypeCode(String code) {
         this.code = code;
     }

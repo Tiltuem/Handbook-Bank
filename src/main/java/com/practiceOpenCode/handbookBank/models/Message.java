@@ -19,13 +19,14 @@ import java.util.List;
 @Entity
 @Table(name = "messages")
 @Data
-@XmlRootElement(name = "ED807")
+@XmlRootElement(name = "ED807", namespace = "urn:cbr-ru:ed:v2.0")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private long id;
+
 
     @XmlAttribute(name = "EDNo")
     @Column(name = "ed_number")
@@ -46,7 +47,7 @@ public class Message {
 
     @XmlAttribute(name = "CreationReason")
     @XmlJavaTypeAdapter(CreationReasonCodeAdapter.class)
-    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "creation_reason_id")
     private CreationReasonCode creationReasonCode;
 
@@ -57,7 +58,7 @@ public class Message {
 
     @XmlAttribute(name = "InfoTypeCode")
     @XmlJavaTypeAdapter(InformationTypeCodeAdapter.class)
-    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "information_type_code_id")
     private InformationTypeCode informationTypeCode;
 
@@ -70,9 +71,13 @@ public class Message {
     @Column(name = "directory_version")
     private int directoryVersion;
 
-    @XmlElement(name = "BICDirectoryEntry")
-    @OneToMany(cascade = CascadeType.REFRESH)
+    @XmlElement(name = "BICDirectoryEntry", namespace = "urn:cbr-ru:ed:v2.0")
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "bic_directory_entry_list_id")
     private List<BICDirectoryEntry> bicDirectoryEntryList = new ArrayList<>();
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "fileInfo_id")
+    private FileInfo fileInfo;
 }
 

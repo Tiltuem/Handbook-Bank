@@ -28,21 +28,22 @@ public class BICDirectoryEntry {
 
     @XmlAttribute(name = "ChangeType")
     @XmlJavaTypeAdapter(ChangeTypeCodeAdapter.class)
-    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "change_type_id")
     private ChangeTypeCode changeTypeCode;
 
-    @XmlElement(name = "ParticipantInfo")
-    @OneToOne(cascade = CascadeType.REFRESH)
+    @XmlElement(name = "ParticipantInfo", namespace = "urn:cbr-ru:ed:v2.0")
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "participant_info_id")
     private ParticipantInfo participantInfo;
 
-    @XmlElement(name = "Accounts")
-    @OneToMany(cascade = CascadeType.REFRESH)
+    @XmlElement(name = "Accounts", namespace = "urn:cbr-ru:ed:v2.0")
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "accounts_id")
     private List<Accounts> accounts;
 
-    @XmlElement(name = "SWBICS")
-    @OneToOne(cascade = CascadeType.REFRESH)
-    private Swbics swbics;
+    @XmlElement(name = "SWBICS", namespace = "urn:cbr-ru:ed:v2.0")
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "swbics_id")
+    private List<Swbics> swbics;
 }

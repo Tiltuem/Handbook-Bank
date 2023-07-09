@@ -1,12 +1,32 @@
 package com.practiceOpenCode.handbookBank.models.adapters;
 
+import com.practiceOpenCode.handbookBank.exception.NoSuchCodeException;
+import com.practiceOpenCode.handbookBank.models.context.ApplicationContextHolder;
 import com.practiceOpenCode.handbookBank.models.directories.CreationReasonCode;
+import com.practiceOpenCode.handbookBank.repositories.CreationReasonCodeRepository;
 import jakarta.xml.bind.annotation.adapters.XmlAdapter;
+import org.springframework.context.ApplicationContext;
+
+import java.util.List;
 
 public class CreationReasonCodeAdapter extends XmlAdapter<String, CreationReasonCode> {
-    public CreationReasonCode unmarshal(String code) throws Exception {
-        return new CreationReasonCode(code);
+    private final List<CreationReasonCode> creationReasonCodeList;
+    private final ApplicationContext ctx;
+
+    public CreationReasonCodeAdapter() {
+        ctx = ApplicationContextHolder.getApplicationContext();
+        creationReasonCodeList = ctx.getBean(CreationReasonCodeRepository.class).findAll();
     }
+
+    @Override
+    public CreationReasonCode unmarshal(String code) throws Exception {
+        for (CreationReasonCode creationReasonCode : creationReasonCodeList) {
+            if (creationReasonCode.getCode().equals(code)) return creationReasonCode;
+        }
+        throw new NoSuchCodeException(code + "code not found in directory.");
+    }
+
+    @Override
     public String marshal(CreationReasonCode creationReasonCode) throws Exception {
         return creationReasonCode.getCode();
     }

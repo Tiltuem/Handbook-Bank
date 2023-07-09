@@ -14,7 +14,7 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "account_restriction_list")
 @Data
-@XmlRootElement
+@XmlRootElement(namespace = "urn:cbr-ru:ed:v2.0")
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "AccRstrList")
 public class AccountRestrictionList {
@@ -25,7 +25,7 @@ public class AccountRestrictionList {
 
     @XmlAttribute(name = "AccRstr")
     @XmlJavaTypeAdapter(AccountRestrictionCodeAdapter.class)
-    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "account_restriction_code_id")
     private AccountRestrictionCode accountRestrictionCode;
 

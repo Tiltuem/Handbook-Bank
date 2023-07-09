@@ -28,4 +28,5 @@ public class AccountStatusCodeServiceImpl implements AccountStatusCodeService {
     public void deleteViaId(long id) {
         repository.deleteById(id);
     }
+
 }

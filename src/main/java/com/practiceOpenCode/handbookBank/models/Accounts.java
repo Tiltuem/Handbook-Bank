@@ -1,6 +1,5 @@
 package com.practiceOpenCode.handbookBank.models;
 
-import com.practiceOpenCode.handbookBank.models.adapters.AccountRestrictionCodeAdapter;
 import com.practiceOpenCode.handbookBank.models.adapters.AccountStatusCodeAdapter;
 import com.practiceOpenCode.handbookBank.models.adapters.LocalDateAdapter;
 import com.practiceOpenCode.handbookBank.models.adapters.RegulationAccountTypeCodeAdapter;
@@ -10,15 +9,18 @@ import jakarta.persistence.*;
 import jakarta.xml.bind.annotation.*;
 import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import lombok.Data;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "accounts")
 @Data
-@XmlRootElement
+@XmlRootElement(namespace = "urn:cbr-ru:ed:v2.0")
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "Accounts")
+@Component
 public class Accounts {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,7 +33,7 @@ public class Accounts {
 
     @XmlAttribute(name = "RegulationAccountType")
     @XmlJavaTypeAdapter(RegulationAccountTypeCodeAdapter.class)
-    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "regulation_account_type")
     private RegulationAccountTypeCode regulationAccountTypeCode;
 
@@ -55,11 +57,12 @@ public class Accounts {
 
     @XmlAttribute(name = "AccountStatus")
     @XmlJavaTypeAdapter(AccountStatusCodeAdapter.class)
-    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "account_status")
     private AccountStatusCode accountStatusCode;
 
-    @XmlElement(name = "AccRstrList")
-    @OneToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
-    private AccountRestrictionList accountRestrictionList;
+    @XmlElement(name = "AccRstrList", namespace = "urn:cbr-ru:ed:v2.0")
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "account_restriction_list_id")
+    private List<AccountRestrictionList> accountRestrictionList;
 }

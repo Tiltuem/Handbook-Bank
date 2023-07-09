@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "restriction_code")
+@Table(name = "restriction_codes")
 @Data
 @NoArgsConstructor
 public class RestrictionCode {
@@ -16,9 +16,6 @@ public class RestrictionCode {
 
     @Column(name = "code", length = 4)
     private String code;
-
-    @Column(name = "description")
-    private String description;
 
     public RestrictionCode(String code) {
         this.code = code;

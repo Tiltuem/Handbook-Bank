@@ -1,12 +1,32 @@
 package com.practiceOpenCode.handbookBank.models.adapters;
 
+import com.practiceOpenCode.handbookBank.exception.NoSuchCodeException;
+import com.practiceOpenCode.handbookBank.models.context.ApplicationContextHolder;
 import com.practiceOpenCode.handbookBank.models.directories.ParticipantStatusCode;
+import com.practiceOpenCode.handbookBank.repositories.ParticipantStatusCodeRepository;
 import jakarta.xml.bind.annotation.adapters.XmlAdapter;
+import org.springframework.context.ApplicationContext;
+
+import java.util.List;
 
 public class ParticipantStatusCodeAdapter extends XmlAdapter<String, ParticipantStatusCode> {
-    public ParticipantStatusCode unmarshal(String code) throws Exception {
-        return new ParticipantStatusCode(code);
+    private final List<ParticipantStatusCode> participantStatusCodeList;
+    private final ApplicationContext ctx;
+
+    public ParticipantStatusCodeAdapter() {
+        ctx = ApplicationContextHolder.getApplicationContext();
+        participantStatusCodeList = ctx.getBean(ParticipantStatusCodeRepository.class).findAll();
     }
+
+    @Override
+    public ParticipantStatusCode unmarshal(String code) throws Exception {
+        for (ParticipantStatusCode participantStatusCode : participantStatusCodeList) {
+            if (participantStatusCode.getCode().equals(code)) return participantStatusCode;
+        }
+        throw new NoSuchCodeException(code + "code not found in directory.");
+    }
+
+    @Override
     public String marshal(ParticipantStatusCode participantStatusCode) throws Exception {
         return participantStatusCode.getCode();
     }

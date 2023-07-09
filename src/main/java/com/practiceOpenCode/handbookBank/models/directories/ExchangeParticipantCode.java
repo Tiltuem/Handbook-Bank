@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "exchange_participant")
+@Table(name = "exchange_participant_codes")
 @Data
 @NoArgsConstructor
 public class ExchangeParticipantCode {
@@ -16,9 +16,6 @@ public class ExchangeParticipantCode {
 
     @Column(name = "code", length = 1)
     private String code;
-
-    @Column(name = "description")
-    private String description;
 
     public ExchangeParticipantCode(String code) {
         this.code = code;

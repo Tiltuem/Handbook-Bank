@@ -9,7 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "change_type")
+@Table(name = "change_type_codes")
 @Data
 @NoArgsConstructor
 public class ChangeTypeCode {
@@ -20,9 +20,6 @@ public class ChangeTypeCode {
 
     @Column(name = "code")
     private String code;
-
-    @Column(name = "description")
-    private String description;
 
     public ChangeTypeCode(String code) {
         this.code = code;

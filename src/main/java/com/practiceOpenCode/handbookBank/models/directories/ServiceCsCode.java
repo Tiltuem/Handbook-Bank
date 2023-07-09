@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "service_cs")
+@Table(name = "service_cs_codes")
 @Data
 @NoArgsConstructor
 public class ServiceCsCode {
@@ -17,8 +17,6 @@ public class ServiceCsCode {
     @Column(name = "code", length = 1)
     private String code;
 
-    @Column(name = "description")
-    private String description;
     public ServiceCsCode(String code) {
         this.code = code;
     }
