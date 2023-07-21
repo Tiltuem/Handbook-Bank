@@ -4,8 +4,8 @@ import com.practiceOpenCode.handbookBank.models.adapters.CreationReasonCodeAdapt
 import com.practiceOpenCode.handbookBank.models.adapters.InformationTypeCodeAdapter;
 import com.practiceOpenCode.handbookBank.models.adapters.LocalDateAdapter;
 import com.practiceOpenCode.handbookBank.models.adapters.LocalDateTimeAdapter;
-import com.practiceOpenCode.handbookBank.models.directories.CreationReasonCode;
-import com.practiceOpenCode.handbookBank.models.directories.InformationTypeCode;
+import com.practiceOpenCode.handbookBank.models.codes.CreationReasonCode;
+import com.practiceOpenCode.handbookBank.models.codes.InformationTypeCode;
 import jakarta.persistence.*;
 import jakarta.xml.bind.annotation.*;
 import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
@@ -26,7 +26,6 @@ public class Message {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private long id;
-
 
     @XmlAttribute(name = "EDNo")
     @Column(name = "ed_number")

@@ -2,8 +2,7 @@ package com.practiceOpenCode.handbookBank.models;
 
 import com.practiceOpenCode.handbookBank.models.adapters.AccountRestrictionCodeAdapter;
 import com.practiceOpenCode.handbookBank.models.adapters.LocalDateAdapter;
-import com.practiceOpenCode.handbookBank.models.directories.AccountRestrictionCode;
-import com.practiceOpenCode.handbookBank.models.directories.RestrictionCode;
+import com.practiceOpenCode.handbookBank.models.codes.AccountRestrictionCode;
 import jakarta.persistence.*;
 import jakarta.xml.bind.annotation.*;
 import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;

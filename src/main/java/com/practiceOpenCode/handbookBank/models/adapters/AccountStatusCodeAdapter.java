@@ -3,8 +3,8 @@ package com.practiceOpenCode.handbookBank.models.adapters;
 
 import com.practiceOpenCode.handbookBank.exception.NoSuchCodeException;
 import com.practiceOpenCode.handbookBank.models.context.ApplicationContextHolder;
-import com.practiceOpenCode.handbookBank.models.directories.AccountStatusCode;
-import com.practiceOpenCode.handbookBank.repositories.AccountStatusCodeRepository;
+import com.practiceOpenCode.handbookBank.models.codes.AccountStatusCode;
+import com.practiceOpenCode.handbookBank.repositories.codes.AccountStatusCodeRepository;
 
 import jakarta.xml.bind.annotation.adapters.XmlAdapter;
 

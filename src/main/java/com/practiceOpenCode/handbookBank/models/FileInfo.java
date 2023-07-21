@@ -20,4 +20,11 @@ public class FileInfo {
 
     @Column(name = "import_date_time")
     private LocalDateTime importDateTime;
+
+    @Column(name = "file")
+    private String fileLink;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "message_id")
+    private Message message;
 }

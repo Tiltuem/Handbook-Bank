@@ -1,7 +1,6 @@
 package com.practiceOpenCode.handbookBank.services.impl;
 
 import com.practiceOpenCode.handbookBank.models.Swbics;
-import com.practiceOpenCode.handbookBank.repositories.AccountRestrictionCodeRepository;
 import com.practiceOpenCode.handbookBank.repositories.SwbicsRepository;
 import com.practiceOpenCode.handbookBank.services.SwbicsService;
 import org.springframework.beans.factory.annotation.Autowired;

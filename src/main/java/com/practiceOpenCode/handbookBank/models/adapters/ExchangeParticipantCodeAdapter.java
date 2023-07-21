@@ -2,8 +2,8 @@ package com.practiceOpenCode.handbookBank.models.adapters;
 
 import com.practiceOpenCode.handbookBank.exception.NoSuchCodeException;
 import com.practiceOpenCode.handbookBank.models.context.ApplicationContextHolder;
-import com.practiceOpenCode.handbookBank.models.directories.ExchangeParticipantCode;
-import com.practiceOpenCode.handbookBank.repositories.ExchangeParticipantCodeRepository;
+import com.practiceOpenCode.handbookBank.models.codes.ExchangeParticipantCode;
+import com.practiceOpenCode.handbookBank.repositories.codes.ExchangeParticipantCodeRepository;
 import jakarta.xml.bind.annotation.adapters.XmlAdapter;
 import org.springframework.context.ApplicationContext;
 

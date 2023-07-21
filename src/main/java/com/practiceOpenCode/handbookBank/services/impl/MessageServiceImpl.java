@@ -1,10 +1,13 @@
 package com.practiceOpenCode.handbookBank.services.impl;
 
 import com.practiceOpenCode.handbookBank.models.Message;
+import com.practiceOpenCode.handbookBank.models.codes.AccountStatusCode;
 import com.practiceOpenCode.handbookBank.repositories.MessageRepository;
 import com.practiceOpenCode.handbookBank.services.FileService;
 import com.practiceOpenCode.handbookBank.services.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -12,7 +15,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.file.Files;
-import java.util.List;
 
 @Service
 public class MessageServiceImpl implements MessageService {
@@ -22,8 +24,8 @@ public class MessageServiceImpl implements MessageService {
     private FileService fileService;
 
     @Override
-    public List<Message> getAllMessage() {
-        return repository.findAll();
+    public Page<Message> getAllMessages(Pageable pageable) {
+        return repository.findAll(pageable);
     }
 
     @Override
@@ -41,20 +43,26 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     public void save(MultipartFile file) {
-        File fileXml = new File("src/main/resources/storage/" + file.getOriginalFilename());
+        String path = "src/main/resources/storage/" + file.getOriginalFilename();
+        File fileXml = new File(path);
         try (OutputStream os = Files.newOutputStream(fileXml.toPath())) {
             os.write(file.getBytes());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
         Message newMessage = fileService.unmarshall(fileXml);
         newMessage.setFileInfo(fileService.addFileInfo(fileXml));
+        newMessage.getFileInfo().setMessage(newMessage);
         repository.save(newMessage);
     }
 
     @Override
     public void deleteViaId(long id) {
         repository.deleteById(id);
+    }
+
+    @Override
+    public Message getMessageViaId(long id) {
+        return repository.getReferenceById(id);
     }
 }

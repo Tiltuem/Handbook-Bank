@@ -1,7 +1,6 @@
 package com.practiceOpenCode.handbookBank.services.impl;
 
 import com.practiceOpenCode.handbookBank.models.AccountRestrictionList;
-import com.practiceOpenCode.handbookBank.repositories.AccountRestrictionCodeRepository;
 import com.practiceOpenCode.handbookBank.repositories.AccountRestrictionListRepository;
 import com.practiceOpenCode.handbookBank.services.AccountRestrictionListService;
 import org.springframework.beans.factory.annotation.Autowired;

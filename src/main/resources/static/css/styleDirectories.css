@@ -1,0 +1,63 @@
+:root {
+    --color1: #7FFFD4;
+    --color2: #008080;
+}
+header {
+    padding: 20px 0;
+}
+footer {
+    padding: 10px 0;
+}
+header, footer {
+    background: var(--color1);
+    background: -moz-linear-gradient(left,  var(--color1) 0%, var(--color2) 100%);
+    background: -webkit-linear-gradient(left,  var(--color1) 0%, var(--color2) 100%);
+    background: linear-gradient(to right,  var(--color1) 0%, var(--color2) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr=var(--color1), endColorstr=var(--color2),GradientType=1 );
+}
+.about {
+    background: url(image/back.jpg);
+    padding: 170px 0;
+    color: white;
+}
+.about i {
+    font-size: 10px;
+    color: red;
+    outline: none;
+}
+.header-icon i {
+    margin: 0 auto 15px;
+    width: 10vh;
+    height: 10vh;
+    border: 3px solid white;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 50px;
+    color: white;
+}
+.color1 {
+    color: var(--color1)
+}
+.color2 {
+    color: var(--color2)
+}
+.bg1 {
+    background-color: var(--color1)
+}
+.bg2 {
+    background-color: var(--color2)
+}
+.btn-my {
+    background-color: var(--color1)
+}
+.btn-my:hover {
+    background: var(--color2);
+}
+tbody tr {
+    background-color: var(--color1);
+}
+table {
+    background-color: var(--color2);
+}

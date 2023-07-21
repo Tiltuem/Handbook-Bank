@@ -2,8 +2,8 @@ package com.practiceOpenCode.handbookBank.models.adapters;
 
 import com.practiceOpenCode.handbookBank.exception.NoSuchCodeException;
 import com.practiceOpenCode.handbookBank.models.context.ApplicationContextHolder;
-import com.practiceOpenCode.handbookBank.models.directories.RestrictionCode;
-import com.practiceOpenCode.handbookBank.repositories.RestrictionCodeRepository;
+import com.practiceOpenCode.handbookBank.models.codes.RestrictionCode;
+import com.practiceOpenCode.handbookBank.repositories.codes.RestrictionCodeRepository;
 import jakarta.xml.bind.annotation.adapters.XmlAdapter;
 import org.springframework.context.ApplicationContext;
 

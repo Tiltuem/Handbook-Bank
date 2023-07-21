@@ -2,10 +2,14 @@ package com.practiceOpenCode.handbookBank.services.impl;
 
 import com.practiceOpenCode.handbookBank.models.FileInfo;
 import com.practiceOpenCode.handbookBank.models.Message;
+import com.practiceOpenCode.handbookBank.repositories.FileRepository;
 import com.practiceOpenCode.handbookBank.services.FileService;
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;
 import jakarta.xml.bind.Unmarshaller;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
@@ -18,6 +22,8 @@ import java.util.zip.ZipInputStream;
 
 @Service
 public class FileServiceImpl implements FileService {
+    @Autowired
+    private FileRepository repository;
     @Override
     public String download(String date) throws IOException {
         String fileName = date.replaceAll("-", "") + "ED01OSBR.zip";
@@ -51,20 +57,20 @@ public class FileServiceImpl implements FileService {
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         } finally {
-            File fileZip = new File(nameFileZip);
+            java.io.File fileZip = new java.io.File(nameFileZip);
             fileZip.delete();
         }
         return null;
     }
 
     @Override
-    public Message unmarshall(File fileXml) {
+    public Message unmarshall(File fileInfoXml) {
         JAXBContext jaxbContext;
 
         try {
             jaxbContext = JAXBContext.newInstance(Message.class);
             Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-            Message e = (Message) jaxbUnmarshaller.unmarshal(fileXml);
+            Message e = (Message) jaxbUnmarshaller.unmarshal(fileInfoXml);
 
             return e;
         } catch (JAXBException e) {
@@ -77,7 +83,23 @@ public class FileServiceImpl implements FileService {
         FileInfo fileInfo = new FileInfo();
         fileInfo.setName(file.getName());
         fileInfo.setImportDateTime(LocalDateTime.now());
+        fileInfo.setFileLink("file:///" + file.getAbsolutePath());
         return fileInfo;
+    }
+
+    @Override
+    public Page<FileInfo> getAllFiles(Pageable pageable) {
+        return repository.findAll(pageable);
+    }
+
+    @Override
+    public void save(FileInfo fileInfo) {
+        repository.save(fileInfo);
+    }
+
+    @Override
+    public void deleteViaId(long id) {
+        repository.deleteById(id);
     }
 
 }

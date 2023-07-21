@@ -2,7 +2,7 @@ package com.practiceOpenCode.handbookBank.models;
 
 
 import com.practiceOpenCode.handbookBank.models.adapters.ChangeTypeCodeAdapter;
-import com.practiceOpenCode.handbookBank.models.directories.ChangeTypeCode;
+import com.practiceOpenCode.handbookBank.models.codes.ChangeTypeCode;
 import jakarta.persistence.*;
 import jakarta.xml.bind.annotation.*;
 import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
