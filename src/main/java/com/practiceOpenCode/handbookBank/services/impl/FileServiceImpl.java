@@ -1,22 +1,27 @@
 package com.practiceOpenCode.handbookBank.services.impl;
 
+import com.practiceOpenCode.handbookBank.exception.NotFoundFileXmlException;
+import com.practiceOpenCode.handbookBank.exception.UnmarshalXmlException;
 import com.practiceOpenCode.handbookBank.models.FileInfo;
 import com.practiceOpenCode.handbookBank.models.Message;
 import com.practiceOpenCode.handbookBank.repositories.FileRepository;
 import com.practiceOpenCode.handbookBank.services.FileService;
-import jakarta.xml.bind.JAXBContext;
-import jakarta.xml.bind.JAXBException;
-import jakarta.xml.bind.Unmarshaller;
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+
+import jakarta.xml.bind.JAXBContext;
+import jakarta.xml.bind.Unmarshaller;
 import java.io.*;
 import java.net.URL;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 import java.time.LocalDateTime;
+import java.util.Objects;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
@@ -24,57 +29,60 @@ import java.util.zip.ZipInputStream;
 public class FileServiceImpl implements FileService {
     @Autowired
     private FileRepository repository;
-    @Override
-    public String download(String date) throws IOException {
-        String fileName = date.replaceAll("-", "") + "ED01OSBR.zip";
-        URL url = new URL("https://cbr.ru/vfs/mcirabis/BIKNew/" + date.replaceAll("-", "") + "ED01OSBR.zip");
-        ReadableByteChannel rbc = Channels.newChannel(url.openStream());
-        FileOutputStream fos = new FileOutputStream(fileName);
+    private static final String START_URL_DOWNLOAD = "https://cbr.ru/vfs/mcirabis/BIKNew/";
+    private static final String END_URL_DOWNLOAD = "ED01OSBR.zip";
+    private static final String PATH_TO_STORAGE = "src/main/resources/storage/";
+    private static final String START_LINK = "file:///";
 
-        fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
-        fos.close();
-        rbc.close();
-        return fileName;
+    @Override
+    public String download(String date) {
+        String fileName = date.replaceAll("-", "") + END_URL_DOWNLOAD;
+
+        try (ReadableByteChannel channel = Channels.newChannel(new URL(START_URL_DOWNLOAD + fileName).openStream());
+             FileOutputStream fos = new FileOutputStream(fileName))
+        {
+            fos.getChannel().transferFrom(channel, 0, Long.MAX_VALUE);
+            return fileName;
+        } catch (IOException e) {
+            throw new NotFoundFileXmlException("Ошибка: нет данных за данный день");
+        }
     }
 
     @Override
     public File unpack(String nameFileZip) {
+
         try (ZipInputStream zin = new ZipInputStream(new FileInputStream(nameFileZip))) {
             ZipEntry entry;
-            String name = null;
-            while ((entry = zin.getNextEntry()) != null) {
-                name = "src/main/resources/storage/" + entry.getName();
+            String pathToFile;
 
-                FileOutputStream fout = new FileOutputStream(name);
+            if (!Objects.isNull(entry = zin.getNextEntry())&&entry.getName().endsWith(".xml")) {
+                pathToFile = PATH_TO_STORAGE + entry.getName();
+
+                FileOutputStream fout = new FileOutputStream(pathToFile);
                 for (int c = zin.read(); c != -1; c = zin.read()) {
                     fout.write(c);
                 }
                 fout.flush();
-                zin.closeEntry();
                 fout.close();
+                zin.closeEntry();
+                return new File(pathToFile);
+            } else {
+                throw new NotFoundFileXmlException("Ошибка: файл XML отсутствует");
             }
-            return new File(name);
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
-        } finally {
-            java.io.File fileZip = new java.io.File(nameFileZip);
-            fileZip.delete();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
-        return null;
     }
 
     @Override
-    public Message unmarshall(File fileInfoXml) {
+    public Message unmarshall(File fileXml) {
         JAXBContext jaxbContext;
-
         try {
             jaxbContext = JAXBContext.newInstance(Message.class);
-            Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-            Message e = (Message) jaxbUnmarshaller.unmarshal(fileInfoXml);
-
-            return e;
-        } catch (JAXBException e) {
-            throw new RuntimeException(e);
+            Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
+            return (Message) unmarshaller.unmarshal(fileXml);
+        } catch (Exception e) {
+            throw new UnmarshalXmlException("Ошибка: неверная структура XML");
         }
     }
 
@@ -83,7 +91,7 @@ public class FileServiceImpl implements FileService {
         FileInfo fileInfo = new FileInfo();
         fileInfo.setName(file.getName());
         fileInfo.setImportDateTime(LocalDateTime.now());
-        fileInfo.setFileLink("file:///" + file.getAbsolutePath());
+        fileInfo.setFileLink(START_LINK + file.getAbsolutePath());
         return fileInfo;
     }
 
@@ -98,8 +106,17 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public void deleteViaId(long id) {
+    public void deleteById(long id) {
         repository.deleteById(id);
     }
 
+    @Override
+    public FileInfo getByName(String name) {
+        return repository.findByName(name);
+    }
+
+    @Override
+    public Boolean checkFileExist(String name) {
+        return repository.findByName(name) != null;
+    }
 }

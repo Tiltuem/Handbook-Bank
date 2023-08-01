@@ -17,6 +17,6 @@ public class HomeController {
 
     @GetMapping("/codes")
     public String getAllDirectories() {
-        return "mainPage/allDirectories";
+        return "mainPages/allDirectories";
     }
 }

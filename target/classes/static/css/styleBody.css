@@ -1,0 +1,47 @@
+:root {
+    --color1: #00d6cb;
+    --color2: #400754;
+}
+.about {
+    background: url(image/back.jpg);
+    padding: 100px 0;
+    color: white;
+    box-sizing: border-box;
+    min-height: 100%;
+    padding-bottom: 90px;
+}
+* {
+  margin: 0;
+  padding: 0;
+}
+html,
+body {
+  height: 100%;
+}
+
+header {
+    padding: 20px 0;
+}
+footer {
+    padding: 10px 0;
+}
+
+header, footer {
+    background: var(--color1);
+    background: -moz-linear-gradient(left,  var(--color1) 0%, var(--color2) 100%);
+    background: -webkit-linear-gradient(left,  var(--color1) 0%, var(--color2) 100%);
+    background: linear-gradient(to right,  var(--color1) 0%, var(--color2) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr=var(--color1), endColorstr=var(--color2),GradientType=1 );
+}
+.header-icon i {
+    margin: 0 auto 15px;
+    width: 10vh;
+    height: 10vh;
+    border: 3px solid white;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 50px;
+    color: white;
+}

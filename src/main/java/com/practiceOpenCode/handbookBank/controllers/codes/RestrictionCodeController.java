@@ -26,17 +26,6 @@ public class RestrictionCodeController {
         Page<RestrictionCode> codes = restrictionCodeService.getAllCodes(PageRequest.of(page, 5, Sort.by("id")));
         model.addAttribute("codes", codes);
         model.addAttribute("maxPage",  codes.getTotalPages()-1);
-        if(page > 0) {
-            model.addAttribute("prevPage", page-1);
-        } else {
-            model.addAttribute("prevPage", page);
-        }
-
-        if(page < codes.getTotalPages()-1) {
-            model.addAttribute("nextPage", page+1);
-        } else {
-            model.addAttribute("nextPage", page);
-        }
         return "codes/restriction";
     }
 

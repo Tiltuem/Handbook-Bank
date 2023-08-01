@@ -11,10 +11,9 @@ import java.util.List;
 
 public class CreationReasonCodeAdapter extends XmlAdapter<String, CreationReasonCode> {
     private final List<CreationReasonCode> creationReasonCodeList;
-    private final ApplicationContext ctx;
 
     public CreationReasonCodeAdapter() {
-        ctx = ApplicationContextHolder.getApplicationContext();
+        ApplicationContext ctx = ApplicationContextHolder.getApplicationContext();
         creationReasonCodeList = ctx.getBean(CreationReasonCodeRepository.class).findAll();
     }
 

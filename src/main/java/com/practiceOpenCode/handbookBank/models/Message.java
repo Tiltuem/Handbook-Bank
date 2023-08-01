@@ -6,11 +6,12 @@ import com.practiceOpenCode.handbookBank.models.adapters.LocalDateAdapter;
 import com.practiceOpenCode.handbookBank.models.adapters.LocalDateTimeAdapter;
 import com.practiceOpenCode.handbookBank.models.codes.CreationReasonCode;
 import com.practiceOpenCode.handbookBank.models.codes.InformationTypeCode;
-import jakarta.persistence.*;
+
 import jakarta.xml.bind.annotation.*;
 import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import lombok.Data;
 
+import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -46,7 +47,7 @@ public class Message {
 
     @XmlAttribute(name = "CreationReason")
     @XmlJavaTypeAdapter(CreationReasonCodeAdapter.class)
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "creation_reason_id")
     private CreationReasonCode creationReasonCode;
 
@@ -57,7 +58,7 @@ public class Message {
 
     @XmlAttribute(name = "InfoTypeCode")
     @XmlJavaTypeAdapter(InformationTypeCodeAdapter.class)
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "information_type_code_id")
     private InformationTypeCode informationTypeCode;
 

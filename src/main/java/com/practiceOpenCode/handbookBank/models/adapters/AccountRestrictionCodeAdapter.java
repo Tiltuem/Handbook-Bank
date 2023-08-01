@@ -7,20 +7,21 @@ import com.practiceOpenCode.handbookBank.repositories.codes.AccountRestrictionCo
 import jakarta.xml.bind.annotation.adapters.XmlAdapter;
 import org.springframework.context.ApplicationContext;
 
+
 import java.util.List;
 
 
 public class AccountRestrictionCodeAdapter extends XmlAdapter<String, AccountRestrictionCode> {
     private final List<AccountRestrictionCode> accountRestrictionCodeList;
-    private final ApplicationContext ctx;
 
     public AccountRestrictionCodeAdapter() {
-        ctx = ApplicationContextHolder.getApplicationContext();
+        ApplicationContext ctx = ApplicationContextHolder.getApplicationContext();
         accountRestrictionCodeList = ctx.getBean(AccountRestrictionCodeRepository.class).findAll();
     }
 
     @Override
     public AccountRestrictionCode unmarshal(String code) throws Exception {
+
         for (AccountRestrictionCode accountRestrictionCode : accountRestrictionCodeList) {
             if (accountRestrictionCode.getCode().equals(code)) return accountRestrictionCode;
         }

@@ -1,7 +1,8 @@
 package com.practiceOpenCode.handbookBank.services.impl;
 
+import com.practiceOpenCode.handbookBank.exception.DuplicateFileException;
+import com.practiceOpenCode.handbookBank.exception.NotFoundFileXmlException;
 import com.practiceOpenCode.handbookBank.models.Message;
-import com.practiceOpenCode.handbookBank.models.codes.AccountStatusCode;
 import com.practiceOpenCode.handbookBank.repositories.MessageRepository;
 import com.practiceOpenCode.handbookBank.services.FileService;
 import com.practiceOpenCode.handbookBank.services.MessageService;
@@ -15,6 +16,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.file.Files;
+import java.nio.file.Paths;
 
 @Service
 public class MessageServiceImpl implements MessageService {
@@ -33,6 +35,8 @@ public class MessageServiceImpl implements MessageService {
         try {
             String nameFileZip = fileService.download(date);
             File fileXml = fileService.unpack(nameFileZip);
+            checkFile(fileXml.getName());
+            Files.deleteIfExists(Paths.get(nameFileZip));
             Message newMessage = fileService.unmarshall(fileXml);
             newMessage.setFileInfo(fileService.addFileInfo(fileXml));
             repository.save(newMessage);
@@ -45,11 +49,27 @@ public class MessageServiceImpl implements MessageService {
     public void save(MultipartFile file) {
         String path = "src/main/resources/storage/" + file.getOriginalFilename();
         File fileXml = new File(path);
-        try (OutputStream os = Files.newOutputStream(fileXml.toPath())) {
-            os.write(file.getBytes());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+
+        if(path.endsWith(".xml")) {
+            checkFile(file.getOriginalFilename());
+            try (OutputStream os = Files.newOutputStream(fileXml.toPath())) {
+                os.write(file.getBytes());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        } else if(path.endsWith(".zip")) {
+            try {
+                file.transferTo(fileXml.getAbsoluteFile());
+                fileXml = fileService.unpack(path);
+                Files.deleteIfExists(Paths.get(path));
+                checkFile(fileXml.getName());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        } else {
+            throw new NotFoundFileXmlException("Ошибка: неверный формат файла.");
         }
+
         Message newMessage = fileService.unmarshall(fileXml);
         newMessage.setFileInfo(fileService.addFileInfo(fileXml));
         newMessage.getFileInfo().setMessage(newMessage);
@@ -57,12 +77,18 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public void deleteViaId(long id) {
+    public void deleteById(long id) {
         repository.deleteById(id);
     }
 
     @Override
-    public Message getMessageViaId(long id) {
+    public Message getMessageById(long id) {
         return repository.getReferenceById(id);
+    }
+
+    private void checkFile(String name) {
+        if (fileService.checkFileExist(name)) {
+            throw new DuplicateFileException("Ошибка: файл уже существует");
+        }
     }
 }

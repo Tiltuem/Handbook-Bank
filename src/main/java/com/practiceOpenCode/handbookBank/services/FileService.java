@@ -17,5 +17,7 @@ public interface FileService {
     FileInfo addFileInfo(File file);
     Page<FileInfo> getAllFiles(Pageable pageable);
     void save (FileInfo fileInfo);
-    void deleteViaId(long id);
+    void deleteById(long id);
+    FileInfo getByName(String name);
+    Boolean checkFileExist(String name);
 }

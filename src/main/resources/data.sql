@@ -1,36 +1,36 @@
-INSERT INTO ACCOUNT_STATUS_CODES(CODE) VALUES
-                                    ('ACAC'), ('ACDL');
+INSERT INTO ACCOUNT_STATUS_CODES(CODE, DELETED) VALUES
+                                    ('ACAC', false), ('ACDL', false);
 
-INSERT INTO ACCOUNT_RESTRICTION_CODES(CODE) VALUES
-                                    ('LMRS'), ('URRS'), ('CLRS'),
-                                    ('FPRS'), ('SDRS');
-INSERT INTO CHANGE_TYPE_CODES(CODE) VALUES
-                                    ('ADDD'), ('CHGD'), ('DLTD');
+INSERT INTO ACCOUNT_RESTRICTION_CODES(CODE, DELETED) VALUES
+                                    ('LMRS', false), ('URRS', false), ('CLRS', false),
+                                    ('FPRS', false), ('SDRS', false);
+INSERT INTO CHANGE_TYPE_CODES(CODE, DELETED) VALUES
+                                    ('ADDD', false), ('CHGD', false), ('DLTD', false);
 
-INSERT INTO CREATION_REASON_CODES(CODE) VALUES
-                                    ('RQST'), ('CIBD'), ('FCBD');
+INSERT INTO CREATION_REASON_CODES(CODE, DELETED) VALUES
+                                    ('RQST', false), ('CIBD', false), ('FCBD', false);
 
-INSERT INTO EXCHANGE_PARTICIPANT_CODES(CODE) VALUES
-                                    ('0'), ('1');
+INSERT INTO EXCHANGE_PARTICIPANT_CODES(CODE, DELETED) VALUES
+                                    ('0', false), ('1', false);
 
-INSERT INTO INFO_TYPE_CODES(CODE) VALUES
-                                    ('FIRR'), ('SIRR');
+INSERT INTO INFO_TYPE_CODES(CODE, DELETED) VALUES
+                                    ('FIRR', false), ('SIRR', false);
 
-INSERT INTO PARTICIPANT_STATUS_CODES(CODE) VALUES
-                                    ('PSAC'), ('PSDL');
+INSERT INTO PARTICIPANT_STATUS_CODES(CODE, DELETED) VALUES
+                                    ('PSAC', false), ('PSDL', false);
 
-INSERT INTO PARTICIPANT_TYPE_CODES(CODE) VALUES
-                                    ('00'), ('10'), ('12'), ('15'),
-                                    ('16'), ('20'), ('30'), ('40'),
-                                    ('51'), ('52'), ('60'), ('65'),
-                                    ('71'), ('75'), ('78'), ('90'),('99');
+INSERT INTO PARTICIPANT_TYPE_CODES(CODE, DELETED) VALUES
+                                    ('00', false), ('10', false), ('12', false), ('15', false),
+                                    ('16', false), ('20', false), ('30', false), ('40', false),
+                                    ('51', false), ('52', false), ('60', false), ('65', false),
+                                    ('71', false), ('75', false), ('78', false), ('90', false),('99', false);
 
-INSERT INTO REGULATION_ACCOUNT_TYPE_CODES(CODE) VALUES
-                                    ('CBRA'), ('CRSA'), ('BANA'), ('TRSA'),
-                                    ('TRUA'), ('CLAC'),('UTRA');
+INSERT INTO REGULATION_ACCOUNT_TYPE_CODES(CODE, DELETED) VALUES
+                                    ('CBRA', false), ('CRSA', false), ('BANA', false), ('TRSA', false),
+                                    ('TRUA', false), ('CLAC', false),('UTRA', false);
 
-INSERT INTO RESTRICTION_CODES(CODE) VALUES
-                                    ('URRS'), ('LWRS'), ('MRTR'),('RSIP'), ('FPIP');
+INSERT INTO RESTRICTION_CODES(CODE, DELETED) VALUES
+                                    ('URRS', false), ('LWRS', false), ('MRTR', false),('RSIP', false), ('FPIP', false);
 
-INSERT INTO SERVICE_CS_CODES(CODE) VALUES
-                                    ('1'), ('2'), ('3'), ('4'), ('5'), ('6');
+INSERT INTO SERVICE_CS_CODES(CODE, DELETED) VALUES
+                                    ('1', false), ('2', false), ('3', false), ('4', false), ('5', false), ('6', false);

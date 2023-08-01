@@ -10,6 +10,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -21,6 +23,8 @@ public class ImportController {
     @Autowired
     MessageService messageService;
     @Autowired
+    FileService fileService;
+    @Autowired
     FileService fileInfoService;
 
     @GetMapping("/{page}")
@@ -28,18 +32,19 @@ public class ImportController {
         Page<FileInfo> files = fileInfoService.getAllFiles(PageRequest.of(page, 5, Sort.by("id")));
         model.addAttribute("files", files);
         model.addAttribute("maxPage",  files.getTotalPages()-1);
-        if(page > 0) {
-            model.addAttribute("prevPage", page-1);
-        } else {
-            model.addAttribute("prevPage", page);
-        }
+        return "mainPages/importFile";
+    }
+    @GetMapping("/{page}-sort")
+    public String getAllSortedFiles(@PathVariable int page, Model model, @RequestParam String column, @RequestParam String direction) {
+        Page<FileInfo> files;
+        if(direction.equals("DESC")) {
+            files = fileInfoService.getAllFiles(PageRequest.of(page, 5, Sort.by(column).descending()));
 
-        if(page < files.getTotalPages()-1) {
-            model.addAttribute("nextPage", page+1);
         } else {
-            model.addAttribute("nextPage", page);
+            files = fileInfoService.getAllFiles(PageRequest.of(page, 5, Sort.by(column)));
         }
-
+        model.addAttribute("files", files);
+        model.addAttribute("maxPage",  files.getTotalPages()-1);
         return "mainPages/importFile";
     }
 
@@ -57,7 +62,11 @@ public class ImportController {
 
     @PostMapping("/delete/{id}")
     public String deleteFile(@PathVariable long id, @RequestParam String page) {
-        fileInfoService.deleteViaId(id);
+        fileInfoService.deleteById(id);
         return "redirect:/import/" + page;
+    }
+
+    private Boolean checkFile(String name) {
+        return fileService.getByName(name) != null;
     }
 }

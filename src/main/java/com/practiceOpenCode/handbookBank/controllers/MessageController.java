@@ -23,41 +23,12 @@ public class MessageController {
         Page<Message> messages = messageService.getAllMessages(PageRequest.of(page, 15, Sort.by("id")));
         model.addAttribute("messages", messages);
         model.addAttribute("maxPage",  messages.getTotalPages()-1);
-        if(page > 0) {
-            model.addAttribute("prevPage", page-1);
-        } else {
-            model.addAttribute("prevPage", page);
-        }
-
-        if(page < messages.getTotalPages()-1) {
-            model.addAttribute("nextPage", page+1);
-        } else {
-            model.addAttribute("nextPage", page);
-        }
         return "mainPages/allMessage";
     }
 
-    /*@GetMapping("/message/${id}/${page}")
-    public String getMessage(@PathVariable int page, Model model, @PathVariable int id) {
-        Page<Message> messages = messageService.getAllMessages(PageRequest.of(page, 15, Sort.by("id")));
-        model.addAttribute("messages", messages);
-        model.addAttribute("maxPage",  messages.getTotalPages()-1);
-        if(page > 0) {
-            model.addAttribute("prevPage", page-1);
-        } else {
-            model.addAttribute("prevPage", page);
-        }
-
-        if(page < messages.getTotalPages()-1) {
-            model.addAttribute("nextPage", page+1);
-        } else {
-            model.addAttribute("nextPage", page);
-        }
-        return "mainPages/message";
-    }*/
     @PostMapping("/delete/{id}")
     public String deleteFile(@PathVariable long id, @RequestParam String page) {
-        messageService.deleteViaId(id);
+        messageService.deleteById(id);
         return "redirect:/messages/" + page;
     }
 }

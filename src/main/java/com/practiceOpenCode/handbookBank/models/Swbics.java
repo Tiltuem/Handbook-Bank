@@ -22,5 +22,5 @@ public class Swbics {
 
     @XmlAttribute(name = "DefaultSWBIC")
     @Column(name = "default_swbic")
-    private boolean DefaultSwbic;
+    private boolean defaultSwbic;
 }

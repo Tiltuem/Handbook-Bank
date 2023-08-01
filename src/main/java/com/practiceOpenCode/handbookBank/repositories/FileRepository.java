@@ -10,4 +10,5 @@ import org.springframework.stereotype.Repository;
 public interface FileRepository extends JpaRepository<FileInfo, Long> {
     Page<FileInfo> findAll(Pageable pageable);
     FileInfo findById(long id);
+    FileInfo findByName(String name);
 }

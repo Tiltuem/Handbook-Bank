@@ -11,10 +11,9 @@ import java.util.List;
 
 public class ChangeTypeCodeAdapter extends XmlAdapter<String, ChangeTypeCode> {
     private final List<ChangeTypeCode> changeTypeCodeList;
-    private final ApplicationContext ctx;
 
     public ChangeTypeCodeAdapter() {
-        ctx = ApplicationContextHolder.getApplicationContext();
+        ApplicationContext ctx = ApplicationContextHolder.getApplicationContext();
         changeTypeCodeList = ctx.getBean(ChangeTypeCodeRepository.class).findAll();
     }
 
