@@ -3,18 +3,14 @@
     --color2: #400754;
 }
 
-.about i {
-    font-size: 10px;
-    color: red;
-    outline: none;
-}
-
 
 tbody tr {
-    background-color: #00CED1
+    background-color: #00CED1;
+    font-size: 18px;
 }
 table {
-    background-color:#00CED1
+    background-color:#00CED1;
+    font-size: 18px;
 }
 
 

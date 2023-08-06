@@ -1,5 +1,6 @@
 package com.practiceOpenCode.handbookBank.controllers.codes;
 
+import com.practiceOpenCode.handbookBank.exception.NotFoundPageException;
 import com.practiceOpenCode.handbookBank.models.codes.AccountRestrictionCode;
 import com.practiceOpenCode.handbookBank.services.codes.AccountRestrictionCodeService;
 
@@ -16,8 +17,6 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
 
-
-
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/codes/accountRestriction")
@@ -28,6 +27,8 @@ public class AccountRestrictionCodeController {
     @GetMapping("/{page}")
     public String getAllAccountRestrictionCode(@RequestParam(name = "code", required = false) String code, @RequestParam(name = "deleted", defaultValue = "false") Boolean showDeleted, @PathVariable int page, final Model model) {
         Page<AccountRestrictionCode> codes = accountRestrictionCodeService.getAllCodes(PageRequest.of(page, 5, Sort.by("id")), code, showDeleted);
+        if (page > codes.getTotalPages())
+            throw new NotFoundPageException("Страница не найдена");
         setModel(model, codes, new AccountRestrictionCode());
         model.addAttribute("search", code);
         return "codes/accountRestriction";

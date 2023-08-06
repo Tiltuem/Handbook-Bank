@@ -80,6 +80,7 @@
                 <h3>Записи отсутствуют</h3>
             </#if>
             </div>
+
             <div class="col-md-5">
                 <h2>Добавить новый файл</h2>
                 <div class="accordion accordion-flush" id="accordion">

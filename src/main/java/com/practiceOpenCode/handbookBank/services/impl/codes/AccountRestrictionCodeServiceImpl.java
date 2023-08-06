@@ -18,7 +18,7 @@ public class AccountRestrictionCodeServiceImpl implements AccountRestrictionCode
 
     @Override
     public Page<AccountRestrictionCode> getAllCodes(Pageable pageable, String code, Boolean showDeleted) {
-        if (showDeleted !=null && showDeleted) {
+        if (showDeleted != null && showDeleted) {
             if (!Objects.isNull(code)) return repository.findByCodeWithDeleted(pageable, code);
             return repository.findAllWithDeleted(pageable);
         }

@@ -25,7 +25,7 @@ public class AccountRestrictionCodeAdapter extends XmlAdapter<String, AccountRes
         for (AccountRestrictionCode accountRestrictionCode : accountRestrictionCodeList) {
             if (accountRestrictionCode.getCode().equals(code)) return accountRestrictionCode;
         }
-        throw new NoSuchCodeException(code + "code not found in directory.");
+        throw new NoSuchCodeException("Ошибка: код " + code + " не существует.\nДля получения файла добавьте этот код в ограничения операций по счету");
     }
 
     @Override
