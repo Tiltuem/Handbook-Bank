@@ -1,6 +1,7 @@
 <#import "../parts/common.ftlh" as c>
 <#import "../parts/header.ftlh" as h>
 <#import "../parts/footer.ftlh" as f>
+<#import "../parts/getIdWithInput.ftlh" as g>
 
 <@c.page "../../css/styleDirectories.css">
 <!--Шапка-->
@@ -182,5 +183,6 @@
 </section>
 <!--Подвал-->
 <@f.footer />
+<@g.getId />
 
 </@c.page>

@@ -4,14 +4,20 @@ package com.practiceOpenCode.handbookBank.models;
 import com.practiceOpenCode.handbookBank.models.adapters.ChangeTypeCodeAdapter;
 import com.practiceOpenCode.handbookBank.models.codes.ChangeTypeCode;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import jakarta.xml.bind.annotation.*;
 import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import lombok.Data;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.SQLInsert;
 
 import java.util.List;
 
 @Entity
 @Table(name = "bic_directory_entries")
+@SQLDelete(sql = "update bic_directory_entries set deleted=true where id=?")
 @Data
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -19,21 +25,23 @@ import java.util.List;
 public class BICDirectoryEntry {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private long id;
 
     @XmlAttribute(name = "BIC")
-    @Column(name = "bic")
-    private int bic;
+    @Size(min = 9, max = 9, message = "Ошибка: неверное количество символов")
+    @Pattern(regexp = "\\d*",
+            message = "Ошибка: неверный формат")
+    @NotBlank(message = "Ошибка: введите код")
+    private String bic;
 
     @XmlAttribute(name = "ChangeType")
     @XmlJavaTypeAdapter(ChangeTypeCodeAdapter.class)
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "change_type_id")
     private ChangeTypeCode changeTypeCode;
 
     @XmlElement(name = "ParticipantInfo", namespace = "urn:cbr-ru:ed:v2.0")
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "participant_info_id")
     private ParticipantInfo participantInfo;
 
@@ -44,6 +52,12 @@ public class BICDirectoryEntry {
 
     @XmlElement(name = "SWBICS", namespace = "urn:cbr-ru:ed:v2.0")
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "swbics_id")
-    private List<Swbics> swbics;
+    @JoinColumn(name = "SWBICs_id")
+    private List<SWBICs> SWBICs;
+
+    private Boolean deleted;
+
+    public BICDirectoryEntry() {
+        this.deleted = false;
+    }
 }

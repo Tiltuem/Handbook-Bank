@@ -8,8 +8,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ChangeTypeCodeRepository extends JpaRepository<ChangeTypeCode, Long> {
-    Page<ChangeTypeCode> findAll(Pageable pageable);
-    ChangeTypeCode findById(long id);
+public interface ChangeTypeCodeRepository extends AbstractCodeRepository<ChangeTypeCode> {
 }
 

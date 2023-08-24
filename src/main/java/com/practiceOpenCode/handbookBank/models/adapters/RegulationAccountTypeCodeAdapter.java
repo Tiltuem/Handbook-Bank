@@ -1,6 +1,7 @@
 package com.practiceOpenCode.handbookBank.models.adapters;
 
 import com.practiceOpenCode.handbookBank.exception.NoSuchCodeException;
+import com.practiceOpenCode.handbookBank.models.codes.AccountRestrictionCode;
 import com.practiceOpenCode.handbookBank.models.context.ApplicationContextHolder;
 import com.practiceOpenCode.handbookBank.models.codes.RegulationAccountTypeCode;
 import com.practiceOpenCode.handbookBank.repositories.codes.RegulationAccountTypeCodeRepository;
@@ -21,9 +22,13 @@ public class RegulationAccountTypeCodeAdapter extends XmlAdapter<String, Regulat
     @Override
     public RegulationAccountTypeCode unmarshal(String code) throws Exception {
         for (RegulationAccountTypeCode regulationAccountTypeCode : regulationAccountTypeCodeList) {
-            if (regulationAccountTypeCode.getCode().equals(code)) return regulationAccountTypeCode;
+            if (regulationAccountTypeCode.getCode().equals(code)) {
+                if(!regulationAccountTypeCode.getDeleted())  return regulationAccountTypeCode;
+                else
+                    throw new NoSuchCodeException("Ошибка: код '" + code + "' удалён.\nДля получения файла добавьте этот код в ограничения операций по счету");
+            }
         }
-        throw new NoSuchCodeException(code + "code not found in directory.");
+        return new RegulationAccountTypeCode(code);
     }
 
     @Override

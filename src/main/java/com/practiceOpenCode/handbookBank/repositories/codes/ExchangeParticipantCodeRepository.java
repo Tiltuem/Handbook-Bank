@@ -8,7 +8,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ExchangeParticipantCodeRepository extends JpaRepository<ExchangeParticipantCode, Long> {
-    Page<ExchangeParticipantCode> findAll(Pageable pageable);
-    ExchangeParticipantCode findById(long id);
+public interface ExchangeParticipantCodeRepository extends AbstractCodeRepository<ExchangeParticipantCode> {
 }

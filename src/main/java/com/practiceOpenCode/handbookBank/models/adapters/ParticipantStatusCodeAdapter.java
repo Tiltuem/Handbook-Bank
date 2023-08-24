@@ -1,6 +1,7 @@
 package com.practiceOpenCode.handbookBank.models.adapters;
 
 import com.practiceOpenCode.handbookBank.exception.NoSuchCodeException;
+import com.practiceOpenCode.handbookBank.models.codes.AccountRestrictionCode;
 import com.practiceOpenCode.handbookBank.models.context.ApplicationContextHolder;
 import com.practiceOpenCode.handbookBank.models.codes.ParticipantStatusCode;
 import com.practiceOpenCode.handbookBank.repositories.codes.ParticipantStatusCodeRepository;
@@ -21,11 +22,14 @@ public class ParticipantStatusCodeAdapter extends XmlAdapter<String, Participant
     @Override
     public ParticipantStatusCode unmarshal(String code) throws Exception {
         for (ParticipantStatusCode participantStatusCode : participantStatusCodeList) {
-            if (participantStatusCode.getCode().equals(code)) return participantStatusCode;
+            if (participantStatusCode.getCode().equals(code)) {
+                if(!participantStatusCode.getDeleted())  return participantStatusCode;
+                else
+                    throw new NoSuchCodeException("Ошибка: код '" + code + "' удалён.\nДля получения файла добавьте этот код в ограничения операций по счету");
+            }
         }
-        throw new NoSuchCodeException(code + "code not found in directory.");
+        return new ParticipantStatusCode(code);
     }
-
     @Override
     public String marshal(ParticipantStatusCode participantStatusCode) throws Exception {
         return participantStatusCode.getCode();

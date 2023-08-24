@@ -24,49 +24,34 @@ public class ImportController {
     MessageService messageService;
     @Autowired
     FileService fileService;
-    @Autowired
-    FileService fileInfoService;
 
     @GetMapping("/{page}")
     public String getAllFiles(@PathVariable int page, Model model) {
-        Page<FileInfo> files = fileInfoService.getAllFiles(PageRequest.of(page, 5, Sort.by("id")));
-        model.addAttribute("files", files);
-        model.addAttribute("maxPage",  files.getTotalPages()-1);
-        return "mainPages/importFile";
-    }
-    @GetMapping("/{page}-sort")
-    public String getAllSortedFiles(@PathVariable int page, Model model, @RequestParam String column, @RequestParam String direction) {
-        Page<FileInfo> files;
-        if(direction.equals("DESC")) {
-            files = fileInfoService.getAllFiles(PageRequest.of(page, 5, Sort.by(column).descending()));
-
-        } else {
-            files = fileInfoService.getAllFiles(PageRequest.of(page, 5, Sort.by(column)));
-        }
+        Page<FileInfo> files = fileService.getAllFiles(PageRequest.of(page, 5, Sort.by("id")));
         model.addAttribute("files", files);
         model.addAttribute("maxPage",  files.getTotalPages()-1);
         return "mainPages/importFile";
     }
 
     @PostMapping("/date")
+    //@PreAuthorize("hasAuthority('ROLE_USER')")
     public String saveMessageByDate(@RequestParam String date, @RequestParam String page) {
         messageService.save(date);
         return "redirect:/import/" + page;
     }
 
     @PostMapping("/file")
+    //@PreAuthorize("hasAuthority('ROLE_USER')")
     public String saveMessageByFile(@RequestParam("fileXml") MultipartFile fileXml, @RequestParam String page) {
         messageService.save(fileXml);
         return "redirect:/import/" + page;
     }
 
     @PostMapping("/delete/{id}")
+    //@PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public String deleteFile(@PathVariable long id, @RequestParam String page) {
-        fileInfoService.deleteById(id);
+        fileService.deleteById(id);
         return "redirect:/import/" + page;
     }
 
-    private Boolean checkFile(String name) {
-        return fileService.getByName(name) != null;
-    }
 }

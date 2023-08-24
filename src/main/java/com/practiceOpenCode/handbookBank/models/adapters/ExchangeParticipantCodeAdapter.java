@@ -1,6 +1,7 @@
 package com.practiceOpenCode.handbookBank.models.adapters;
 
 import com.practiceOpenCode.handbookBank.exception.NoSuchCodeException;
+import com.practiceOpenCode.handbookBank.models.codes.AccountRestrictionCode;
 import com.practiceOpenCode.handbookBank.models.context.ApplicationContextHolder;
 import com.practiceOpenCode.handbookBank.models.codes.ExchangeParticipantCode;
 import com.practiceOpenCode.handbookBank.repositories.codes.ExchangeParticipantCodeRepository;
@@ -21,9 +22,13 @@ public class ExchangeParticipantCodeAdapter extends XmlAdapter<String, ExchangeP
     @Override
     public ExchangeParticipantCode unmarshal(String code) throws Exception {
         for (ExchangeParticipantCode exchangeParticipantCode : exchangeParticipantCodeList) {
-            if (exchangeParticipantCode.getCode().equals(code)) return exchangeParticipantCode;
+            if (exchangeParticipantCode.getCode().equals(code)) {
+                if(!exchangeParticipantCode.getDeleted())  return exchangeParticipantCode;
+                else
+                    throw new NoSuchCodeException("Ошибка: код '" + code + "' удалён.\nДля получения файла добавьте этот код в ограничения операций по счету");
+            }
         }
-        throw new NoSuchCodeException(code + "code not found in directory.");
+        return new ExchangeParticipantCode(code);
     }
 
     @Override

@@ -1,30 +1,42 @@
 package com.practiceOpenCode.handbookBank.services.impl;
 
-import com.practiceOpenCode.handbookBank.models.Swbics;
-import com.practiceOpenCode.handbookBank.repositories.SwbicsRepository;
-import com.practiceOpenCode.handbookBank.services.SwbicsService;
+import com.practiceOpenCode.handbookBank.models.Accounts;
+import com.practiceOpenCode.handbookBank.models.SWBICs;
+import com.practiceOpenCode.handbookBank.repositories.SWBICsRepository;
+import com.practiceOpenCode.handbookBank.services.SWBICsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class SwbicsServiceImpl implements SwbicsService {
+public class SWBICsServiceImpl implements SWBICsService {
     @Autowired
-    private SwbicsRepository repository;
+    private SWBICsRepository repository;
 
     @Override
-    public List<Swbics> getAllSwbics() {
+    public List<SWBICs> getAllSWBICs() {
         return repository.findAll();
     }
 
     @Override
-    public void save(Swbics swbics) {
-        repository.save(swbics);
+    public void save(SWBICs SWBICs) {
+        repository.save(SWBICs);
     }
 
     @Override
-    public void deleteViaId(long id) {
+    public void deleteById(long id) {
         repository.deleteById(id);
+    }
+
+    @Override
+    public SWBICs getById(long id) {
+        return repository.findById(id);
+    }
+
+    @Override
+    public void recoveryById(long id) {
+        SWBICs swbiCs = repository.findById(id);
+        swbiCs.setDeleted(false);
     }
 }

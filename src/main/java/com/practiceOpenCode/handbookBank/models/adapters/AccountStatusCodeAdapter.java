@@ -2,6 +2,7 @@ package com.practiceOpenCode.handbookBank.models.adapters;
 
 
 import com.practiceOpenCode.handbookBank.exception.NoSuchCodeException;
+import com.practiceOpenCode.handbookBank.models.codes.AccountRestrictionCode;
 import com.practiceOpenCode.handbookBank.models.context.ApplicationContextHolder;
 import com.practiceOpenCode.handbookBank.models.codes.AccountStatusCode;
 import com.practiceOpenCode.handbookBank.repositories.codes.AccountStatusCodeRepository;
@@ -24,9 +25,13 @@ public class AccountStatusCodeAdapter extends XmlAdapter<String, AccountStatusCo
     @Override
     public AccountStatusCode unmarshal(String code) throws Exception {
         for (AccountStatusCode accountStatusCode : accountStatusCodeList) {
-            if (accountStatusCode.getCode().equals(code)) return accountStatusCode;
+            if (accountStatusCode.getCode().equals(code)) {
+                if(!accountStatusCode.getDeleted())  return accountStatusCode;
+                else
+                    throw new NoSuchCodeException("Ошибка: код '" + code + "' удалён.\nДля получения файла восстановите этот код в ограничения операций по счету");
+            }
         }
-        throw new NoSuchCodeException(code + "code not found in directory.");
+        return new AccountStatusCode(code);
     }
 
     @Override

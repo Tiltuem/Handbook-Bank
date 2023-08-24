@@ -5,10 +5,13 @@ import com.practiceOpenCode.handbookBank.models.adapters.LocalDateAdapter;
 import com.practiceOpenCode.handbookBank.models.adapters.RegulationAccountTypeCodeAdapter;
 import com.practiceOpenCode.handbookBank.models.codes.AccountStatusCode;
 import com.practiceOpenCode.handbookBank.models.codes.RegulationAccountTypeCode;
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 import jakarta.xml.bind.annotation.*;
 import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import lombok.Data;
+import org.hibernate.annotations.SQLDelete;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -16,48 +19,55 @@ import java.util.List;
 
 @Entity
 @Table(name = "accounts")
+@SQLDelete(sql = "update accounts set deleted=true where id=?")
 @Data
 @XmlRootElement(namespace = "urn:cbr-ru:ed:v2.0")
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "Accounts")
-@Component
 public class Accounts {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private long id;
 
     @XmlAttribute(name = "Account")
-    @Column(name = "account_number", length = 20)
+    @Size(max = 20, message = "Ошибка: превышена максимальная длина(20)")
+    @NotBlank(message = "Ошибка: поле не может быть пустым")
+    @Pattern(regexp = "\\d*",
+            message = "Ошибка: неверный формат")
     private String accountNumber;
 
     @XmlAttribute(name = "RegulationAccountType")
     @XmlJavaTypeAdapter(RegulationAccountTypeCodeAdapter.class)
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "regulation_account_type")
     private RegulationAccountTypeCode regulationAccountTypeCode;
 
     @XmlAttribute(name = "AccountCBRBIC")
-    @Column(name = "bic_cbr")
-    private long bicCbr;
+    @Size(max = 9, min = 9, message = "Ошибка: введите 9 символов")
+    @NotBlank(message = "Ошибка: поле не может быть пустым")
+    @Pattern(regexp = "\\d*",
+            message = "Ошибка: неверный формат")
+    private String bicCbr;
 
     @XmlAttribute(name = "CK")
-    @Column(name = "control_key", length = 2)
+    @Size(max = 2, min = 2, message = "Ошибка: введите 2 символа")
+    @NotBlank(message = "Ошибка: поле не может быть пустым")
+    @Pattern(regexp = "\\d*",
+            message = "Ошибка: неверный формат")
     private String controlKey;
 
     @XmlAttribute(name = "DateIn")
     @XmlJavaTypeAdapter(LocalDateAdapter.class)
-    @Column(name = "date_in")
+    @NotNull(message = "Ошибка: поле не может быть пустым")
     private LocalDate dateIn;
 
     @XmlAttribute(name = "DateOut")
     @XmlJavaTypeAdapter(LocalDateAdapter.class)
-    @Column(name = "date_out")
     private LocalDate dateOut;
 
     @XmlAttribute(name = "AccountStatus")
     @XmlJavaTypeAdapter(AccountStatusCodeAdapter.class)
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "account_status")
     private AccountStatusCode accountStatusCode;
 
@@ -65,4 +75,9 @@ public class Accounts {
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "account_restriction_list_id")
     private List<AccountRestrictionList> accountRestrictionList;
+    private Boolean deleted;
+
+    public Accounts() {
+        this.deleted = false;
+    }
 }

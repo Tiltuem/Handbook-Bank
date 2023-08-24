@@ -1,6 +1,7 @@
 package com.practiceOpenCode.handbookBank.models.adapters;
 
 import com.practiceOpenCode.handbookBank.exception.NoSuchCodeException;
+import com.practiceOpenCode.handbookBank.models.codes.AccountRestrictionCode;
 import com.practiceOpenCode.handbookBank.models.context.ApplicationContextHolder;
 import com.practiceOpenCode.handbookBank.models.codes.ChangeTypeCode;
 import com.practiceOpenCode.handbookBank.repositories.codes.ChangeTypeCodeRepository;
@@ -20,9 +21,13 @@ public class ChangeTypeCodeAdapter extends XmlAdapter<String, ChangeTypeCode> {
     @Override
     public ChangeTypeCode unmarshal(String code) throws Exception {
         for (ChangeTypeCode changeTypeCode : changeTypeCodeList) {
-            if (changeTypeCode.getCode().equals(code)) return changeTypeCode;
+            if (changeTypeCode.getCode().equals(code)) {
+                if(!changeTypeCode.getDeleted())  return changeTypeCode;
+                else
+                    throw new NoSuchCodeException("Ошибка: код '" + code + "' удалён.\nДля получения файла добавьте этот код в ограничения операций по счету");
+            }
         }
-        throw new NoSuchCodeException(code + "code not found in directory.");
+        return new ChangeTypeCode(code);
     }
 
     @Override

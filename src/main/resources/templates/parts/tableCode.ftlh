@@ -31,9 +31,9 @@
                 <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#editModal" onclick="getId(${code.id})"><i class="bi bi-pencil edit-svgIcon"></i>Редактировать</button>
                 <#else>
                 <form action="/codes/${nameCode}/recovery/${code.id}" method="post">
-                <button type="submit" class="bi bi-trash" data-bs-toggle="modal" data-bs-target="#loadingModal">Восстановить
+                <button type="submit" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#loadingModal">Восстановить
                 </button>
-            </form>
+                 </form>
             </#if>
             </td>
         </tr>

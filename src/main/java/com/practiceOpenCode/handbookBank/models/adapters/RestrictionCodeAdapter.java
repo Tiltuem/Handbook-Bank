@@ -1,6 +1,7 @@
 package com.practiceOpenCode.handbookBank.models.adapters;
 
 import com.practiceOpenCode.handbookBank.exception.NoSuchCodeException;
+import com.practiceOpenCode.handbookBank.models.codes.AccountRestrictionCode;
 import com.practiceOpenCode.handbookBank.models.context.ApplicationContextHolder;
 import com.practiceOpenCode.handbookBank.models.codes.RestrictionCode;
 import com.practiceOpenCode.handbookBank.repositories.codes.RestrictionCodeRepository;
@@ -21,9 +22,13 @@ public class RestrictionCodeAdapter extends XmlAdapter<String, RestrictionCode> 
     @Override
     public RestrictionCode unmarshal(String code) throws Exception {
         for (RestrictionCode restrictionCode : restrictionCodeList) {
-            if (restrictionCode.getCode().equals(code)) return restrictionCode;
+            if (restrictionCode.getCode().equals(code)) {
+                if(!restrictionCode.getDeleted())  return restrictionCode;
+                else
+                    throw new NoSuchCodeException("Ошибка: код '" + code + "' удалён.\nДля получения файла добавьте этот код в ограничения операций по счету");
+            }
         }
-        throw new NoSuchCodeException(code + "code not found in directory.");
+        return new RestrictionCode(code);
     }
 
     @Override

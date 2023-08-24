@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface RestrictionListRepository extends JpaRepository<RestrictionList, Long> {
+    RestrictionList findById(long id);
 }

@@ -23,9 +23,21 @@ public class RestrictionListServiceImpl implements RestrictionListService {
         repository.save(restrictionList);
 
     }
-
     @Override
-    public void deleteViaId(long id) {
+    public void deleteById(long id) {
         repository.deleteById(id);
     }
+
+    @Override
+    public RestrictionList getById(long id) {
+        return repository.findById(id);
+    }
+
+    @Override
+    public void recoveryById(long id) {
+        RestrictionList restrictionList = repository.findById(id);
+        restrictionList.setDeleted(false);
+        repository.save(restrictionList);
+    }
+
 }

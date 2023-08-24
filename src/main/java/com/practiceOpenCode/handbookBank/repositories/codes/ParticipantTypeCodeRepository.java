@@ -8,7 +8,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ParticipantTypeCodeRepository extends JpaRepository<ParticipantTypeCode, Long> {
-    Page<ParticipantTypeCode> findAll(Pageable pageable);
-    ParticipantTypeCode findById(long id);
+public interface ParticipantTypeCodeRepository extends AbstractCodeRepository<ParticipantTypeCode> {
 }

@@ -8,8 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface AccountStatusCodeRepository extends JpaRepository<AccountStatusCode, Long> {
-    Page<AccountStatusCode> findAll(Pageable pageable);
-    AccountStatusCode findById(long id);
+public interface AccountStatusCodeRepository extends AbstractCodeRepository<AccountStatusCode>  {
+
 }
 

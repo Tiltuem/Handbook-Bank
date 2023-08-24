@@ -1,4 +1,4 @@
-<#macro edit nameCode>
+<#macro edit action>
 <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -7,7 +7,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
             </div>
             <div class="modal-body">
-                <form action="/codes/${nameCode}/update" method="post">
+                <form action="${action}" method="post">
                     <div>
                         <#nested>
                         <input id="id" type="hidden" name="id">

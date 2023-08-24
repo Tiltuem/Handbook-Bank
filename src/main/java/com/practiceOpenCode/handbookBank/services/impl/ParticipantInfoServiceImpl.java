@@ -1,6 +1,8 @@
 package com.practiceOpenCode.handbookBank.services.impl;
 
+import com.practiceOpenCode.handbookBank.models.BICDirectoryEntry;
 import com.practiceOpenCode.handbookBank.models.ParticipantInfo;
+import com.practiceOpenCode.handbookBank.models.RestrictionList;
 import com.practiceOpenCode.handbookBank.repositories.ParticipantInfoRepository;
 import com.practiceOpenCode.handbookBank.services.ParticipantInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +28,14 @@ public class ParticipantInfoServiceImpl implements ParticipantInfoService {
     }
 
     @Override
-    public void deleteViaId(long id) {
+    public void deleteById(long id) {
         repository.deleteById(id);
+    }
+
+    @Override
+    public void updateById(long id, RestrictionList restrictionList) {
+        ParticipantInfo participantInfo = repository.findById(id);
+        participantInfo.getRestrictionList().add(restrictionList);
+        repository.save(participantInfo);
     }
 }

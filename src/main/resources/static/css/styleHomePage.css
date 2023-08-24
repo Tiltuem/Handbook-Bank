@@ -3,8 +3,8 @@
     --color2: #400754;
 }
 header {
-    padding: 20px 0;
-    height: 35%;
+    padding: 50px 0;
+    height: 37%;
 }
 
 footer {
@@ -15,9 +15,9 @@ footer {
 }
 header, footer{
     background: var(--color1);
-    background: -moz-linear-gradient(left,  var(--color1) 0%, var(--color2) 100%);
-    background: -webkit-linear-gradient(left,  var(--color1) 0%, var(--color2) 100%);
-    background: linear-gradient(to right,  var(--color1) 0%, var(--color2) 100%);
+    background: -moz-linear-gradient(60deg, left,  var(--color1) 0%, var(--color2) 100%);
+    background: -webkit-linear-gradient(60deg, left,  var(--color1) 0%, var(--color2) 100%);
+    background: linear-gradient(60deg, to right,  var(--color1) 0%, var(--color2) 100%);
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr=var(--color1), endColorstr=var(--color2),GradientType=1 );
 }
 

@@ -8,7 +8,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface RestrictionCodeRepository extends JpaRepository<RestrictionCode, Long> {
-    Page<RestrictionCode> findAll(Pageable pageable);
-    RestrictionCode findById(long id);
+public interface RestrictionCodeRepository extends AbstractCodeRepository<RestrictionCode> {
 }

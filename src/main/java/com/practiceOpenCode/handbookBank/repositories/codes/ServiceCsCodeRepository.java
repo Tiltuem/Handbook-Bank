@@ -8,7 +8,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ServiceCsCodeRepository extends JpaRepository<ServiceCsCode, Long> {
-    Page<ServiceCsCode> findAll(Pageable pageable);
-    ServiceCsCode findById(long id);
+public interface ServiceCsCodeRepository extends AbstractCodeRepository<ServiceCsCode> {
 }

@@ -8,11 +8,22 @@ tbody tr {
     background-color: #00CED1;
     font-size: 18px;
 }
+
 table {
     background-color:#00CED1;
     font-size: 18px;
+    text-align: center;
 }
 
+.table-my table{
+  background-color: white;
+  font-size: 14px;
+}
+
+.table-my tbody tr thead{
+  background-color: white;
+  font-size: 14px;
+}
 
 .checkbox {
   display: inline-block;
@@ -88,3 +99,4 @@ table {
 .error {
 color: red;
 }
+

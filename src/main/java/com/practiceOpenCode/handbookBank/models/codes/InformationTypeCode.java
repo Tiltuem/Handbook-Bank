@@ -9,22 +9,14 @@ import org.hibernate.annotations.Where;
 @Entity
 @Table(name = "info_type_codes")
 @SQLDelete(sql = "update info_type_codes set deleted=true where id=?")
-@Where(clause = "deleted = false")
 @Data
 @NoArgsConstructor
-public class InformationTypeCode {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private int id;
-
+public class InformationTypeCode  extends AbstractCode{
     @Column(name = "code")
     private String code;
 
-    @Column(name = "deleted")
-    private Boolean deleted;
-
     public InformationTypeCode(String code) {
+        super();
         this.code = code;
-        deleted = false;
-    }}
+    }
+}

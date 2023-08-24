@@ -8,7 +8,9 @@ import java.util.List;
 
 @Service
 public interface AccountsService {
-    List<Accounts> getAllAccounts();
-    void save (Accounts accounts);
-    void deleteViaId(long id);
+    void save (Accounts account);
+    void update(Accounts account);
+    void deleteById(long id);
+    Accounts getById(long id);
+    void recoveryById(long id);
 }

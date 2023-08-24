@@ -30,7 +30,7 @@
 <!--Подвал-->
 <@f.footer />
 <!--Окно редактирования-->
-<@e.edit "accountRestriction">
+<@e.edit "/codes/accountRestriction/update">
 Введите новое значение из 4 английских букв верхнего регистра: <input class="form-control"
                                                                       type="text"
                                                                       pattern="[A-Z]{4}"

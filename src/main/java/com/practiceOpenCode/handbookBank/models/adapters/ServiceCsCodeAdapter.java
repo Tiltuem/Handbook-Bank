@@ -1,6 +1,7 @@
 package com.practiceOpenCode.handbookBank.models.adapters;
 
 import com.practiceOpenCode.handbookBank.exception.NoSuchCodeException;
+import com.practiceOpenCode.handbookBank.models.codes.AccountRestrictionCode;
 import com.practiceOpenCode.handbookBank.models.context.ApplicationContextHolder;
 import com.practiceOpenCode.handbookBank.models.codes.ServiceCsCode;
 import com.practiceOpenCode.handbookBank.repositories.codes.ServiceCsCodeRepository;
@@ -21,9 +22,13 @@ public class ServiceCsCodeAdapter extends XmlAdapter<String, ServiceCsCode> {
     @Override
     public ServiceCsCode unmarshal(String code) throws Exception {
         for (ServiceCsCode serviceCsCode : serviceCsCodeList) {
-            if (serviceCsCode.getCode().equals(code)) return serviceCsCode;
+            if (serviceCsCode.getCode().equals(code)) {
+                if(!serviceCsCode.getDeleted())  return serviceCsCode;
+                else
+                    throw new NoSuchCodeException("Ошибка: код '" + code + "' удалён.\nДля получения файла добавьте этот код в ограничения операций по счету");
+            }
         }
-        throw new NoSuchCodeException(code + "code not found in directory.");
+        return new ServiceCsCode(code);
     }
 
     @Override

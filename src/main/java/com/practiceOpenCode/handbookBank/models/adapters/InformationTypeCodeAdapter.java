@@ -1,6 +1,7 @@
 package com.practiceOpenCode.handbookBank.models.adapters;
 
 import com.practiceOpenCode.handbookBank.exception.NoSuchCodeException;
+import com.practiceOpenCode.handbookBank.models.codes.AccountRestrictionCode;
 import com.practiceOpenCode.handbookBank.models.context.ApplicationContextHolder;
 import com.practiceOpenCode.handbookBank.models.codes.InformationTypeCode;
 import com.practiceOpenCode.handbookBank.repositories.codes.InformationTypeCodeRepository;
@@ -21,11 +22,14 @@ public class InformationTypeCodeAdapter extends XmlAdapter<String, InformationTy
     @Override
     public InformationTypeCode unmarshal(String code) throws Exception {
         for (InformationTypeCode informationTypeCode : informationTypeCodeList) {
-            if (informationTypeCode.getCode().equals(code)) return informationTypeCode;
+            if (informationTypeCode.getCode().equals(code)) {
+                if(!informationTypeCode.getDeleted())  return informationTypeCode;
+                else
+                    throw new NoSuchCodeException("Ошибка: код '" + code + "' удалён.\nДля получения файла добавьте этот код в ограничения операций по счету");
+            }
         }
-        throw new NoSuchCodeException(code + "code not found in directory.");
+        return new InformationTypeCode(code);
     }
-
     @Override
     public String marshal(InformationTypeCode informationTypeCode) throws Exception {
         return informationTypeCode.getCode();

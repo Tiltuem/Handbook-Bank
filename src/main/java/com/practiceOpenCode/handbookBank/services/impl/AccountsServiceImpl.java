@@ -14,17 +14,31 @@ public class AccountsServiceImpl implements AccountsService {
     private AccountsRepository repository;
 
     @Override
-    public List<Accounts> getAllAccounts() {
-        return repository.findAll();
+    public void save(Accounts account) {
+        repository.save(account);
     }
 
     @Override
-    public void save(Accounts accounts) {
-        repository.save(accounts);
+    public void update(Accounts account) {
+        Accounts oldAccount = repository.findById(account.getId());
+        account.setAccountRestrictionList(oldAccount.getAccountRestrictionList());
+        repository.save(account);
     }
 
+
     @Override
-    public void deleteViaId(long id) {
+    public void deleteById(long id) {
         repository.deleteById(id);
+    }
+
+    @Override
+    public Accounts getById(long id) {
+        return repository.findById(id);
+    }
+
+    @Override
+    public void recoveryById(long id) {
+        Accounts account = repository.findById(id);
+        account.setDeleted(false);
     }
 }

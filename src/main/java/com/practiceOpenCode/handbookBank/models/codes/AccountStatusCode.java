@@ -12,24 +12,14 @@ import org.springframework.stereotype.Component;
 @Entity
 @Table(name = "account_status_codes")
 @SQLDelete(sql = "update account_status_codes set deleted=true where id=?")
-@Where(clause = "deleted = false")
 @Data
 @NoArgsConstructor
-@Component
-public class AccountStatusCode {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private int id;
-
-    @Column(name = "code")
+public class AccountStatusCode extends AbstractCode{
+    @Column(name = "code", unique = true)
     private String code;
 
-    @Column(name = "deleted")
-    private Boolean deleted;
-
     public AccountStatusCode(String code) {
+        super();
         this.code = code;
-        deleted = false;
     }
 }

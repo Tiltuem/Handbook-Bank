@@ -8,7 +8,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface RegulationAccountTypeCodeRepository extends JpaRepository<RegulationAccountTypeCode, Long> {
-    Page<RegulationAccountTypeCode> findAll(Pageable pageable);
-    RegulationAccountTypeCode findById(long id);
+public interface RegulationAccountTypeCodeRepository extends AbstractCodeRepository<RegulationAccountTypeCode> {
 }

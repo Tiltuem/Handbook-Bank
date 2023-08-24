@@ -8,7 +8,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface CreationReasonCodeRepository extends JpaRepository<CreationReasonCode, Long> {
-    Page<CreationReasonCode> findAll(Pageable pageable);
-    CreationReasonCode findById(long id);
+public interface CreationReasonCodeRepository extends AbstractCodeRepository<CreationReasonCode> {
 }

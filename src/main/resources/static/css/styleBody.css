@@ -9,6 +9,7 @@
     box-sizing: border-box;
     min-height: 100%;
     padding-bottom: 90px;
+    font-family: "Times New Roman";
 }
 * {
   margin: 0;
@@ -44,4 +45,30 @@ header, footer {
     align-items: center;
     font-size: 50px;
     color: white;
+}
+
+.col-25 {
+    float: left;
+    width: 25%;
+    margin-top: 10px;
+    font-size: 20px;
+}
+
+.col-75 {
+    float: left;
+    width: 75%;
+    margin-top: 10px;
+}
+
+input[type=text], textarea {
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: vertical;
+}
+select {
+    width: 60%;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: vertical;
 }

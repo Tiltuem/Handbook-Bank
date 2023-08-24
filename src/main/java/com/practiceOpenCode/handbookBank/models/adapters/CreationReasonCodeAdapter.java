@@ -1,6 +1,7 @@
 package com.practiceOpenCode.handbookBank.models.adapters;
 
 import com.practiceOpenCode.handbookBank.exception.NoSuchCodeException;
+import com.practiceOpenCode.handbookBank.models.codes.AccountRestrictionCode;
 import com.practiceOpenCode.handbookBank.models.context.ApplicationContextHolder;
 import com.practiceOpenCode.handbookBank.models.codes.CreationReasonCode;
 import com.practiceOpenCode.handbookBank.repositories.codes.CreationReasonCodeRepository;
@@ -20,9 +21,13 @@ public class CreationReasonCodeAdapter extends XmlAdapter<String, CreationReason
     @Override
     public CreationReasonCode unmarshal(String code) throws Exception {
         for (CreationReasonCode creationReasonCode : creationReasonCodeList) {
-            if (creationReasonCode.getCode().equals(code)) return creationReasonCode;
+            if (creationReasonCode.getCode().equals(code)) {
+                if(!creationReasonCode.getDeleted())  return creationReasonCode;
+                else
+                    throw new NoSuchCodeException("Ошибка: код '" + code + "' удалён.\nДля получения файла добавьте этот код в ограничения операций по счету");
+            }
         }
-        throw new NoSuchCodeException(code + "code not found in directory.");
+        return new CreationReasonCode(code);
     }
 
     @Override
