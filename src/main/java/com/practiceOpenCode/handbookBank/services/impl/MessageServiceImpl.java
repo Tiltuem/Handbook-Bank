@@ -10,6 +10,7 @@ import com.practiceOpenCode.handbookBank.services.MessageService;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -28,6 +29,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Service
+@Slf4j
 public class MessageServiceImpl implements MessageService {
     @Autowired
     private MessageRepository repository;
@@ -61,6 +63,7 @@ public class MessageServiceImpl implements MessageService {
             newMessage.setDeleted(false);
             repository.save(newMessage);
         } catch (IOException e) {
+            log.error("Ошибка при добавлении файла на стороне сервера");
             throw new RuntimeException(e);
         }
     }
@@ -75,6 +78,7 @@ public class MessageServiceImpl implements MessageService {
             try (OutputStream os = Files.newOutputStream(fileXml.toPath())) {
                 os.write(file.getBytes());
             } catch (IOException e) {
+                log.error("Ошибка при добавлении файла на стороне сервера");
                 throw new RuntimeException(e);
             }
         } else if (path.endsWith(".zip")) {
@@ -84,6 +88,7 @@ public class MessageServiceImpl implements MessageService {
                 Files.deleteIfExists(Paths.get(path));
                 checkFile(fileXml.getName());
             } catch (IOException e) {
+                log.error("Ошибка при добавлении файла на стороне сервера");
                 throw new RuntimeException(e);
             }
         } else {
@@ -109,6 +114,7 @@ public class MessageServiceImpl implements MessageService {
 
     private void checkFile(String name) {
         if (fileService.checkFileExist(name)) {
+            log.warn("Ошибка при добавлении файла: файл уже существует");
             throw new DuplicateFileException("Ошибка: файл уже существует");
         }
     }

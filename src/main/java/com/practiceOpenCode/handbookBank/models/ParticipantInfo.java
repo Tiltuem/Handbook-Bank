@@ -114,7 +114,7 @@ public class ParticipantInfo {
     private ParticipantStatusCode participantStatusCode;
 
     @XmlElement(name = "RstrList", namespace = "urn:cbr-ru:ed:v2.0")
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "restriction_list_id")
     private List<RestrictionList> restrictionList;
 

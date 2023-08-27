@@ -8,6 +8,7 @@ import com.practiceOpenCode.handbookBank.repositories.FileRepository;
 import com.practiceOpenCode.handbookBank.services.FileService;
 
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -26,6 +27,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 @Service
+@Slf4j
 public class FileServiceImpl implements FileService {
     @Autowired
     private FileRepository repository;
@@ -44,6 +46,7 @@ public class FileServiceImpl implements FileService {
             fos.getChannel().transferFrom(channel, 0, Long.MAX_VALUE);
             return fileName;
         } catch (IOException e) {
+            log.warn("Ошибка при добавлении файла: нет данных за данный день");
             throw new NotFoundFileXmlException("Ошибка: нет данных за данный день");
         }
     }
@@ -67,9 +70,11 @@ public class FileServiceImpl implements FileService {
                 zin.closeEntry();
                 return new File(pathToFile);
             } else {
+                log.warn("Ошибка при добавлении файла: файл XML отсутствует");
                 throw new NotFoundFileXmlException("Ошибка: файл XML отсутствует");
             }
         } catch (Exception e) {
+            log.error("Ошибка при добавлении файла на стороне сервера");
             throw new RuntimeException(e);
         }
     }
@@ -82,6 +87,7 @@ public class FileServiceImpl implements FileService {
             Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
             return (Message) unmarshaller.unmarshal(fileXml);
         } catch (Exception e) {
+            log.warn("Ошибка при добавлении файла: неверная структура XML");
             throw new UnmarshalXmlException("Ошибка: неверная структура XML");
         }
     }

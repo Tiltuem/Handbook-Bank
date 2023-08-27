@@ -1,3 +1,4 @@
+/*
 package com.practiceOpenCode.handbookBank.models;
 
 import com.practiceOpenCode.handbookBank.models.enums.Role;
@@ -63,4 +64,4 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
-}
+}*/

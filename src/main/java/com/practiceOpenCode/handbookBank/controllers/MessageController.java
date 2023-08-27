@@ -5,6 +5,7 @@ import com.practiceOpenCode.handbookBank.models.BICDirectoryEntry;
 import com.practiceOpenCode.handbookBank.models.Message;
 import com.practiceOpenCode.handbookBank.services.MessageService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/messages")
+@Slf4j
 public class MessageController {
     @Autowired
     MessageService messageService;
@@ -56,6 +58,7 @@ public class MessageController {
     //@PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public String deleteMessage(@PathVariable long id, @RequestParam String page) {
         messageService.deleteById(id);
+        log.debug("ЭС (id: " + id + ") удалено");
         return "redirect:/messages/" + page;
     }
 
@@ -63,6 +66,7 @@ public class MessageController {
     //@PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public String recoveryMessage(@PathVariable long id, @RequestParam String page) {
         messageService.recoveryById(id);
+        log.debug("ЭС (id: " + id + ") восстановлено");
         return "redirect:/messages/" + page;
     }
 }

@@ -7,6 +7,7 @@ import com.practiceOpenCode.handbookBank.services.BICDirectoryEntryService;
 import com.practiceOpenCode.handbookBank.services.codes.AbstractCodeService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/message-{messageId}/directory-entry")
+@Slf4j
 public class EntryController {
     @Autowired
     private BICDirectoryEntryService bicDirectoryEntryService;
@@ -72,6 +74,7 @@ public class EntryController {
     //@PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public String deleteEntry(@PathVariable long id, @RequestParam String page) {
         bicDirectoryEntryService.deleteById(id);
+        log.debug("Запись (id: " + id +") уделена");
         return "redirect:/message-{messageId}/directory-entry/" + page;
     }
 
@@ -79,6 +82,7 @@ public class EntryController {
     //@PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public String recoveryEntry(@PathVariable long id, @RequestParam String page) {
         bicDirectoryEntryService.recoveryById(id);
+        log.debug("Аккаунт (id: " + id +") восстановлена");
         return "redirect:/message-{messageId}/directory-entry/" + page;
     }
 
@@ -114,7 +118,7 @@ public class EntryController {
     //@PreAuthorize("hasAuthority('ROLE_USER')")
     public String add(String bic, ParticipantInfo info, String participantType, String serviceCs, String exchangeParticipant, String participantStatus, String changeType, @RequestParam String page) {
         bicDirectoryEntryService.add(bic,  info,  participantType,  serviceCs,  exchangeParticipant,  participantStatus,  changeType);
-
+        log.debug("Запись добавлена");
         return "redirect:/message-{messageId}/directory-entry/" + page;
     }
 
@@ -123,6 +127,7 @@ public class EntryController {
     public String updateEntry(@Valid BICDirectoryEntry bicDirectoryEntry, String participantType, String serviceCs, String exchangeParticipant, String participantStatus, String changeType, Model model, BindingResult bindingResult, @PathVariable String messageId, @RequestParam String page) {
         if (!bindingResult.hasErrors()) {
             bicDirectoryEntryService.update( bicDirectoryEntry,  participantType,  serviceCs,  exchangeParticipant,  participantStatus,  changeType);
+            log.debug("Запись (id: " + bicDirectoryEntry.getId() +") редактирована");
             return "redirect:/message-{messageId}/directory-entry/" + page;
         }
 

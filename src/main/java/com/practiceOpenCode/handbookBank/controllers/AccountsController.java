@@ -8,6 +8,9 @@ import com.practiceOpenCode.handbookBank.services.BICDirectoryEntryService;
 import com.practiceOpenCode.handbookBank.services.codes.AbstractCodeService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import lombok.extern.slf4j.Slf4j;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/message-{messageId}/entry-{entryId}")
 @RequiredArgsConstructor
 @Controller
+@Slf4j
 public class AccountsController {
     @Autowired
     AccountsService accountsService;
@@ -38,6 +42,7 @@ public class AccountsController {
     ////@PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public String deleteAccount(@PathVariable long id, @RequestParam String page) {
         accountsService.deleteById(id);
+        log.debug("Аккаунт (id: " + id +") удалён");
         return "redirect:/message-{messageId}/directory-entry/" + page;
     }
 
@@ -45,6 +50,7 @@ public class AccountsController {
     ////@PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public String recoveryAccount(@PathVariable long id, @RequestParam String page) {
         accountsService.recoveryById(id);
+        log.debug("Аккаунт (id: " + id +") восстановлен");
         return "redirect:/message-{messageId}/directory-entry/" + page;
     }
 
@@ -61,6 +67,7 @@ public class AccountsController {
         if (bindingResult.getErrorCount() == 2) {
             setCodes(account, regulationAccountTypeCode, accountStatusCode);
             bicDirectoryEntryService.updateById(entryId, account);
+            log.debug("Аккаунт добавлен");
             return "redirect:/message-{messageId}/directory-entry/" + page;
         }
         setModel(model, messageId, entryId, account, page);
@@ -74,6 +81,7 @@ public class AccountsController {
         setCodes(account, regulationAccountTypeCode, accountStatusCode);
         if (bindingResult.getErrorCount() == 2) {
             accountsService.update(account);
+            log.debug("Аккаунт (id: " + account.getId() +") редактирован");
             return "redirect:/message-{messageId}/directory-entry/" + page;
         }
 

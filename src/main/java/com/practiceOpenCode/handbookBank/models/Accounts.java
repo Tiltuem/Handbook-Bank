@@ -5,14 +5,13 @@ import com.practiceOpenCode.handbookBank.models.adapters.LocalDateAdapter;
 import com.practiceOpenCode.handbookBank.models.adapters.RegulationAccountTypeCodeAdapter;
 import com.practiceOpenCode.handbookBank.models.codes.AccountStatusCode;
 import com.practiceOpenCode.handbookBank.models.codes.RegulationAccountTypeCode;
-import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import jakarta.xml.bind.annotation.*;
 import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
 import lombok.Data;
 import org.hibernate.annotations.SQLDelete;
-import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.List;

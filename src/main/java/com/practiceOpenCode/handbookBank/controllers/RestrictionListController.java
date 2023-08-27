@@ -8,6 +8,7 @@ import com.practiceOpenCode.handbookBank.services.RestrictionListService;
 import com.practiceOpenCode.handbookBank.services.codes.AbstractCodeService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/message-{messageId}/entry-{entryId}")
 @RequiredArgsConstructor
 @Controller
+@Slf4j
 public class RestrictionListController {
     @Autowired
     RestrictionListService restrictionListService;
@@ -36,6 +38,7 @@ public class RestrictionListController {
     //@PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public String deleteRestrictionList(@PathVariable long id, @RequestParam String page) {
         restrictionListService.deleteById(id);
+        log.debug("Перечень БИК (id: " + id + ") удалён");
         return "redirect:/message-{messageId}/directory-entry/" + page;
     }
 
@@ -43,6 +46,7 @@ public class RestrictionListController {
     //@PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public String recoveryRestrictionList(@PathVariable long id, @RequestParam String page) {
         restrictionListService.recoveryById(id);
+        log.debug("Список ограничений (id: " + id + ") восстановлен");
         return "redirect:/message-{messageId}/directory-entry/" + page;
     }
 
@@ -59,6 +63,7 @@ public class RestrictionListController {
         if (bindingResult.getErrorCount() == 1) {
             setCodes(restrictionList, restrictionCode);
             participantInfoService.updateById(entryId, restrictionList);
+            log.debug("Добавлен новый список ограничений");
             return "redirect:/message-{messageId}/directory-entry/" + page;
         }
         setModel(model, messageId, entryId, restrictionList, page);
@@ -72,6 +77,7 @@ public class RestrictionListController {
         setCodes(restrictionList, restrictionCode);
         if (bindingResult.getErrorCount() == 1) {
             restrictionListService.save(restrictionList);
+            log.debug("Список ограничений (id: " + restrictionList.getId() + ") редактирован");
             return "redirect:/message-{messageId}/directory-entry/" + page;
         }
 

@@ -2,6 +2,7 @@
 <#if codes.getTotalPages() != 0>
 <@s.searchCode nameCode/>
 <br>
+<div class="col-md-10">
 <div class="table-responsive">
     <table class="table table-striped table-hover table-sm rounded">
         <thead>
@@ -14,11 +15,11 @@
         <tbody>
         <#list codes.iterator() as code>
         <tr>
-            <td>
+            <td style="text-align: center">
                 <#if code.deleted = false>
                 <form action="/codes/${nameCode}/delete/${code.id}" method="post">
                     <input type="hidden" name="page" value="${page}">
-                    <button type="submit" class="bi bi-trash" data-bs-toggle="modal" data-bs-target="#loadingModal"></button>
+                    <button type="submit" class="btn-delete" data-bs-toggle="modal" data-bs-target="#loadingModal"><i class="bi bi-trash"></i></button>
                 </form>
                 </#if>
             </td>
@@ -27,12 +28,12 @@
             </td>
             <td>
                 <#if code.deleted = false>
-                <button type="button" class="bi bi-pencil" data-bs-toggle="modal" data-bs-target="#editModal" onclick="getId(${code.id})">Редактировать</button>
+                <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#editModal" onclick="getId(${code.id})"><i class="bi bi-pencil edit-svgIcon"></i>Редактировать</button>
                 <#else>
                 <form action="/codes/${nameCode}/recovery/${code.id}" method="post">
-                <button type="submit" class="bi bi-trash" data-bs-toggle="modal" data-bs-target="#loadingModal">Восстановить
+                <button type="submit" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#loadingModal">Восстановить
                 </button>
-            </form>
+                 </form>
             </#if>
             </td>
         </tr>
@@ -40,6 +41,7 @@
         </tbody>
     </table>
     <@p.pagination nameCode/>
+</div>
 </div>
 <#else>
 <h3>Записи отсутствуют</h3>

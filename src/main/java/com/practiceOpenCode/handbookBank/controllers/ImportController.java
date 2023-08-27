@@ -4,6 +4,7 @@ import com.practiceOpenCode.handbookBank.models.FileInfo;
 import com.practiceOpenCode.handbookBank.services.FileService;
 import com.practiceOpenCode.handbookBank.services.MessageService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -19,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/import")
+@Slf4j
 public class ImportController {
     @Autowired
     MessageService messageService;
@@ -37,6 +39,7 @@ public class ImportController {
     //@PreAuthorize("hasAuthority('ROLE_USER')")
     public String saveMessageByDate(@RequestParam String date, @RequestParam String page) {
         messageService.save(date);
+        log.debug("ЭС добавлено");
         return "redirect:/import/" + page;
     }
 
@@ -44,6 +47,7 @@ public class ImportController {
     //@PreAuthorize("hasAuthority('ROLE_USER')")
     public String saveMessageByFile(@RequestParam("fileXml") MultipartFile fileXml, @RequestParam String page) {
         messageService.save(fileXml);
+        log.debug("ЭС добавлено");
         return "redirect:/import/" + page;
     }
 
@@ -51,6 +55,7 @@ public class ImportController {
     //@PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public String deleteFile(@PathVariable long id, @RequestParam String page) {
         fileService.deleteById(id);
+        log.debug("ЭС (id: " + id + ") удалено");
         return "redirect:/import/" + page;
     }
 
