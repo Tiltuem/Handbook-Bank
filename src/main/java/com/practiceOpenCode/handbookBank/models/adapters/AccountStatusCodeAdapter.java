@@ -7,7 +7,7 @@ import com.practiceOpenCode.handbookBank.models.context.ApplicationContextHolder
 import com.practiceOpenCode.handbookBank.models.codes.AccountStatusCode;
 import com.practiceOpenCode.handbookBank.repositories.codes.AccountStatusCodeRepository;
 
-import jakarta.xml.bind.annotation.adapters.XmlAdapter;
+import javax.xml.bind.annotation.adapters.XmlAdapter;
 
 import org.springframework.context.ApplicationContext;
 

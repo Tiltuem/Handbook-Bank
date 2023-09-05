@@ -13,9 +13,7 @@
                 <div class="baG">
                     <h3>Ooooops!</h3>
                     <p>Страница не найдена</p>
-                    <button type="submit" value="submit" class="btn btn-my">Просмотр всех файлов</button>
-                    <br>
-                    <button type="submit" value="submit" class="btn btn-my">Назад</button>
+                    <a class="btn btn-my"  href="/">На главную</a>
                 </div>
             </div>
         </div>

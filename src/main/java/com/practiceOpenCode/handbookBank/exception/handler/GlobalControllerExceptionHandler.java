@@ -14,13 +14,13 @@ public class GlobalControllerExceptionHandler {
     @ExceptionHandler(value = {DuplicateFileException.class, IncompatibleClassChangeError.class, NoSuchCodeException.class, NotFoundFileXmlException.class, UnmarshalXmlException.class})
     public String handleCustomException(Exception exception, Model model) {
         model.addAttribute("message", exception.getMessage());
-        return "errors/duplicateFileException";
+        return "errors/customError";
     }
 
    @ResponseStatus(HttpStatus.NOT_FOUND)
    @ExceptionHandler(NoHandlerFoundException.class)
     public String handleNotFoundPage(Model model) {
        model.addAttribute("message", "Страница не найдена");
-        return "errors/duplicateFileException";
+        return "errors/customError";
    }
 }

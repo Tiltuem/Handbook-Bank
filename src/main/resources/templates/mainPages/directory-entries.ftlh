@@ -106,6 +106,10 @@
                                     <th>УИС</th>
                                     <th>Статус участника</th>
                                     <th>Тип изменения в Справочнике</th>
+                                    <th>Кем создано</th>
+                                    <th>Когда создано</th>
+                                    <th>Кем изменено</th>
+                                    <th>Когда изменено</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -205,6 +209,18 @@
                                                 ${directoryEntry.changeTypeCode.code}
                                             </#if>
                                         </td>
+                                        <td>
+                                            ${directoryEntry.createdBy}
+                                        </td>
+                                        <td>
+                                            ${directoryEntry.createdDate}
+                                        </td>
+                                        <td>
+                                            ${directoryEntry.modifiedBy}
+                                        </td>
+                                        <td>
+                                            ${directoryEntry.modifiedDate}
+                                        </td>
                                     </tr>
                                     <tr class="collapse out" id="collapse-${directoryEntry.id}">
                                         <td colspan="20">
@@ -222,11 +238,12 @@
                                                         </form>
                                                     </div>
                                                     <div class="col-md-auto">
-                                                    <form action="/message-${messageId}/entry-${directoryEntry.id}/new-account"
-                                                          method="get">
-                                                        <input type="hidden" name="page" value="${page}">
-                                                        <button type="submit" class="btn btn-light">Добавить</button>
-                                                    </form>
+                                                        <form action="/message-${messageId}/entry-${directoryEntry.id}/new-account"
+                                                              method="get">
+                                                            <input type="hidden" name="page" value="${page}">
+                                                            <button type="submit" class="btn btn-light">Добавить
+                                                            </button>
+                                                        </form>
                                                     </div>
                                                 </div>
                                                 <div class="table-responsive">
@@ -241,6 +258,10 @@
                                                             <th>Дата открытия</th>
                                                             <th>Дата исключения</th>
                                                             <th>Статус счета</th>
+                                                            <th>Кем создано</th>
+                                                            <th>Когда создано</th>
+                                                            <th>Кем изменено</th>
+                                                            <th>Когда изменено</th>
                                                         </tr>
                                                         </thead>
                                                         <tbody>
@@ -281,6 +302,18 @@
                                                                         </td>
                                                                         <td>
                                                                             ${account.accountStatusCode.code}
+                                                                        </td>
+                                                                        <td>
+                                                                            ${account.createdBy}
+                                                                        </td>
+                                                                        <td>
+                                                                            ${account.createdDate}
+                                                                        </td>
+                                                                        <td>
+                                                                            ${account.modifiedBy}
+                                                                        </td>
+                                                                        <td>
+                                                                            ${account.modifiedDate}
                                                                         </td>
                                                                     </tr>
                                                                 </#if>
@@ -324,6 +357,10 @@
                                                             </th>
                                                             <th>Дата начала действия ограничения
                                                             </th>
+                                                            <th>Кем создано</th>
+                                                            <th>Когда создано</th>
+                                                            <th>Кем изменено</th>
+                                                            <th>Когда изменено</th>
                                                         </tr>
                                                         </thead>
                                                         <tbody>
@@ -347,6 +384,18 @@
                                                                         </td>
                                                                         <td>
                                                                             ${restriction.restrictionDate}
+                                                                        </td>
+                                                                        <td>
+                                                                            ${restriction.createdBy}
+                                                                        </td>
+                                                                        <td>
+                                                                            ${restriction.createdDate}
+                                                                        </td>
+                                                                        <td>
+                                                                            ${restriction.modifiedBy}
+                                                                        </td>
+                                                                        <td>
+                                                                            ${restriction.modifiedDate}
                                                                         </td>
                                                                     </tr>
                                                                 </#if>
@@ -372,9 +421,11 @@
                                                         </form>
                                                     </div>
                                                     <div class="col-md-auto">
-                                                        <form action="/message-${messageId}/entry-${directoryEntry.id}/new-swbics" method="get">
+                                                        <form action="/message-${messageId}/entry-${directoryEntry.id}/new-swbics"
+                                                              method="get">
                                                             <input type="hidden" name="page" value="${page}">
-                                                            <button type="submit" class="btn btn-light">Добавить</button>
+                                                            <button type="submit" class="btn btn-light">Добавить
+                                                            </button>
                                                         </form>
                                                     </div>
                                                 </div>
@@ -387,6 +438,10 @@
                                                             <th>Признак использования БИК
                                                                 (СВИФТ)
                                                             </th>
+                                                            <th>Кем создано</th>
+                                                            <th>Когда создано</th>
+                                                            <th>Кем изменено</th>
+                                                            <th>Когда изменено</th>
                                                         </tr>
                                                         </thead>
                                                         <tbody>
@@ -414,6 +469,18 @@
                                                                             <#else>
                                                                                 -
                                                                             </#if>
+                                                                        </td>
+                                                                        <td>
+                                                                            ${SWBIC.createdBy}
+                                                                        </td>
+                                                                        <td>
+                                                                            ${SWBIC.createdDate}
+                                                                        </td>
+                                                                        <td>
+                                                                            ${SWBIC.modifiedBy}
+                                                                        </td>
+                                                                        <td>
+                                                                            ${SWBIC.modifiedDate}
                                                                         </td>
                                                                     </tr>
                                                                 </#if>

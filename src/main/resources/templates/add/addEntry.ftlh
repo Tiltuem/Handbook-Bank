@@ -1,6 +1,8 @@
 <#import "../parts/common.ftlh" as c>
 <#import "../parts/header.ftlh" as h>
 <#import "../parts/footer.ftlh" as f>
+<#import "../parts/loadingModal.ftlh" as l>
+
 <#import "/spring.ftl" as spring />
 <@c.page "../../css/styleDirectories.css">
     <!--Шапка-->
@@ -98,5 +100,6 @@
     </section>
     <!--Подвал-->
     <@f.footer />
-
+    <!--Окно загрузки-->
+    <@l.loading />
 </@c.page>

@@ -1,22 +1,24 @@
 <#import "../parts/common.ftlh" as c>
 <#import "../parts/header.ftlh" as h>
 <#import "../parts/footer.ftlh" as f>
+<#import "../parts/loadingModal.ftlh" as l>
+
 <#import "/spring.ftl" as spring />
 
 <@c.page "../../css/styleDirectories.css">
-    <!--Шапка-->
+    <!--?????-->
     <@h.header />
 
-    <!--Тело-->
+    <!--????-->
     <section class="about">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <h2>Добавление SWBIC</h2>
+                    <h2>?????????? SWBIC</h2>
                     <form action="/message-${messageId}/entry-${entryId}/restriction-list-edit" method="post">
                         <input type="hidden" name="id" value="${restrictionList.id}">
                         <div class="col-25">
-                            Код ограничения:
+                            ??? ???????????:
                         </div>
                         <div class="col-75">
                             <select type="text" name="restrictionCode">
@@ -30,7 +32,7 @@
                         </div>
                         <br>
                         <div class="col-25">
-                            Дата начала действия ограничения:
+                            ???? ?????? ???????? ???????????:
                         </div>
                             <input type="date" name="restrictionDate" value="${restrictionList.restrictionDate}">
                         <#if bindingResult?has_content>
@@ -46,7 +48,7 @@
                         <input type="hidden" name="page" value="${page}">
                         <div class="col">
                             <button type="submit" value="submit" class="btn btn-my" data-bs-toggle="modal"
-                                    data-bs-target="#loadingModal">Добавить
+                                    data-bs-target="#loadingModal">????????
                             </button>
                         </div>
                     </form>
@@ -54,7 +56,8 @@
             </div>
         </div>
     </section>
-    <!--Подвал-->
+    <!--??????-->
     <@f.footer />
-
+    <!--Окно загрузки-->
+    <@l.loading />
 </@c.page>

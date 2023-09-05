@@ -5,7 +5,7 @@ import com.practiceOpenCode.handbookBank.models.codes.AccountRestrictionCode;
 import com.practiceOpenCode.handbookBank.models.context.ApplicationContextHolder;
 import com.practiceOpenCode.handbookBank.models.codes.ChangeTypeCode;
 import com.practiceOpenCode.handbookBank.repositories.codes.ChangeTypeCodeRepository;
-import jakarta.xml.bind.annotation.adapters.XmlAdapter;
+import javax.xml.bind.annotation.adapters.XmlAdapter;
 import org.springframework.context.ApplicationContext;
 
 import java.util.List;

@@ -1,5 +1,7 @@
 <#import "../parts/common.ftlh" as c>
 <#import "../parts/header.ftlh" as h>
+<#import "../parts/loadingModal.ftlh" as l>
+
 <#import "../parts/footer.ftlh" as f>
 <#import "/spring.ftl" as spring />
 
@@ -147,5 +149,6 @@
     </section>
     <!--Подвал-->
     <@f.footer />
-
+    <!--Окно загрузки-->
+    <@l.loading />
 </@c.page>
