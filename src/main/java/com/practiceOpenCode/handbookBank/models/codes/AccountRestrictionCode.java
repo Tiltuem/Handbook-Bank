@@ -1,8 +1,8 @@
 package com.practiceOpenCode.handbookBank.models.codes;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 
-import jakarta.validation.constraints.*;
+import javax.validation.constraints.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;

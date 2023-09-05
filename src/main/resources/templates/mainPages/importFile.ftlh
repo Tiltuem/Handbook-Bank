@@ -1,8 +1,9 @@
 <#import "../parts/common.ftlh" as c>
 <#import "../parts/header.ftlh" as h>
 <#import "../parts/footer.ftlh" as f>
+<#import "../parts/loadingModal.ftlh" as l>
 
-<@c.page "../../css/styleImport.css">
+<@c.page "../../css/styleDirectories.css">
 
     <!--Шапка-->
     <@h.header />
@@ -19,7 +20,6 @@
                                 <thead>
                                 <tr>
                                     <th></th>
-                                    <th></th>
                                     <th>
                                         Наименование
                                     </th>
@@ -27,17 +27,12 @@
                                     </th>
                                     <th>Файл
                                     </th>
+                                    <th>Пользователь</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <#list files.iterator() as fileInfo>
                                     <tr>
-                                        <td>
-                                            <form action="/import/delete/${fileInfo.id}" method="post">
-                                                <input type="hidden" name="page" value="${page}">
-                                                <button type="submit" class="bi bi-trash"></button>
-                                            </form>
-                                        </td>
                                         <td>
                                             ${fileInfo.id}
                                         </td>
@@ -49,6 +44,9 @@
                                         </td>
                                         <td>
                                             <a href="${fileInfo.fileLink}">${fileInfo.name}</a>
+                                        </td>
+                                        <td>
+                                            ${fileInfo.message.user.username}
                                         </td>
                                     </tr>
                                 </#list>
@@ -103,7 +101,9 @@
                                             </#list>
                                         </#if>
 
-                                        <button type="submit" class="btn btn-my">Получить данные</button>
+                                        <button type="submit" class="btn btn-my" data-bs-toggle="modal"
+                                                data-bs-target="#loadingModal">Получить данные
+                                        </button>
                                     </form>
 
                                 </div>
@@ -120,9 +120,11 @@
                                  data-bs-parent="#accordion">
                                 <div class="accordion-body fst-italic">
                                     <form action="/import/file" method="post" enctype="multipart/form-data">
-                                        Прикрепите файл: <input type="file" name="fileXml"/><br><br>
+                                        Прикрепите файл в формале '.xml' или '.zip': <input type="file" name="fileXml"/><br><br>
                                         <input type="hidden" name="page" value="${page}">
-                                        <button type="submit" class="btn btn-my">Получить данные</button>
+                                        <button type="submit" class="btn btn-my" data-bs-toggle="modal"
+                                                data-bs-target="#loadingModal">Получить данные
+                                        </button>
                                     </form>
                                 </div>
                             </div>
@@ -133,6 +135,7 @@
         </div>
     </section>
     <!--Подвал-->
-    <@f.footer />
+    <@f.footer /><!--Окно загрузки-->
+    <@l.loading />
 </@c.page>
 

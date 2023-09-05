@@ -1,6 +1,6 @@
 package com.practiceOpenCode.handbookBank.models.adapters;
 
-import jakarta.xml.bind.annotation.adapters.XmlAdapter;
+import javax.xml.bind.annotation.adapters.XmlAdapter;
 
 import java.text.ParseException;
 import java.time.LocalDate;

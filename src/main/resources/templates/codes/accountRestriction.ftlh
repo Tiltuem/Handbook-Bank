@@ -9,7 +9,6 @@
 <#import "../parts/addCode.ftlh" as a>
 <#import "../parts/getId.ftlh" as g>
 <#import "../parts/pagination.ftlh" as p>
-
 <@c.page "../../css/styleDirectories.css">
 <!--Шапка-->
 <@h.header />
@@ -17,12 +16,12 @@
 <section class="about">
     <div class="container">
         <div class="row">
-            <div class="col-md-7">
+            <div class="col-md-8">
                 <h2>Ограничения операций по счету</h2>
                 <@t.tableCode "accountRestriction"/>
             </div>
-            <div class="col-md-5">
-                <@a.addCode "accountRestriction"/>
+            <div class="col-md-4">
+                <@a.addCode "accountRestriction" "из 4 английских букв верхнего регистра"/>
             </div>
         </div>
     </div>

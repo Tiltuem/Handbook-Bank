@@ -1,0 +1,7 @@
+package com.practiceOpenCode.handbookBank.exception;
+
+public class UnauthorizedException extends RuntimeException{
+    public UnauthorizedException(String message) {
+        super(message);
+    }
+}

@@ -1,11 +1,10 @@
 package com.practiceOpenCode.handbookBank.controllers.codes;
 
+import com.practiceOpenCode.handbookBank.exception.DuplicateFileException;
 import com.practiceOpenCode.handbookBank.exception.NotFoundPageException;
 import com.practiceOpenCode.handbookBank.models.codes.AccountRestrictionCode;
-import com.practiceOpenCode.handbookBank.repositories.codes.CodesRepository;
 import com.practiceOpenCode.handbookBank.services.codes.AbstractCodeService;
 
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,6 +16,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Objects;
 
 
@@ -34,11 +34,11 @@ public class AccountRestrictionCodeController {
             throw new NotFoundPageException("Страница не найдена");
         setModel(model, codes, new AccountRestrictionCode());
         model.addAttribute("search", code);
+        
         return "codes/accountRestriction";
     }
 
     @PostMapping("/add")
-    ////@PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public String addNewAccountRestrictionCode(@Valid AccountRestrictionCode accountRestrictionCode, BindingResult bindingResult, Model model) {
         if (accountRestrictionCodeService.getByCode(accountRestrictionCode.getCode()) != null) {
             bindingResult.addError(new ObjectError("accountRestrictionCode", "Ошибка: данный код уже существует"));
@@ -46,6 +46,7 @@ public class AccountRestrictionCodeController {
         if (!bindingResult.hasErrors()) {
             accountRestrictionCode.setDeleted(false);
             accountRestrictionCodeService.save(accountRestrictionCode);
+
             return "redirect:/codes/accountRestriction/0";
         }
         Page<AccountRestrictionCode> codes = accountRestrictionCodeService.getAllCodes(PageRequest.of(0, 5, Sort.by("id")), null, null);
@@ -57,15 +58,16 @@ public class AccountRestrictionCodeController {
     }
 
     @PostMapping("/delete/{id}")
-    ////@PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public String deleteAccountRestrictionCode(@PathVariable long id, @RequestParam String page) {
         accountRestrictionCodeService.deleteById(id);
         return "redirect:/codes/accountRestriction/" + page;
     }
 
     @PostMapping("/update")
-    ////@PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public String updateAccountRestrictionCode(@RequestParam long id, @RequestParam String newCode, @RequestParam String page) {
+        if (accountRestrictionCodeService.getByCode(newCode) != null) {
+            throw new DuplicateFileException("Ошибка: данный код уже существует") ;
+        }
         AccountRestrictionCode accountRestrictionCode = accountRestrictionCodeService.getById(id);
         accountRestrictionCode.setCode(newCode);
         accountRestrictionCodeService.save(accountRestrictionCode);
@@ -73,7 +75,6 @@ public class AccountRestrictionCodeController {
     }
 
     @PostMapping("/recovery/{id}")
-    ////@PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public String recoveryAccountRestrictionCode(@PathVariable long id) {
         accountRestrictionCodeService.recoveryById(id);
         return "redirect:/codes/accountRestriction/0";
