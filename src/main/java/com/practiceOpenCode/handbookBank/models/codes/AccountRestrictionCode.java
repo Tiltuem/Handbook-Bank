@@ -8,6 +8,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.SQLDelete;
 
+
 @Entity
 @Table(name = "account_restriction_codes")
 @SQLDelete(sql = "update account_restriction_codes set deleted=true where id=?")
