@@ -14,11 +14,11 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <h2>?????????? SWBIC</h2>
+                    <h2>Редактирование списка ограничений</h2>
                     <form action="/message-${messageId}/entry-${entryId}/restriction-list-edit" method="post">
                         <input type="hidden" name="id" value="${restrictionList.id}">
                         <div class="col-25">
-                            ??? ???????????:
+                            Код ограничения:
                         </div>
                         <div class="col-75">
                             <select type="text" name="restrictionCode">
@@ -32,7 +32,7 @@
                         </div>
                         <br>
                         <div class="col-25">
-                            ???? ?????? ???????? ???????????:
+                            Дата начала действия ограничения:
                         </div>
                             <input type="date" name="restrictionDate" value="${restrictionList.restrictionDate}">
                         <#if bindingResult?has_content>
@@ -58,6 +58,6 @@
     </section>
     <!--??????-->
     <@f.footer />
-    <!--���� ��������-->
+    <!--Окно загрузки-->
     <@l.loading />
 </@c.page>

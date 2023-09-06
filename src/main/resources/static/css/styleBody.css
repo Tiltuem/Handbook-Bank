@@ -22,9 +22,14 @@ body {
 
 header {
     padding: 20px 0;
+    height: 22%;
 }
+
 footer {
-    padding: 10px 0;
+    padding: 11px 0;
+    left:0px;
+    bottom:0px;
+    height: 11%;
 }
 
 header, footer {
@@ -61,13 +66,13 @@ header, footer {
 }
 
 input[type=text], textarea {
-    width: 100%;
+
     border: 1px solid #ccc;
     border-radius: 4px;
     resize: vertical;
 }
 select {
-    width: 60%;
+
     border: 1px solid #ccc;
     border-radius: 4px;
     resize: vertical;

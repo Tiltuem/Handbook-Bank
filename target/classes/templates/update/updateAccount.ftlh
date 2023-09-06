@@ -14,7 +14,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <h2>Добавление аккаунта</h2>
+                    <h2>Редактирование аккаунта</h2>
                     <form action="/message-${messageId}/entry-${entryId}/account-edit" method="post">
                         <input type="hidden" name="id" value="${account.id}">
                         <div class="col-25">

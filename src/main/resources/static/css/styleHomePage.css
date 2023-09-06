@@ -2,31 +2,37 @@
     --color1: #00d6cb;
     --color2: #400754;
 }
-header {
-    padding: 50px 0;
-    height: 37%;
-}
 
+header {
+    padding: 25px 0;
+    height: 50%;
+}
 footer {
     padding: 10px 0;
     left:0px;
     bottom:0px;
-    height: 7%;
+    height: 10%;
 }
-header, footer{
+header, footer {
     background: var(--color1);
-    background: -moz-linear-gradient(60deg, left,  var(--color1) 0%, var(--color2) 100%);
-    background: -webkit-linear-gradient(60deg, left,  var(--color1) 0%, var(--color2) 100%);
-    background: linear-gradient(60deg, to right,  var(--color1) 0%, var(--color2) 100%);
+    background: -moz-linear-gradient(left,  var(--color1) 0%, var(--color2) 100%);
+    background: -webkit-linear-gradient(left,  var(--color1) 0%, var(--color2) 100%);
+    background: linear-gradient(to right,  var(--color1) 0%, var(--color2) 100%);
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr=var(--color1), endColorstr=var(--color2),GradientType=1 );
 }
 
 .about {
     background: url(image/back.jpg);
     padding: 130px 0;
-    height: auto;
+    color: white;
+    box-sizing: border-box;
+    min-height: 100%;
+    font-family: "Times New Roman";
 }
-
+html,
+body {
+    height: 87%;
+}
 .about i {
     font-size: 30px;
     color: var(--color1);;

@@ -24,6 +24,14 @@ public class SWBICsServiceImpl implements SWBICsService {
     }
 
     @Override
+    public void update(SWBICs newSWBICs) {
+        SWBICs swbiCs = repository.findById(newSWBICs.getId());
+        swbiCs.setSwbic(newSWBICs.getSwbic());
+        swbiCs.setDefaultSWBIC(newSWBICs.isDefaultSWBIC());
+        repository.save(swbiCs);
+    }
+
+    @Override
     public void deleteById(long id) {
         repository.deleteById(id);
     }

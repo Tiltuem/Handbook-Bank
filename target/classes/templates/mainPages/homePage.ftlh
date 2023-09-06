@@ -1,7 +1,19 @@
 <#import "../parts/common.ftlh" as c>
 <#import "../parts/footer.ftlh" as f>
+    <html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>Справочник ЦБ РФ</title>
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="shortcut icon" href="../../css/image/bank2.png">
+    <link rel="stylesheet" href="../../css/styleHomePage.css">
+    <link rel="stylesheet" href="../../css/styleButton.css">
 
-<@c.page "../../css/styleHomePage.css">
+</head>
+<body>
 <#--Шапка-->
 <header>
     <div class="container">
@@ -44,4 +56,9 @@
 <!--Подвал-->
 <@f.footer />
 
-</@c.page>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+        crossorigin="anonymous"></script>
+</script>
+</body>
+    </html>

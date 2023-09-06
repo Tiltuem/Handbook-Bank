@@ -75,7 +75,7 @@ public class SWBICsController {
     @PostMapping("/swbics-edit")
     public String updateSWBICs(@Valid SWBICs swbics, BindingResult bindingResult, Model model, @PathVariable long entryId, @PathVariable long messageId, @RequestParam String page) {
         if (!bindingResult.hasErrors()) {
-            SWBICsService.save(swbics);
+            SWBICsService.update(swbics);
             log.info("Перечень БИК (id: " + swbics.getId() + ") редактирован");
 
             return "redirect:/message-{messageId}/directory-entry/" + page;

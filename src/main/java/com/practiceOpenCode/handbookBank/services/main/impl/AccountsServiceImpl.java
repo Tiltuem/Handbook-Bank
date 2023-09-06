@@ -20,6 +20,10 @@ public class AccountsServiceImpl implements AccountsService {
     public void update(Accounts account) {
         Accounts oldAccount = repository.findById(account.getId());
         account.setAccountRestrictionList(oldAccount.getAccountRestrictionList());
+        account.setCreatedBy(oldAccount.getCreatedBy());
+        account.setCreatedDate(oldAccount.getCreatedDate());
+        account.setModifiedBy(oldAccount.getModifiedBy());
+        account.setModifiedDate(oldAccount.getModifiedDate());
         repository.save(account);
     }
 

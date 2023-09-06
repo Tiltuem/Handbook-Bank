@@ -4,7 +4,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-auto">
-                <div class="header-icon"><i class="bi bi-bank" ></i></div>
+              <div class="header-icon"><i class="bi bi-bank"></i></div><
             </div>
             <div class="col">
                 <h4 class="text-white">Справочник сведений ЦБ РФ о
@@ -16,7 +16,7 @@
                     <a class="btn btn-outline-light"  href="/profile">Профиль</a>
                 </@security.authorize>
                 <@security.authorize access="!isAuthenticated()">
-                    <a class="btn btn-outline-light"  href="/registration">Авторизация</a>
+                    <a class="btn btn-outline-light"  href="/registration">Регистрация</a>
                 </@security.authorize>
 
             </div>

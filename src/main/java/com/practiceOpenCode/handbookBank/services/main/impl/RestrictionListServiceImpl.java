@@ -21,7 +21,14 @@ public class RestrictionListServiceImpl implements RestrictionListService {
     @Override
     public void save(RestrictionList restrictionList) {
         repository.save(restrictionList);
+    }
 
+    @Override
+    public void update(RestrictionList newRestrictionList) {
+        RestrictionList restrictionList = repository.findById(newRestrictionList.getId());
+        restrictionList.setRestrictionCode(newRestrictionList.getRestrictionCode());
+        restrictionList.setRestrictionDate(newRestrictionList.getRestrictionDate());
+        repository.save(restrictionList);
     }
 
     @Override

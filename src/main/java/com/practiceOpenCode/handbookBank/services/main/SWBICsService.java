@@ -10,6 +10,8 @@ public interface SWBICsService {
 
     List<SWBICs> getAllSWBICs();
     void save (SWBICs SWBICs);
+    void update (SWBICs SWBICs);
+
     void deleteById(long id);
     SWBICs getById(long id);
     void recoveryById(long id);

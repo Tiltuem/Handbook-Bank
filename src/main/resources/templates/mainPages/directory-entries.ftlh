@@ -64,18 +64,18 @@
                         </form>
                         <div class="row">
                             <div class="col-md-2">
+                                <form action="/message-${messageId}/directory-entry/new-entry" method="get">
+                                    <input type="hidden" name="page" value="${page}">
+                                    <button type="submit" class="btn btn-my">Добавить</button>
+                                </form>
+                            </div>
+                            <div class="col-md-2">
                                 <form action="/message-${messageId}/directory-entry/edit-entry" method="get">
                                     <input name="id" type="hidden" id="id-entry">
                                     <input type="hidden" name="page" value="${page}">
                                     <button type="submit" class="btn btn-my" id="btn-entry" disabled="disabled">
                                         Редактировать
                                     </button>
-                                </form>
-                            </div>
-                            <div class="col-md-2">
-                                <form action="/message-${messageId}/directory-entry/new-entry" method="get">
-                                    <input type="hidden" name="page" value="${page}">
-                                    <button type="submit" class="btn btn-light">Добавить</button>
                                 </form>
                             </div>
                         </div>
@@ -224,9 +224,17 @@
                                     </tr>
                                     <tr class="collapse out" id="collapse-${directoryEntry.id}">
                                         <td colspan="20">
-                                            <div class="col-md-6">
+                                            <div class="col-md-8">
                                                 <div><h5>Аккаунты</h5></div>
                                                 <div class="row">
+                                                    <div class="col-md-auto">
+                                                        <form action="/message-${messageId}/entry-${directoryEntry.id}/new-account"
+                                                              method="get">
+                                                            <input type="hidden" name="page" value="${page}">
+                                                            <button type="submit" class="btn btn-light">Добавить
+                                                            </button>
+                                                        </form>
+                                                    </div>
                                                     <div class="col-md-auto">
                                                         <form action="/message-${messageId}/entry-${directoryEntry.id}/account-edit"
                                                               method="get">
@@ -234,14 +242,6 @@
                                                             <input type="hidden" name="page" value="${page}">
                                                             <button type="submit" class="btn btn-light" id="btn-account"
                                                                     disabled="disabled">Редактировать
-                                                            </button>
-                                                        </form>
-                                                    </div>
-                                                    <div class="col-md-auto">
-                                                        <form action="/message-${messageId}/entry-${directoryEntry.id}/new-account"
-                                                              method="get">
-                                                            <input type="hidden" name="page" value="${page}">
-                                                            <button type="submit" class="btn btn-light">Добавить
                                                             </button>
                                                         </form>
                                                     </div>
@@ -328,6 +328,15 @@
                                                 <h5>Перечень ограничений участника</h5>
                                                 <div class="row">
                                                     <div class="col-md-auto">
+                                                        <form action="/message-${messageId}/entry-${directoryEntry.id}/new-restriction-list"
+                                                              method="get">
+                                                            <input type="hidden" name="page" value="${page}">
+                                                            <button type="submit" class="btn btn-light">
+                                                                Добавить
+                                                            </button>
+                                                        </form>
+                                                    </div>
+                                                    <div class="col-md-auto">
                                                         <form action="/message-${messageId}/entry-${directoryEntry.id}/restriction-list-edit"
                                                               method="get">
                                                             <input name="id" type="hidden" id="id-restriction-list">
@@ -335,15 +344,6 @@
                                                             <button type="submit" class="btn btn-light"
                                                                     id="btn-restriction-list" disabled="disabled">
                                                                 Редактировать
-                                                            </button>
-                                                        </form>
-                                                    </div>
-                                                    <div class="col-md-auto">
-                                                        <form action="/message-${messageId}/entry-${directoryEntry.id}/new-restriction-list"
-                                                              method="get">
-                                                            <input type="hidden" name="page" value="${page}">
-                                                            <button type="submit" class="btn btn-light">
-                                                                Добавить
                                                             </button>
                                                         </form>
                                                     </div>
@@ -367,7 +367,7 @@
                                                         <#if directoryEntry.participantInfo.restrictionList?has_content>
                                                             <#list directoryEntry.participantInfo.restrictionList as restriction>
                                                                 <#if !restriction.deleted>
-                                                                    <tr>
+                                                                    <tr onclick="getIdRstrList(${restriction.id})">
                                                                         <td>
                                                                             <form action="/message-${messageId}/entry-${directoryEntry.id}/restriction-list-delete/${restriction.id}"
                                                                                   method="post">
@@ -405,11 +405,17 @@
                                                     </table>
                                                 </div>
                                             </div>
-
-
                                             <div class="col-md-4">
                                                 <h5>Перечень БИК (СВИФТ)</h5>
                                                 <div class="row">
+                                                    <div class="col-md-auto">
+                                                        <form action="/message-${messageId}/entry-${directoryEntry.id}/new-swbics"
+                                                              method="get">
+                                                            <input type="hidden" name="page" value="${page}">
+                                                            <button type="submit" class="btn btn-light">Добавить
+                                                            </button>
+                                                        </form>
+                                                    </div>
                                                     <div class="col-md-auto">
                                                         <form action="/message-${messageId}/entry-${directoryEntry.id}/swbics-edit"
                                                               method="get">
@@ -417,14 +423,6 @@
                                                             <input type="hidden" name="page" value="${page}">
                                                             <button type="submit" class="btn btn-light" id="btn-swbics"
                                                                     disabled="disabled">Редактировать
-                                                            </button>
-                                                        </form>
-                                                    </div>
-                                                    <div class="col-md-auto">
-                                                        <form action="/message-${messageId}/entry-${directoryEntry.id}/new-swbics"
-                                                              method="get">
-                                                            <input type="hidden" name="page" value="${page}">
-                                                            <button type="submit" class="btn btn-light">Добавить
                                                             </button>
                                                         </form>
                                                     </div>

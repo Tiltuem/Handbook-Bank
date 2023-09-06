@@ -4,7 +4,8 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.*;
-import lombok.Data;
+
+import lombok.*;
 import org.hibernate.annotations.SQLDelete;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
@@ -22,7 +23,6 @@ import java.util.Date;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "SWBIC")
 @EntityListeners(AuditingEntityListener.class)
-
 public class SWBICs {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

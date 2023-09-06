@@ -40,7 +40,7 @@ public class RestrictionListController {
     @PostMapping("/restriction-list-delete/{id}")
     public String deleteRestrictionList(@PathVariable long id, @RequestParam String page) {
         restrictionListService.deleteById(id);
-        log.info("Перечень БИК (id: " + id + ") удалён");
+        log.info("Список ограничений (id: " + id + ") удалён");
 
         return "redirect:/message-{messageId}/directory-entry/" + page;
     }
@@ -78,7 +78,7 @@ public class RestrictionListController {
     public String updateRestrictionList(@Valid RestrictionList restrictionList, BindingResult bindingResult, Model model, @PathVariable long entryId, @PathVariable long messageId, @RequestParam String restrictionCode, @RequestParam String page) {
         setCodes(restrictionList, restrictionCode);
         if (bindingResult.getErrorCount() == 1) {
-            restrictionListService.save(restrictionList);
+            restrictionListService.update(restrictionList);
             log.info("Список ограничений (id: " + restrictionList.getId() + ") редактирован");
             return "redirect:/message-{messageId}/directory-entry/" + page;
         }

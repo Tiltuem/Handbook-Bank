@@ -12,6 +12,10 @@
         document.getElementById("id-swbics").value = id;
         document.getElementById("btn-swbics").removeAttribute("disabled");
     }
+    function getIdRstrList(id){
+        document.getElementById("id-restriction-list").value = id;
+        document.getElementById("btn-restriction-list").removeAttribute("disabled");
+    }
 
 </script>
 </#macro>

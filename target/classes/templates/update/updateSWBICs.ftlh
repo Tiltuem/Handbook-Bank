@@ -14,7 +14,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <h2>Добавление SWBIC</h2>
+                    <h2>Редактирование SWBIC</h2>
                     <form action="/message-${messageId}/entry-${entryId}/swbics-edit" method="post">
                         <input type="hidden" name="id" value="${swbics.id}">
                         <div class="col-25">

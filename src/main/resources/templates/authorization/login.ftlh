@@ -16,7 +16,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <h2>Регистрация</h2>
+                    <h2>Вход</h2>
                     <form>
                         <div class="col-25">
                             Введите логин:
