@@ -6,11 +6,35 @@
   <component name="ChangeListManager">
     <list default="true" id="42e6be46-1bb5-4d6a-8938-571679c4bbba" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/practiceOpenCode/handbookBank/config/JwtRequestFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/practiceOpenCode/handbookBank/config/JwtRequestFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/practiceOpenCode/handbookBank/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/practiceOpenCode/handbookBank/config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/practiceOpenCode/handbookBank/controllers/codes/RegulationAccountTypeCodeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/practiceOpenCode/handbookBank/controllers/codes/RegulationAccountTypeCodeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/practiceOpenCode/handbookBank/controllers/security/AuthRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/practiceOpenCode/handbookBank/controllers/security/AuthRestController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/practiceOpenCode/handbookBank/models/adapters/AccountRestrictionCodeAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/practiceOpenCode/handbookBank/models/adapters/AccountRestrictionCodeAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/practiceOpenCode/handbookBank/services/security/AuthService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/practiceOpenCode/handbookBank/services/security/AuthService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/practiceOpenCode/handbookBank/services/security/impl/AuthServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/practiceOpenCode/handbookBank/services/security/impl/AuthServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/authorization/login.ftlh" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/authorization/login.ftlh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/codes/regulationAccountType.ftlh" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/codes/regulationAccountType.ftlh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/mainPages/profile.ftlh" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/mainPages/profile.ftlh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/parts/addCode.ftlh" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/parts/addCode.ftlh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/parts/header.ftlh" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/parts/header.ftlh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/authorization/login.ftlh" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/authorization/login.ftlh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/codes/regulationAccountType.ftlh" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/codes/regulationAccountType.ftlh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/mainPages/profile.ftlh" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/mainPages/profile.ftlh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/parts/addCode.ftlh" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/parts/addCode.ftlh" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -65,6 +89,10 @@
       <workItem from="1693929369483" duration="271000" />
       <workItem from="1693956326328" duration="344000" />
       <workItem from="1693956748636" duration="12000" />
+      <workItem from="1694002180493" duration="2411000" />
+      <workItem from="1694103412288" duration="838000" />
+      <workItem from="1694180305133" duration="7514000" />
+      <workItem from="1694193696964" duration="5000" />
     </task>
     <servers />
   </component>

@@ -15,15 +15,11 @@ import java.util.List;
 
 public class AccountRestrictionCodeAdapter extends XmlAdapter<String, AccountRestrictionCode> {
     private final List<AccountRestrictionCode> accountRestrictionCodeList;
-
     private final ApplicationContext ctx;
-
-    AbstractCodeRepository<AccountRestrictionCode> repository;
 
 
     public AccountRestrictionCodeAdapter() {
         ctx = ApplicationContextHolder.getApplicationContext();
-
         accountRestrictionCodeList = ctx.getBean(AccountRestrictionCodeRepository.class).findAll();
     }
 

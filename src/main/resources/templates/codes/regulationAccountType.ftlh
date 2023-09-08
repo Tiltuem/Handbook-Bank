@@ -9,6 +9,7 @@
 <#import "../parts/addCode.ftlh" as a>
 <#import "../parts/getId.ftlh" as g>
 <#import "../parts/pagination.ftlh" as p>
+
 <@c.page "../../css/styleDirectories.css">
     <!--Шапка-->
     <@h.header />

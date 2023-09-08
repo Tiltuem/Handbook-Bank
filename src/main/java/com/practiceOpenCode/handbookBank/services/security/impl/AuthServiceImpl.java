@@ -11,12 +11,18 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @Service
 @RequiredArgsConstructor
@@ -55,5 +61,18 @@ public class AuthServiceImpl implements AuthService {
         modelAndView.addObject("bindingResult", bindingResult);
 
         return modelAndView;
+    }
+
+    @Override
+    public void logout(HttpServletRequest request, HttpServletResponse response) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null) {
+            request.getSession().invalidate();
+            Cookie[] cookies = request.getCookies();
+                for (Cookie cookie : cookies) {
+                    cookie.setMaxAge(0);
+                    response.addCookie(cookie);
+                }
+        }
     }
 }

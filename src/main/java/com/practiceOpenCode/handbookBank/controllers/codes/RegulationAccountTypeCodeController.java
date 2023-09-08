@@ -25,7 +25,6 @@ import java.util.Objects;
 @RequestMapping("/codes/regulationAccountType")
 @Slf4j
 public class RegulationAccountTypeCodeController {
-
     @Autowired
     AbstractCodeService<RegulationAccountTypeCode> regulationAccountTypeCodeService;
 
@@ -96,8 +95,8 @@ public class RegulationAccountTypeCodeController {
         return "redirect:/codes/regulationAccountType/0";
     }
 
-    private void setModel(Model model, Page<RegulationAccountTypeCode> codes, RegulationAccountTypeCode regulationAccountType) {
+    private void setModel(Model model, Page<RegulationAccountTypeCode> codes, RegulationAccountTypeCode regulationAccountTypeCode) {
         model.addAttribute("codes", codes);
-        model.addAttribute("regulationAccountType", regulationAccountType);
+        model.addAttribute("regulationAccountTypeCode", regulationAccountTypeCode);
     }
 }

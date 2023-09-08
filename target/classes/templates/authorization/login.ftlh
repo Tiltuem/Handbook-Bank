@@ -37,6 +37,7 @@
                                 <li>Ошибка: неверный логин/пароль</li>
                             </div>
                         </#if>
+                        <a href="/registration">Зарегистрироваться</a>
                         <div class="col">
                             <button type="button" class="btn btn-my" onclick="test()" data-bs-toggle="modal"
                                     data-bs-target="#loadingModal">Войти
@@ -62,11 +63,8 @@
             })
                 .then(response => {
                     if (response.ok) {
-                        console.log("hi");
                         response.json().then(function (data) {
-                            document.cookie = "Bearer " + data.token;
-                            console.log(data);
-                            console.log(data.token);
+                            document.cookie = "jwt=Bearer " + data.token;
                             window.location.replace("/");
                         })
                     }

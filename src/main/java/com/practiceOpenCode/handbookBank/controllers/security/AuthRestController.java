@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.util.HashMap;
@@ -33,4 +35,10 @@ public class AuthRestController {
     public ModelAndView createNewUser(@Valid RegistrationUserDto registrationUserDto, BindingResult bindingResult) {
         return authService.createNewUser(registrationUserDto, bindingResult);
     }
+
+   /* @GetMapping("/logout")
+    public String logout(HttpServletRequest request, HttpServletResponse response) {
+        authService.logout(request, response);
+        return "redirect:/";
+    }*/
 }

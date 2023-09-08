@@ -23,6 +23,7 @@
                     </#list>
                     </ul>
                 </h4>
+                <a class="btn btn-outline-light"  href="/logout">Выйти</a>
             </div>
         </div>
     </section>
