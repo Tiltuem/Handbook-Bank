@@ -28,4 +28,8 @@ public class FileInfo {
     private Message message;
 
     private Boolean deleted;
+
+    public FileInfo() {
+        this.deleted = false;
+    }
 }

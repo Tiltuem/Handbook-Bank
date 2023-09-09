@@ -32,6 +32,7 @@
                                 </thead>
                                 <tbody>
                                 <#list files.iterator() as fileInfo>
+                                    <#if !fileInfo.message.deleted>
                                     <tr>
                                         <td>
                                             ${fileInfo.id}
@@ -49,6 +50,7 @@
                                             ${fileInfo.message.user.username}
                                         </td>
                                     </tr>
+                                    </#if>
                                 </#list>
                                 </tbody>
                             </table>

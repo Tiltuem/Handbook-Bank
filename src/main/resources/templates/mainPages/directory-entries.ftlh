@@ -51,7 +51,7 @@
                             </h5>
                             с <input type="date" name="dateFrom"> по <input type="date" name="dateBy">
                             <div class="checkbox">
-                                <input id="checkbox1" class="checkbox__input" type="checkbox" name="deleted">
+                                <input id="checkbox1" class="checkbox__input" type="checkbox" name="showDeleted">
                                 <label for="checkbox1" class="checkbox__label">
                                     <span class="checkbox__custom"></span>
                                     Показать удалённые
@@ -116,10 +116,18 @@
                                 <#list entries.iterator() as directoryEntry>
                                     <tr onclick="getIdEntry(${directoryEntry.id})">
                                         <td>
-                                            <button class="btn btn-light" type="button" data-bs-toggle="collapse"
-                                                    data-bs-target="#collapse-${directoryEntry.id}"
-                                                    aria-expanded="false" aria-controls="collapseExample"><i
-                                                        class="bi bi-plus"></i></button>
+                                            <#if !directoryEntry.deleted>
+                                                <button class="btn btn-light" type="button" data-bs-toggle="collapse"
+                                                        data-bs-target="#collapse-${directoryEntry.id}"
+                                                        aria-expanded="false" aria-controls="collapseExample"><i
+                                                            class="bi bi-plus"></i></button>
+                                                <#else>
+                                                    <form action="/message-${messageId}/directory-entry/recovery/${directoryEntry.id}" method="post">
+                                                        <input type="hidden" name="page" value="${page}">
+                                                        <button type="submit" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#loadingModal">Восстановить
+                                                        </button>
+                                                    </form>
+                                            </#if>
                                         </td>
                                         <td>
                                             <form action="/message-${messageId}/directory-entry/delete/${directoryEntry.id}"

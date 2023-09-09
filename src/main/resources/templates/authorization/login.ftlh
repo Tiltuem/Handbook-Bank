@@ -64,8 +64,8 @@
                 .then(response => {
                     if (response.ok) {
                         response.json().then(function (data) {
-                            document.cookie = "jwt=Bearer " + data.token;
-                            window.location.replace("/");
+                            document.cookie = "token= " + data.token;
+                            window.location.replace("/login");
                         })
                     }
                     if (response.status === 500){

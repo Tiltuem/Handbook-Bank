@@ -63,7 +63,7 @@ public class BICDirectoryEntryServiceImpl implements BICDirectoryEntryService {
 
     @Override
     public Page<BICDirectoryEntry> searchEntries(Pageable pageable, String value, Boolean showDeleted, String column, String dateFrom, String dateBy) {
-        if (!value.equals("") || !dateFrom.equals(""))
+        if (!value.equals("") || !Objects.isNull(dateFrom))
             return search(pageable, value, column, showDeleted, dateFrom, dateBy);
         if (showDeleted) return repository.findAll(pageable);
         return repository.findByDeleted(pageable, false);

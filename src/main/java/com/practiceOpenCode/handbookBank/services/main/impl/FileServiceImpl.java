@@ -103,7 +103,7 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public Page<FileInfo> getAllFiles(Pageable pageable) {
-        return repository.findAll(pageable);
+        return repository.findAllByDeleted(pageable, false);
     }
 
     @Override

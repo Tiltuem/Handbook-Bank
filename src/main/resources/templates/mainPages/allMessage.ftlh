@@ -118,7 +118,7 @@
                                         </td>
                                         <td>
                                             <#if message.deleted = true>
-                                                <form action="/message/recovery/${message.id}" method="post">
+                                                <form action="/messages/recovery/${message.id}" method="post">
                                                     <input type="hidden" name="page" value="${page}">
                                                     <button type="submit" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#loadingModal">Восстановить
                                                     </button>
