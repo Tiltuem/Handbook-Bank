@@ -6,17 +6,91 @@
   <component name="ChangeListManager">
     <list default="true" id="42e6be46-1bb5-4d6a-8938-571679c4bbba" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/practiceOpenCode/handbookBank/config/JwtRequestFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/practiceOpenCode/handbookBank/config/JwtRequestFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/practiceOpenCode/handbookBank/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/practiceOpenCode/handbookBank/config/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/practiceOpenCode/handbookBank/models/main/FileInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/practiceOpenCode/handbookBank/models/main/FileInfo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/practiceOpenCode/handbookBank/repositories/main/FileRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/practiceOpenCode/handbookBank/repositories/main/FileRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/practiceOpenCode/handbookBank/controllers/main/AccountsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/practiceOpenCode/handbookBank/controllers/main/AccountsController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/practiceOpenCode/handbookBank/controllers/main/EntryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/practiceOpenCode/handbookBank/controllers/main/EntryController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/practiceOpenCode/handbookBank/controllers/main/ImportController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/practiceOpenCode/handbookBank/controllers/main/ImportController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/practiceOpenCode/handbookBank/controllers/main/RestrictionListController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/practiceOpenCode/handbookBank/controllers/main/RestrictionListController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/practiceOpenCode/handbookBank/controllers/main/SWBICsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/practiceOpenCode/handbookBank/controllers/main/SWBICsController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/practiceOpenCode/handbookBank/controllers/main/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/practiceOpenCode/handbookBank/controllers/main/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/practiceOpenCode/handbookBank/models/main/ParticipantInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/practiceOpenCode/handbookBank/models/main/ParticipantInfo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/practiceOpenCode/handbookBank/services/main/BICDirectoryEntryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/practiceOpenCode/handbookBank/services/main/BICDirectoryEntryService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/practiceOpenCode/handbookBank/services/main/impl/BICDirectoryEntryServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/practiceOpenCode/handbookBank/services/main/impl/BICDirectoryEntryServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/practiceOpenCode/handbookBank/services/main/impl/FileServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/practiceOpenCode/handbookBank/services/main/impl/FileServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/practiceOpenCode/handbookBank/services/security/AuthService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/practiceOpenCode/handbookBank/services/security/AuthService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/practiceOpenCode/handbookBank/services/security/impl/AuthServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/practiceOpenCode/handbookBank/services/security/impl/AuthServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/css/styleBody.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/css/styleBody.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/css/styleButton.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/css/styleButton.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/css/styleDirectories.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/css/styleDirectories.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/add/addAccount.ftlh" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/add/addAccount.ftlh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/add/addEntry.ftlh" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/add/addEntry.ftlh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/add/addRestrictionList.ftlh" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/add/addRestrictionList.ftlh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/add/addSWBICs.ftlh" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/add/addSWBICs.ftlh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/templates/authorization/login.ftlh" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/authorization/login.ftlh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/codes/accountRestriction.ftlh" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/codes/accountRestriction.ftlh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/codes/accountStatus.ftlh" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/codes/accountStatus.ftlh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/codes/changeType.ftlh" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/codes/changeType.ftlh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/codes/creationReason.ftlh" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/codes/creationReason.ftlh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/codes/exchangeParticipant.ftlh" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/codes/exchangeParticipant.ftlh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/codes/informationType.ftlh" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/codes/informationType.ftlh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/codes/participantStatus.ftlh" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/codes/participantStatus.ftlh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/codes/participantType.ftlh" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/codes/participantType.ftlh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/codes/regulationAccountType.ftlh" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/codes/regulationAccountType.ftlh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/codes/restriction.ftlh" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/codes/restriction.ftlh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/codes/serviceCs.ftlh" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/codes/serviceCs.ftlh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/error.ftlh" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/error.ftlh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/errors/customError.ftlh" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/errors/customError.ftlh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/templates/mainPages/allMessage.ftlh" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/mainPages/allMessage.ftlh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/templates/mainPages/directory-entries.ftlh" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/mainPages/directory-entries.ftlh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/templates/mainPages/importFile.ftlh" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/mainPages/importFile.ftlh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/mainPages/profile.ftlh" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/mainPages/profile.ftlh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/parts/addCode.ftlh" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/parts/addCode.ftlh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/parts/common.ftlh" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/parts/common.ftlh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/parts/editModal.ftlh" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/parts/editModal.ftlh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/parts/getId.ftlh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/parts/getIdWithInput.ftlh" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/parts/getIdWithInput.ftlh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/parts/pagination.ftlh" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/parts/pagination.ftlh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/parts/table.ftlh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/parts/tableCode.ftlh" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/parts/tableCode.ftlh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/update/updateAccount.ftlh" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/update/updateAccount.ftlh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/update/updateEntry.ftlh" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/update/updateEntry.ftlh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/update/updateRestrictionList.ftlh" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/update/updateRestrictionList.ftlh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/update/updateSWBICs.ftlh" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/update/updateSWBICs.ftlh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/css/styleBody.css" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/css/styleBody.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/css/styleButton.css" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/css/styleButton.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/css/styleDirectories.css" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/css/styleDirectories.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/add/addAccount.ftlh" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/add/addAccount.ftlh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/add/addEntry.ftlh" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/add/addEntry.ftlh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/add/addRestrictionList.ftlh" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/add/addRestrictionList.ftlh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/add/addSWBICs.ftlh" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/add/addSWBICs.ftlh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/templates/authorization/login.ftlh" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/authorization/login.ftlh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/codes/accountRestriction.ftlh" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/codes/accountRestriction.ftlh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/codes/accountStatus.ftlh" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/codes/accountStatus.ftlh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/codes/changeType.ftlh" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/codes/changeType.ftlh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/codes/creationReason.ftlh" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/codes/creationReason.ftlh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/codes/exchangeParticipant.ftlh" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/codes/exchangeParticipant.ftlh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/codes/informationType.ftlh" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/codes/informationType.ftlh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/codes/participantStatus.ftlh" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/codes/participantStatus.ftlh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/codes/participantType.ftlh" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/codes/participantType.ftlh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/codes/regulationAccountType.ftlh" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/codes/regulationAccountType.ftlh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/codes/restriction.ftlh" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/codes/restriction.ftlh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/codes/serviceCs.ftlh" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/codes/serviceCs.ftlh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/error.ftlh" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/error.ftlh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/errors/customError.ftlh" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/errors/customError.ftlh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/mainPages/allMessage.ftlh" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/mainPages/allMessage.ftlh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/mainPages/directory-entries.ftlh" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/mainPages/directory-entries.ftlh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/mainPages/importFile.ftlh" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/mainPages/importFile.ftlh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/mainPages/profile.ftlh" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/mainPages/profile.ftlh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/parts/addCode.ftlh" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/parts/addCode.ftlh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/parts/common.ftlh" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/parts/common.ftlh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/parts/editModal.ftlh" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/parts/editModal.ftlh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/parts/getId.ftlh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/parts/getIdWithInput.ftlh" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/parts/getIdWithInput.ftlh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/parts/pagination.ftlh" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/parts/pagination.ftlh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/parts/table.ftlh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/parts/tableCode.ftlh" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/parts/tableCode.ftlh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/update/updateAccount.ftlh" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/update/updateAccount.ftlh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/update/updateEntry.ftlh" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/update/updateEntry.ftlh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/update/updateRestrictionList.ftlh" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/update/updateRestrictionList.ftlh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/update/updateSWBICs.ftlh" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/update/updateSWBICs.ftlh" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,7 +131,7 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Kirill/Desktop/Handbook-Bank-develop&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Kirill/Desktop/warehousesystem-main&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;spring.configuration.checksum&quot;: &quot;0eebcd5ef7cd9b1bffb1e46ad0e57f77&quot;
   }
@@ -88,6 +162,15 @@
       <workItem from="1694180305133" duration="7514000" />
       <workItem from="1694193696964" duration="5000" />
       <workItem from="1694193862120" duration="7399000" />
+      <workItem from="1694274231380" duration="3148000" />
+      <workItem from="1694352068240" duration="41000" />
+      <workItem from="1694362459815" duration="62000" />
+      <workItem from="1694537780734" duration="3950000" />
+      <workItem from="1694552442824" duration="5251000" />
+      <workItem from="1694604149982" duration="19862000" />
+      <workItem from="1694630955681" duration="4000" />
+      <workItem from="1694630968977" duration="7000" />
+      <workItem from="1694630995049" duration="9000" />
     </task>
     <servers />
   </component>
@@ -104,21 +187,5 @@
         </entry>
       </map>
     </option>
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/practiceOpenCode/handbookBank/services/main/impl/AccountsServiceImpl.java</url>
-          <line>32</line>
-          <option name="timeStamp" value="10" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/practiceOpenCode/handbookBank/controllers/main/AccountsController.java</url>
-          <line>43</line>
-          <option name="timeStamp" value="15" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

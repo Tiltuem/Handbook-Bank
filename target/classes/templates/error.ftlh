@@ -13,10 +13,12 @@
                 <div class="baG">
                     <h3>Ooooops!</h3>
                     <p>Страница не найдена</p>
-                    <a class="btn btn-my"  href="/">На главную</a>
+
+                            <a class="btn btn-my" onclick="history.back()">Назад</a>
+                            <a class="btn btn-my" href="/">На главную</a>
+
                 </div>
             </div>
-        </div>
     </section>
     <!--Подвал-->
     <@f.footer />

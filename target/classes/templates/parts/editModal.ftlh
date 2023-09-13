@@ -12,7 +12,8 @@
                         <#nested>
                         <input id="id" type="hidden" name="id">
                         <input type="hidden" name="page" value="${page}">
-                        <button type="submit" class="btn my-btn">Сохранить</button>
+                        <button type="submit" class="btn my-btn" data-bs-toggle="modal"
+                                data-bs-target="#loadingModal">Сохранить</button>
                     </div>
                 </form>
             </div>

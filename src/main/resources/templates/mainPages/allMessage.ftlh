@@ -2,7 +2,7 @@
 <#import "../parts/header.ftlh" as h>
 <#import "../parts/footer.ftlh" as f>
 <#import "../parts/loadingModal.ftlh" as l>
-
+<#import "../parts/pagination.ftlh" as p>
 <@c.page "../../css/styleDirectories.css">
     <!--Шапка-->
     <@h.header />
@@ -132,26 +132,7 @@
                                 </tbody>
                             </table>
                         </div>
-                        <nav aria-label="Page navigation example">
-                            <ul class="pagination">
-                                <li class="page-item"><a class="page-link" href="/messages/0"><i class="bi bi-chevron-double-left"></i></a></li>
-                                <#if page gt 0>
-                                    <li class="page-item"><a class="page-link" href="/messages/${page-1}"><i class="bi bi-chevron-left"></i></a>
-                                    </li>
-                                </#if>
-                                <li class="page-item active"><a class="page-link">
-                                        <input id="num" type="text" value="${page+1}" size="2"/>
-                                        из ${messages.getTotalPages()}
-                                        <button onclick="location.href='/messages/'+(document.getElementById('num').value-1)">Перейти</button>
-                                    </a></li>
-                                <#if messages.getTotalPages() gt page + 1>
-                                    <li class="page-item"><a class="page-link" href="/messages/${page+1}"><i class="bi bi-chevron-right"></i></a>
-                                    </li>
-                                </#if>
-                                <li class="page-item"><a class="page-link"
-                                                         href="/messages/${messages.getTotalPages()-1}"><i class="bi bi-chevron-double-right"></i></a></li>
-                            </ul>
-                        </nav>
+                        <@p.pagination "messages" messages />
                     <#else>
                         <h3>ЭС отсутствуют</h3>
                     </#if>

@@ -16,10 +16,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 
+import org.springframework.validation.BindingResult;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -95,56 +95,87 @@ public class EntryController {
 
     @GetMapping("/edit-entry")
     public String getEntryById(@RequestParam long id, Model model, @PathVariable String messageId, @RequestParam String page) {
-        model.addAttribute("messageId", messageId);
-        model.addAttribute("page", page);
         BICDirectoryEntry directoryEntry = bicDirectoryEntryService.getById(id);
 
         model.addAttribute("bicDirectoryEntry", directoryEntry);
-        setModel(model);
+        model.addAttribute("participantInfo", directoryEntry.getParticipantInfo());
+        setModel(model, page, messageId);
 
         return "update/updateEntry";
     }
 
     @GetMapping("/new-entry")
-    public String addEntry(@PathVariable int messageId, Model model, @RequestParam String page) {
-        model.addAttribute("messageId", messageId);
-        model.addAttribute("page", page);
-        setModel(model);
+    public String addEntry(@PathVariable String messageId, Model model, @RequestParam String page) {
+        setModel(model, page, messageId);
+        model.addAttribute("bicDirectoryEntry", new BICDirectoryEntry());
+        model.addAttribute("participantInfo", new ParticipantInfo());
 
         return "add/addEntry";
     }
 
     @PostMapping("/add")
-    public String add(String bic, ParticipantInfo info, String participantType, String serviceCs, String exchangeParticipant, String participantStatus, String changeType, @RequestParam String page) {
-        bicDirectoryEntryService.add(bic, info, participantType, serviceCs, exchangeParticipant, participantStatus, changeType);
-        log.info("Запись добавлена");
+    public String addNewEntry(@Valid @ModelAttribute("bicDirectoryEntry") BICDirectoryEntry bicDirectoryEntry,
+                              BindingResult bicDirectoryEntryBindingResult,
+                              @Valid @ModelAttribute("participantInfo") ParticipantInfo participantInfo,
+                              BindingResult participantInfoBindingResult,
+                              String participantType,
+                              String serviceCs,
+                              String exchangeParticipant,
+                              String participantStatus,
+                              String changeType,
+                              Model model,
+                              @PathVariable String messageId,
+                              @RequestParam String page) {
+        if (!bicDirectoryEntryBindingResult.hasErrors() && !participantInfoBindingResult.hasErrors()) {
+            bicDirectoryEntryService.add(bicDirectoryEntry, participantInfo, participantType, serviceCs, exchangeParticipant, participantStatus, changeType);
+            log.info("Запись добавлена");
 
-        return "redirect:/message-{messageId}/directory-entry/" + page;
+            return "redirect:/message-{messageId}/directory-entry/" + page;
+        }
+        setModel(model, page, messageId);
+        model.addAttribute("bicDirectoryEntry", bicDirectoryEntry);
+        model.addAttribute("bicDirectoryEntryBindingResult", bicDirectoryEntryBindingResult);
+        model.addAttribute("participantInfoBindingResult", participantInfoBindingResult);
+
+        return "add/addEntry";
     }
 
-    @PatchMapping("/update")
-    public String updateEntry(@Valid BICDirectoryEntry bicDirectoryEntry, String participantType, String serviceCs, String exchangeParticipant, String participantStatus, String changeType, Model model, BindingResult bindingResult, @PathVariable String messageId, @RequestParam String page) {
-        if (!bindingResult.hasErrors()) {
-            bicDirectoryEntryService.update(bicDirectoryEntry, participantType, serviceCs, exchangeParticipant, participantStatus, changeType);
+    @PostMapping("/update")
+    public String updateEntry(@Valid @ModelAttribute("bicDirectoryEntry") BICDirectoryEntry bicDirectoryEntry,
+                              BindingResult bicDirectoryEntryBindingResult,
+                              @Valid @ModelAttribute("participantInfo") ParticipantInfo participantInfo,
+                              BindingResult participantInfoBindingResult,
+                              String participantType,
+                              String serviceCs,
+                              String exchangeParticipant,
+                              String participantStatus,
+                              String changeType,
+                              Model model,
+                              @PathVariable String messageId,
+                              @RequestParam String page) {
+        if (!bicDirectoryEntryBindingResult.hasErrors() && !participantInfoBindingResult.hasErrors()) {
+            bicDirectoryEntryService.update(bicDirectoryEntry, participantInfo, participantType, serviceCs, exchangeParticipant, participantStatus, changeType);
             log.info("Запись (id: " + bicDirectoryEntry.getId() + ") редактирована");
 
             return "redirect:/message-{messageId}/directory-entry/" + page;
         }
 
-        setModel(model);
+        setModel(model, page, messageId);
         model.addAttribute("bicDirectoryEntry", bicDirectoryEntry);
-        model.addAttribute("bindingResult", bindingResult);
-        model.addAttribute("messageId", messageId);
+        model.addAttribute("bicDirectoryEntryBindingResult", bicDirectoryEntryBindingResult);
+        model.addAttribute("participantInfoBindingResult", participantInfoBindingResult);
 
         return "update/updateEntry";
     }
 
-    private void setModel(Model model) {
+    private void setModel(Model model, String page, String messageId) {
         model.addAttribute("participantTypeCodeList", participantTypeCodeService.getAllCodeList());
         model.addAttribute("serviceCsCodeList", serviceCsCodeService.getAllCodeList());
         model.addAttribute("exchangeParticipantCodeList", exchangeParticipantCodeService.getAllCodeList());
         model.addAttribute("participantStatusCodeList", participantStatusCodeService.getAllCodeList());
         model.addAttribute("changeTypeCodeList", changeTypeCodeService.getAllCodeList());
+        model.addAttribute("messageId", messageId);
+        model.addAttribute("page", page);
     }
 
 }

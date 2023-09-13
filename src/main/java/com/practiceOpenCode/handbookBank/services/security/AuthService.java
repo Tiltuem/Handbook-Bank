@@ -15,5 +15,4 @@ import java.net.http.HttpRequest;
 public interface AuthService {
     ResponseEntity<?> createAuthToken(JwtRequest authRequest);
     ModelAndView createNewUser(RegistrationUserDto registrationUserDto, BindingResult bindingResult);
-    void logout(HttpServletRequest request, HttpServletResponse response);
 }

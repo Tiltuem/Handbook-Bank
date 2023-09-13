@@ -19,7 +19,7 @@
                 </button>
             </div>
             <div class="col-md-auto">
-                <a class="btn btn-my" href="/codes">Назад</a>
+                <a class="btn btn-my" onclick="history.back()">Назад</a>
             </div>
         </div>
     </form>

@@ -14,7 +14,8 @@
                 <h3>Ooooops!</h3>
                 <h4>ВНИМАНИЕ</h4>
                 <p>${message}</p>
-                <a class="btn btn-my"  href="/">На главную</a>
+                        <a class="btn btn-my" onclick="history.back()">Назад</a>
+                        <a class="btn btn-my" href="/">На главную</a>
             </div>
         </div>
     </div>

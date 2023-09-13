@@ -7,7 +7,7 @@
 <#import "../parts/searchCode.ftlh" as s>
 <#import "../parts/tableCode.ftlh" as t>
 <#import "../parts/addCode.ftlh" as a>
-<#import "../parts/getId.ftlh" as g>
+<#import "../parts/getIdWithInput.ftlh" as g>
 <#import "../parts/pagination.ftlh" as p>
 
 <@c.page "../../css/styleDirectories.css">

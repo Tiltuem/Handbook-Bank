@@ -15,8 +15,8 @@ public interface BICDirectoryEntryService {
     Page<BICDirectoryEntry> getAllEntries(Pageable pageable);
     Page<BICDirectoryEntry> searchEntries(Pageable pageable, String value, Boolean showDeleted, String column, String dateFrom, String dateBy);
     void save (BICDirectoryEntry bicDirectoryEntry);
-    void update(BICDirectoryEntry entry, String participantTypeCode, String serviceCsCode, String exchangeParticipantCode, String participantStatusCode, String changeTypeCode);
-    void add(String bic, ParticipantInfo info, String participantTypeCode, String serviceCsCode, String exchangeParticipantCode, String participantStatusCode, String changeTypeCode);
+    void update(BICDirectoryEntry entry, ParticipantInfo info, String participantTypeCode, String serviceCsCode, String exchangeParticipantCode, String participantStatusCode, String changeTypeCode);
+    void add(BICDirectoryEntry entry, ParticipantInfo info, String participantTypeCode, String serviceCsCode, String exchangeParticipantCode, String participantStatusCode, String changeTypeCode);
     void deleteById(long id);
     BICDirectoryEntry getById(long id);
     void recoveryById(long id);

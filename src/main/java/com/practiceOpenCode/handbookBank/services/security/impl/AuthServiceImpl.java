@@ -53,7 +53,7 @@ public class AuthServiceImpl implements AuthService {
 
         if (!bindingResult.hasErrors()) {
             userService.createNewUser(registrationUserDto);
-            return new ModelAndView("redirect:/");
+            return new ModelAndView("redirect:/login");
         }
 
         ModelAndView modelAndView = new ModelAndView("authorization/signup");
@@ -63,16 +63,5 @@ public class AuthServiceImpl implements AuthService {
         return modelAndView;
     }
 
-    @Override
-    public void logout(HttpServletRequest request, HttpServletResponse response) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null) {
-            request.getSession().invalidate();
-            Cookie[] cookies = request.getCookies();
-                for (Cookie cookie : cookies) {
-                    cookie.setMaxAge(0);
-                    response.addCookie(cookie);
-                }
-        }
-    }
+
 }

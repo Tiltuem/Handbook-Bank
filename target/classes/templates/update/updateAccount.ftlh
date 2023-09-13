@@ -137,10 +137,15 @@
                         </div>
                         <input type="hidden" name="page" value="${page}">
                         <br>
-                        <div class="col">
-                            <button type="submit" value="submit" class="btn btn-my" data-bs-toggle="modal"
-                                    data-bs-target="#loadingModal">Добавить
-                            </button>
+                        <div class="row">
+                            <div class="col-md-2">
+                                <a class="btn btn-my" onclick="history.back()">Назад</a>
+                            </div>
+                            <div class="col-md-2">
+                                <button type="submit" value="submit" class="btn btn-my" data-bs-toggle="modal"
+                                        data-bs-target="#loadingModal">Сохранить
+                                </button>
+                            </div>
                         </div>
                     </form>
                 </div>

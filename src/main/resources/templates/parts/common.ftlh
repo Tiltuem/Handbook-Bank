@@ -19,7 +19,18 @@
             integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
             crossorigin="anonymous"></script>
     </script>
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // добавляем обработчик клика на каждую строку таблицы
+            $('table tr').click(function() {
+                // удаляем класс active из всех строк таблицы
+                $('table tr').removeClass('active');
+                // добавляем класс active к выделенной строке
+                $(this).addClass('active');
+            });
+        });
+    </script>
     </body>
     </html>
 </#macro>

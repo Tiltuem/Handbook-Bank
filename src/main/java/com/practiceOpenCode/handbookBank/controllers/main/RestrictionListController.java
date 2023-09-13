@@ -61,7 +61,13 @@ public class RestrictionListController {
     }
 
     @PostMapping("/restriction-list-add")
-    public String addRestrictionList(@Valid RestrictionList restrictionList, BindingResult bindingResult, Model model, @PathVariable long entryId, @PathVariable long messageId, @RequestParam String restrictionCode, @RequestParam String page) {
+    public String addRestrictionList(@Valid RestrictionList restrictionList,
+                                     BindingResult bindingResult,
+                                     Model model,
+                                     @PathVariable long entryId,
+                                     @PathVariable long messageId,
+                                     @RequestParam String restrictionCode,
+                                     @RequestParam String page) {
         if (bindingResult.getErrorCount() == 1) {
             setCodes(restrictionList, restrictionCode);
             participantInfoService.updateById(entryId, restrictionList);
@@ -75,7 +81,13 @@ public class RestrictionListController {
     }
 
     @PostMapping("/restriction-list-edit")
-    public String updateRestrictionList(@Valid RestrictionList restrictionList, BindingResult bindingResult, Model model, @PathVariable long entryId, @PathVariable long messageId, @RequestParam String restrictionCode, @RequestParam String page) {
+    public String updateRestrictionList(@Valid RestrictionList restrictionList,
+                                        BindingResult bindingResult,
+                                        Model model,
+                                        @PathVariable long entryId,
+                                        @PathVariable long messageId,
+                                        @RequestParam String restrictionCode,
+                                        @RequestParam String page) {
         setCodes(restrictionList, restrictionCode);
         if (bindingResult.getErrorCount() == 1) {
             restrictionListService.update(restrictionList);

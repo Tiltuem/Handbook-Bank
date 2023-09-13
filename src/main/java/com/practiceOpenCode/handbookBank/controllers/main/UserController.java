@@ -10,6 +10,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @RequiredArgsConstructor
 @Controller
@@ -20,10 +21,11 @@ public class UserController {
     UserServiceImpl userService;
 
     @GetMapping("/profile")
-    public String getUserInfo(Model model) {
+    public String getUserInfo(Model model, @RequestParam(required = false) boolean success) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         User user  = userService.findByUsername(username).get();
         model.addAttribute("user", user);
+        model.addAttribute("success", success);
 
         return "mainPages/profile";
     }

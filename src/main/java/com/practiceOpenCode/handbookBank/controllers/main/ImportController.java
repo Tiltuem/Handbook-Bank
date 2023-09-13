@@ -1,5 +1,6 @@
 package com.practiceOpenCode.handbookBank.controllers.main;
 
+import com.practiceOpenCode.handbookBank.exception.NotFoundPageException;
 import com.practiceOpenCode.handbookBank.models.main.FileInfo;
 import com.practiceOpenCode.handbookBank.services.main.FileService;
 import com.practiceOpenCode.handbookBank.services.main.MessageService;
@@ -30,6 +31,9 @@ public class ImportController {
     @GetMapping("/{page}")
     public String getAllFiles(@PathVariable int page, Model model) {
         Page<FileInfo> files = fileService.getAllFiles(PageRequest.of(page, 5, Sort.by("id")));
+        if (page > files.getTotalPages())
+            throw new NotFoundPageException("Страница не найдена");
+
         model.addAttribute("files", files);
         model.addAttribute("maxPage", files.getTotalPages() - 1);
 

@@ -2,7 +2,7 @@
 <#import "../parts/header.ftlh" as h>
 <#import "../parts/footer.ftlh" as f>
 <#import "../parts/getIdWithInput.ftlh" as g>
-<#import "../parts/table.ftlh" as t>
+<#import "../parts/pagination.ftlh" as p>
 
 <@c.page "../../css/styleDirectories.css">
     <!--Шапка-->
@@ -133,7 +133,8 @@
                                             <form action="/message-${messageId}/directory-entry/delete/${directoryEntry.id}"
                                                   method="post">
                                                 <input type="hidden" name="page" value="${page}">
-                                                <button type="submit" class="btn-delete"><i class="bi bi-trash"></i>
+                                                <button type="submit" class="btn-delete" data-bs-toggle="modal"
+                                                        data-bs-target="#loadingModal"><i class="bi bi-trash"></i>
                                                 </button>
                                             </form>
                                         </td>
@@ -283,7 +284,8 @@
                                                                                 <input type="hidden" name="page"
                                                                                        value="${page}">
                                                                                 <button type="submit"
-                                                                                        class="btn-delete"><i
+                                                                                        class="btn-delete" data-bs-toggle="modal"
+                                                                                        data-bs-target="#loadingModal"><i
                                                                                             class="bi bi-trash"></i>
                                                                                 </button>
                                                                             </form>
@@ -382,7 +384,8 @@
                                                                                 <input type="hidden" name="page"
                                                                                        value="${page}">
                                                                                 <button type="submit"
-                                                                                        class="btn-delete"><i
+                                                                                        class="btn-delete"  data-bs-toggle="modal"
+                                                                                        data-bs-target="#loadingModal"><i
                                                                                             class="bi bi-trash"></i>
                                                                                 </button>
                                                                             </form>
@@ -461,7 +464,8 @@
                                                                                 <input type="hidden" name="page"
                                                                                        value="${page}">
                                                                                 <button type="submit"
-                                                                                        class="btn-delete"><i
+                                                                                        class="btn-delete"  data-bs-toggle="modal"
+                                                                                        data-bs-target="#loadingModal"><i
                                                                                             class="bi bi-trash"></i>
                                                                                 </button>
                                                                             </form>
@@ -501,37 +505,8 @@
                                 </#list>
                                 </tbody>
                             </table>
-                            <nav aria-label="Page navigation example">
-                                <ul class="pagination">
-                                    <li class="page-item"><a class="page-link"
-                                                             href="/message-${messageId}/directory-entry/0"><i
-                                                    class="bi bi-chevron-double-left"></i></a></li>
-                                    <#if page gt 0>
-                                        <li class="page-item"><a class="page-link"
-                                                                 href="/message-${messageId}/directory-entry/${page-1}"><i
-                                                        class="bi bi-chevron-left"></i></a>
-                                        </li>
-                                    </#if>
-                                    <li class="page-item active"><a class="page-link">
-                                            <input id="num" type="text" value="${page+1}" size="1"/>
-                                            из ${entries.getTotalPages()}
-                                            <button onclick="location.href='/message-${messageId}/directory-entry/'+(document.getElementById('num').value-1)">
-                                                Перейти
-                                            </button>
-                                        </a></li>
-                                    <#if entries.getTotalPages() gt page + 1>
-                                        <li class="page-item"><a class="page-link"
-                                                                 href="/message-${messageId}/directory-entry/${page+1}"><i
-                                                        class="bi bi-chevron-right"></i></a>
-                                        </li>
-                                    </#if>
-                                    <li class="page-item"><a class="page-link"
-                                                             href="/message-${messageId}/directory-entry/${entries.getTotalPages()-1}"><i
-                                                    class="bi bi-chevron-double-right"></i></a></li>
-                                </ul>
-                            </nav>
-
                         </div>
+                        <@p.pagination "message-${messageId}/directory-entry" entries />
                     <#else>
                         <h3>Записи отсутствуют</h3>
                     </#if>
@@ -544,5 +519,4 @@
     <!--Скрипт для получения id-записи в модальном окне-->
     <@g.getId />
 
-    <@t.colorTr />
 </@c.page>

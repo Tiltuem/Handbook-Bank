@@ -21,14 +21,14 @@
                         <div class="col-25">
                             Введите логин:
                         </div>
-                        <div class="col-75">
+                        <div class="col-65">
                             <input type="text" name="username" id="username">
                         </div>
                         <br>
                         <div class="col-25">
                             Введите пароль:
                         </div>
-                        <div class="col-75">
+                        <div class="col-65">
                             <input type="password" name="password" id="password">
                         </div>
                         <br>
@@ -65,7 +65,7 @@
                     if (response.ok) {
                         response.json().then(function (data) {
                             document.cookie = "token= " + data.token;
-                            window.location.replace("/login");
+                            window.location.replace("/profile?success=true");
                         })
                     }
                     if (response.status === 500){

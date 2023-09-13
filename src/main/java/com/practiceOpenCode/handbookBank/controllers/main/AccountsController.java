@@ -63,7 +63,14 @@ public class AccountsController {
     }
 
     @PostMapping("/account-add")
-    public String addAccount(@Valid Accounts account, BindingResult bindingResult, Model model, @PathVariable long entryId, @PathVariable long messageId, @RequestParam String accountStatusCode, @RequestParam String regulationAccountTypeCode, @RequestParam String page) {
+    public String addAccount(@Valid Accounts account,
+                             BindingResult bindingResult,
+                             Model model,
+                             @PathVariable long entryId,
+                             @PathVariable long messageId,
+                             @RequestParam String accountStatusCode,
+                             @RequestParam String regulationAccountTypeCode,
+                             @RequestParam String page) {
         if (bindingResult.getErrorCount() == 2) {
             setCodes(account, regulationAccountTypeCode, accountStatusCode);
             bicDirectoryEntryService.updateById(entryId, account);
@@ -78,7 +85,14 @@ public class AccountsController {
     }
 
     @PostMapping("/account-edit")
-    public String updateAccount(@Valid Accounts account, BindingResult bindingResult, Model model, @PathVariable long entryId, @PathVariable long messageId, @RequestParam String accountStatusCode, @RequestParam String regulationAccountTypeCode, @RequestParam String page) {
+    public String updateAccount(@Valid Accounts account,
+                                BindingResult bindingResult,
+                                Model model,
+                                @PathVariable long entryId,
+                                @PathVariable long messageId,
+                                @RequestParam String accountStatusCode,
+                                @RequestParam String regulationAccountTypeCode,
+                                @RequestParam String page) {
         setCodes(account, regulationAccountTypeCode, accountStatusCode);
         if (bindingResult.getErrorCount() == 2) {
             accountsService.update(account);

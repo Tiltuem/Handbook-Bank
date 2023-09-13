@@ -14,6 +14,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.util.Date;
@@ -83,10 +84,12 @@ public class ParticipantInfo {
     @XmlAttribute(name = "DateIn")
     @XmlJavaTypeAdapter(LocalDateAdapter.class)
     @NotNull(message = "Ошибка: поле не может быть пустым")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dateIn;
 
     @XmlAttribute(name = "DateOut")
     @XmlJavaTypeAdapter(LocalDateAdapter.class)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dateOut;
 
     @XmlAttribute(name = "PtType")
@@ -124,18 +127,6 @@ public class ParticipantInfo {
     private List<RestrictionList> restrictionList;
 
     private Boolean deleted;
-
-    @CreatedDate
-    private Date createdDate;
-
-    @LastModifiedDate
-    private Date modifiedDate;
-
-    @CreatedBy
-    private String createdBy;
-
-    @LastModifiedBy
-    private String modifiedBy;
     public ParticipantInfo() {
         this.deleted = false;
     }

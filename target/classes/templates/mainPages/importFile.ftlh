@@ -2,6 +2,7 @@
 <#import "../parts/header.ftlh" as h>
 <#import "../parts/footer.ftlh" as f>
 <#import "../parts/loadingModal.ftlh" as l>
+<#import "../parts/pagination.ftlh" as p>
 
 <@c.page "../../css/styleDirectories.css">
 
@@ -54,25 +55,8 @@
                                 </#list>
                                 </tbody>
                             </table>
-                            <nav aria-label="Page navigation example">
-                                <ul class="pagination">
-                                    <li class="page-item"><a class="page-link" href="/import/0">Первая
-                                            страница</a></li>
-                                    <#if page != 0>
-                                        <li class="page-item"><a class="page-link" href="/import/${page-1}">${page}</a>
-                                        </li>
-                                    </#if>
-                                    <li class="page-item active"><a class="page-link" href="#">${page+1}</a></li>
-                                    <#if page != maxPage>
-                                        <li class="page-item"><a class="page-link"
-                                                                 href="/import/${page+1}">${page+2}</a>
-                                        </li>
-                                    </#if>
-                                    <li class="page-item"><a class="page-link" href="/import/${maxPage}">Последняя
-                                            страница</a></li>
-                                </ul>
-                            </nav>
                         </div>
+                        <@p.pagination "import" files />
                     <#else>
                         <h3>Записи отсутствуют</h3>
                     </#if>
@@ -137,7 +121,8 @@
         </div>
     </section>
     <!--Подвал-->
-    <@f.footer /><!--Окно загрузки-->
+    <@f.footer />
+    <!--Окно загрузки-->
     <@l.loading />
 </@c.page>
 

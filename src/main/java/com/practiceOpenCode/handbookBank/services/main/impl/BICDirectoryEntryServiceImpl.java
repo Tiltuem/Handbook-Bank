@@ -75,40 +75,22 @@ public class BICDirectoryEntryServiceImpl implements BICDirectoryEntryService {
     }
 
     @Override
-    public void update(BICDirectoryEntry entry, String participantTypeCode, String serviceCsCode, String exchangeParticipantCode, String participantStatusCode, String changeTypeCode) {
+    public void update(BICDirectoryEntry entry, ParticipantInfo info, String participantTypeCode, String serviceCsCode, String exchangeParticipantCode, String participantStatusCode, String changeTypeCode) {
         BICDirectoryEntry oldEntry = repository.findById(entry.getId());
-        ParticipantInfo info = entry.getParticipantInfo();
-
         info.setId(oldEntry.getParticipantInfo().getId());
-        info.setExchangeParticipantCode(exchangeParticipantCodeService.getByCode(exchangeParticipantCode));
-        info.setParticipantStatusCode(participantStatusCodeService.getByCode(participantStatusCode));
-        info.setServiceCsCode(serviceCsCodeService.getByCode(serviceCsCode));
-        info.setParticipantTypeCode(participantTypeCodeService.getByCode(participantTypeCode));
-        info.setDeleted(false);
         info.setRestrictionList(oldEntry.getParticipantInfo().getRestrictionList());
-
         oldEntry.setBic(entry.getBic());
-        oldEntry.setParticipantInfo(info);
-        oldEntry.setChangeTypeCode(changeTypeCodeService.getByCode(changeTypeCode));
+        setInfo(oldEntry, info, participantTypeCode, serviceCsCode, exchangeParticipantCode, participantStatusCode, changeTypeCode);
 
         repository.save(oldEntry);
     }
 
     @Override
-    public void add(String bic, ParticipantInfo info, String participantTypeCode, String serviceCsCode, String exchangeParticipantCode, String participantStatusCode, String changeTypeCode) {
-        BICDirectoryEntry entry = new BICDirectoryEntry();
+    public void add(BICDirectoryEntry newEntry, ParticipantInfo info, String participantTypeCode, String serviceCsCode, String exchangeParticipantCode, String participantStatusCode, String changeTypeCode) {
+        newEntry.setDeleted(false);
+        setInfo(newEntry, info, participantTypeCode, serviceCsCode, exchangeParticipantCode, participantStatusCode, changeTypeCode);
 
-        //info.setId(entry.getId());
-        info.setExchangeParticipantCode(exchangeParticipantCodeService.getByCode(exchangeParticipantCode));
-        info.setParticipantStatusCode(participantStatusCodeService.getByCode(participantStatusCode));
-        info.setServiceCsCode(serviceCsCodeService.getByCode(serviceCsCode));
-        info.setParticipantTypeCode(participantTypeCodeService.getByCode(participantTypeCode));
-        info.setDeleted(false);
-
-        entry.setDeleted(false);
-        entry.setChangeTypeCode(changeTypeCodeService.getByCode(changeTypeCode));
-        entry.setParticipantInfo(info);
-        repository.save(entry);
+        repository.save(newEntry);
     }
 
     @Override
@@ -128,6 +110,17 @@ public class BICDirectoryEntryServiceImpl implements BICDirectoryEntryService {
         repository.save(entry);
     }
 
+    private void setInfo(BICDirectoryEntry entry, ParticipantInfo info, String participantTypeCode, String serviceCsCode, String exchangeParticipantCode, String participantStatusCode, String changeTypeCode) {
+        info.setExchangeParticipantCode(exchangeParticipantCodeService.getByCode(exchangeParticipantCode));
+        info.setParticipantStatusCode(participantStatusCodeService.getByCode(participantStatusCode));
+        info.setServiceCsCode(serviceCsCodeService.getByCode(serviceCsCode));
+        info.setParticipantTypeCode(participantTypeCodeService.getByCode(participantTypeCode));
+        info.setDeleted(false);
+
+        entry.setChangeTypeCode(changeTypeCodeService.getByCode(changeTypeCode));
+        entry.setParticipantInfo(info);
+    }
+
     private Page<BICDirectoryEntry> search(Pageable pageable, String value, String column, Boolean deleted, String dateFrom, String dateBy) {
         Query query;
         StringBuilder queryString = new StringBuilder("SELECT a FROM BICDirectoryEntry a WHERE a.");
@@ -144,7 +137,7 @@ public class BICDirectoryEntryServiceImpl implements BICDirectoryEntryService {
             if (!Objects.isNull(deleted))
                 queryString.append(" AND a.deleted = false");
 
-            if (!dateFrom.equals("")) {
+            if (!Objects.isNull(dateFrom)) {
                 queryString.append(" AND a.participantInfo.dateIn BETWEEN ?2 AND ?3");
                 query = entityManager.createQuery(queryString.toString())
                         .setParameter(1, value)

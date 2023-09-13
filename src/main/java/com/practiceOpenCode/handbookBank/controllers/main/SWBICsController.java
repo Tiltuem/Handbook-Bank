@@ -59,7 +59,12 @@ public class SWBICsController {
     }
 
     @PostMapping("/swbics-add")
-    public String addSWBICs(@Valid SWBICs swbics, BindingResult bindingResult, Model model, @PathVariable long entryId, @PathVariable long messageId, @RequestParam String page) {
+    public String addSWBICs(@Valid SWBICs swbics,
+                            BindingResult bindingResult,
+                            Model model,
+                            @PathVariable long entryId,
+                            @PathVariable long messageId,
+                            @RequestParam String page) {
         if (!bindingResult.hasErrors()) {
             bicDirectoryEntryService.updateById(entryId, swbics);
             log.info("Добавлен новый перечень БИК");
@@ -73,7 +78,12 @@ public class SWBICsController {
     }
 
     @PostMapping("/swbics-edit")
-    public String updateSWBICs(@Valid SWBICs swbics, BindingResult bindingResult, Model model, @PathVariable long entryId, @PathVariable long messageId, @RequestParam String page) {
+    public String updateSWBICs(@Valid SWBICs swbics,
+                               BindingResult bindingResult,
+                               Model model,
+                               @PathVariable long entryId,
+                               @PathVariable long messageId,
+                               @RequestParam String page) {
         if (!bindingResult.hasErrors()) {
             SWBICsService.update(swbics);
             log.info("Перечень БИК (id: " + swbics.getId() + ") редактирован");

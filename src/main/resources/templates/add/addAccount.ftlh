@@ -65,13 +65,12 @@
                             </#if>
                         </div>
                         <br>
-
                         <div class="row">
                             <div class="col-md-6">
-                                <div class="col-35">
+                                <div class="col-25">
                                     Статус счета:
                                 </div>
-                                <div class="col-65">
+                                <div class="col-75">
                                     <select type="text" name="accountStatusCode">
                                         <#list accountStatusCodeList as code>
                                             <option value="${code.code}">${code.code}</option>
@@ -103,10 +102,10 @@
                         </div>
                         <div class="row">
                             <div class="col-md-6">
-                                <div class="col-35">
+                                <div class="col-25">
                                     Тип счета:
                                 </div>
-                                <div class="col-65">
+                                <div class="col-75">
                                     <select type="text" name="regulationAccountTypeCode">
                                         <#list regulationAccountTypeCodeList as code>
                                             <option value="${code.code}">${code.code}</option>
@@ -129,10 +128,15 @@
                         </div>
 
                         <br>
-                        <div class="col">
-                            <button type="submit" value="submit" class="btn btn-my" data-bs-toggle="modal"
-                                    data-bs-target="#loadingModal">Добавить
-                            </button>
+                        <div class="row">
+                            <div class="col-md-2">
+                                <a class="btn btn-my" onclick="history.back()">Назад</a>
+                            </div>
+                            <div class="col-md-2">
+                                <button type="submit" value="submit" class="btn btn-my" data-bs-toggle="modal"
+                                        data-bs-target="#loadingModal">Добавить
+                                </button>
+                            </div>
                         </div>
                     </form>
                 </div>

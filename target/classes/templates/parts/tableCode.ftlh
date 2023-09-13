@@ -66,9 +66,10 @@
                     </#list>
                     </tbody>
                 </table>
-                <@p.pagination nameCode/>
             </div>
+            <@p.pagination "codes/${nameCode}" codes/>
         </div>
+
     <#else>
         <h3>Записи отсутствуют</h3>
         <#if search??>
