@@ -6,6 +6,7 @@ import com.practiceOpenCode.handbookBank.models.codes.AccountRestrictionCode;
 import com.practiceOpenCode.handbookBank.services.codes.AbstractCodeService;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -23,6 +24,7 @@ import java.util.Objects;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/codes/accountRestriction")
+@Slf4j
 public class AccountRestrictionCodeController {
     @Autowired
     AbstractCodeService<AccountRestrictionCode> accountRestrictionCodeService;
@@ -42,11 +44,12 @@ public class AccountRestrictionCodeController {
     public String addNewAccountRestrictionCode(@Valid AccountRestrictionCode accountRestrictionCode, BindingResult bindingResult, Model model) {
         if (accountRestrictionCodeService.getByCode(accountRestrictionCode.getCode()) != null) {
             bindingResult.addError(new ObjectError("accountRestrictionCode", "Ошибка: данный код уже существует"));
+            log.warn("Ошибка при добавлении кода: данный код уже существует");
         }
         if (!bindingResult.hasErrors()) {
             accountRestrictionCode.setDeleted(false);
             accountRestrictionCodeService.save(accountRestrictionCode);
-
+            log.info("Код добавлен");
             return "redirect:/codes/accountRestriction/0";
         }
         Page<AccountRestrictionCode> codes = accountRestrictionCodeService.getAllCodes(PageRequest.of(0, 5, Sort.by("id")), null, null);
@@ -60,6 +63,8 @@ public class AccountRestrictionCodeController {
     @PostMapping("/delete/{id}")
     public String deleteAccountRestrictionCode(@PathVariable long id, @RequestParam String page) {
         accountRestrictionCodeService.deleteById(id);
+        log.info("Код с id: " + id + " удален");
+
         return "redirect:/codes/accountRestriction/" + page;
     }
 
@@ -71,12 +76,15 @@ public class AccountRestrictionCodeController {
         AccountRestrictionCode accountRestrictionCode = accountRestrictionCodeService.getById(id);
         accountRestrictionCode.setCode(newCode);
         accountRestrictionCodeService.save(accountRestrictionCode);
+        log.info("Код с id: " + id + " редактирован");
+
         return "redirect:/codes/accountRestriction/" + page;
     }
 
     @PostMapping("/recovery/{id}")
     public String recoveryAccountRestrictionCode(@PathVariable long id) {
         accountRestrictionCodeService.recoveryById(id);
+        log.info("Код с id: " + id + " восстановлен");
         return "redirect:/codes/accountRestriction/0";
     }
 

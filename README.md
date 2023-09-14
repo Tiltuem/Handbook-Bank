@@ -33,8 +33,8 @@
 ## Запуск
 Чтобы собрать и запустить проект, выполните следующие действия:
 * Клонируйте репозиторий: `git clone https://github.com/Tiltuem/Handbook-Bank.git`
-* Перейдите в каталог проекта: cd handbook-Bank-develop.;
+* Перейдите в каталог проекта: cd Handbook-Bank-develop.;
 * Сборка проекта: mvn clean install;
 * Запустите проект: mvn Spring-boot:run.
 
--> Приложение будет доступно по адресу http://localhost:8080.
+-> Приложение будет доступно по адресу http://localhost:8080. Тестовые данные для авторизации: 1) admin, 100; 2) user, 100.
