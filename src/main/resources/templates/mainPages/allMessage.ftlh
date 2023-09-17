@@ -44,11 +44,11 @@
                             <option value="creationDateTime">Дата и время создания</option>
                             <option value="businessDay">Дата ОД</option>
                         </select>
-                        с  <input type="date" name="dateFrom"> по <input type="date" name="dateBy">
+                        с  <input type="date" name="dateFrom"> по <input type="date" name="dateBy" value="">
                         <#if search??>
                             <br>
                             <br>
-                            <a class="btn btn-my" href="">Отменить поиск</a>
+                            <a class="btn btn-my" href="/messages/${page}">Отменить поиск</a>
                         </#if>
                     </form>
                     <br>

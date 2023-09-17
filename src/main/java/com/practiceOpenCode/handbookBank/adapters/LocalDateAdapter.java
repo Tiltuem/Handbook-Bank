@@ -1,4 +1,4 @@
-package com.practiceOpenCode.handbookBank.models.adapters;
+package com.practiceOpenCode.handbookBank.adapters;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 

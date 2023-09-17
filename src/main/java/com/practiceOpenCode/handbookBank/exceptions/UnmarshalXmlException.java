@@ -1,4 +1,4 @@
-package com.practiceOpenCode.handbookBank.exception;
+package com.practiceOpenCode.handbookBank.exceptions;
 
 public class UnmarshalXmlException extends RuntimeException{
     public UnmarshalXmlException(String message) {

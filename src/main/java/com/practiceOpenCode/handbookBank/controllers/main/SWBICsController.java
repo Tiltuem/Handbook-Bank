@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @Controller
 @Slf4j
-@PreAuthorize("hasAuthority('ROLE_USER')")
+@PreAuthorize("hasAuthority('ROLE_USER') or hasAuthority('ROLE_ADMIN')")
 public class SWBICsController {
     @Autowired
     SWBICsService SWBICsService;

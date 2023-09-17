@@ -12,8 +12,9 @@
             <div class="row">
                 <div class="baG">
                     <h3>Ooooops!</h3>
-                    <p>Ошибка прав доступа</p>
-                    <a class="btn btn-my"  href="/">На главную</a>
+                    <p>Ошибка: недостаточно прав</p>
+                    <a class="btn btn-my" onclick="history.back()">Назад</a>
+                    <a class="btn btn-my" href="/">На главную</a>
                 </div>
             </div>
         </div>

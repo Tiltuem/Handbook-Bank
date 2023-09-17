@@ -1,9 +1,9 @@
 package com.practiceOpenCode.handbookBank.models.main;
 
-import com.practiceOpenCode.handbookBank.models.adapters.CreationReasonCodeAdapter;
-import com.practiceOpenCode.handbookBank.models.adapters.InformationTypeCodeAdapter;
-import com.practiceOpenCode.handbookBank.models.adapters.LocalDateAdapter;
-import com.practiceOpenCode.handbookBank.models.adapters.LocalDateTimeAdapter;
+import com.practiceOpenCode.handbookBank.adapters.CreationReasonCodeAdapter;
+import com.practiceOpenCode.handbookBank.adapters.InformationTypeCodeAdapter;
+import com.practiceOpenCode.handbookBank.adapters.LocalDateAdapter;
+import com.practiceOpenCode.handbookBank.adapters.LocalDateTimeAdapter;
 import com.practiceOpenCode.handbookBank.models.codes.CreationReasonCode;
 import com.practiceOpenCode.handbookBank.models.codes.InformationTypeCode;
 
@@ -88,7 +88,7 @@ public class Message {
     private String directoryVersion;
 
     @XmlElement(name = "BICDirectoryEntry", namespace = "urn:cbr-ru:ed:v2.0")
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "bic_directory_entry_list_id")
     private List<BICDirectoryEntry> bicDirectoryEntryList = new ArrayList<>();
 

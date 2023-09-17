@@ -1,6 +1,6 @@
 package com.practiceOpenCode.handbookBank.controllers.main;
 
-import com.practiceOpenCode.handbookBank.exception.NotFoundPageException;
+import com.practiceOpenCode.handbookBank.exceptions.NotFoundPageException;
 import com.practiceOpenCode.handbookBank.models.codes.*;
 import com.practiceOpenCode.handbookBank.models.main.BICDirectoryEntry;
 import com.practiceOpenCode.handbookBank.models.main.ParticipantInfo;
@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping("/message-{messageId}/directory-entry")
 @Slf4j
-@PreAuthorize("hasAuthority('ROLE_USER')")
+@PreAuthorize("hasAuthority('ROLE_USER') or hasAuthority('ROLE_ADMIN')")
 public class EntryController {
     @Autowired
     private BICDirectoryEntryService bicDirectoryEntryService;

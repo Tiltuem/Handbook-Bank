@@ -1,7 +1,7 @@
 package com.practiceOpenCode.handbookBank.models.main;
 
-import com.practiceOpenCode.handbookBank.models.adapters.LocalDateAdapter;
-import com.practiceOpenCode.handbookBank.models.adapters.RestrictionCodeAdapter;
+import com.practiceOpenCode.handbookBank.adapters.LocalDateAdapter;
+import com.practiceOpenCode.handbookBank.adapters.RestrictionCodeAdapter;
 import com.practiceOpenCode.handbookBank.models.codes.RestrictionCode;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

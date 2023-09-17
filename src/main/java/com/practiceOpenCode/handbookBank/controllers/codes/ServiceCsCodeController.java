@@ -1,7 +1,7 @@
 package com.practiceOpenCode.handbookBank.controllers.codes;
 
-import com.practiceOpenCode.handbookBank.exception.DuplicateFileException;
-import com.practiceOpenCode.handbookBank.exception.NotFoundPageException;
+import com.practiceOpenCode.handbookBank.exceptions.DuplicateFileException;
+import com.practiceOpenCode.handbookBank.exceptions.NotFoundPageException;
 import com.practiceOpenCode.handbookBank.models.codes.ServiceCsCode;
 import com.practiceOpenCode.handbookBank.services.codes.AbstractCodeService;
 import lombok.RequiredArgsConstructor;
@@ -40,7 +40,7 @@ public class ServiceCsCodeController {
     }
 
     @PostMapping("/add")
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public String addNewServiceCsCode(@Valid ServiceCsCode serviceCsCode, BindingResult bindingResult, Model model) {
         if (serviceCsCodeService.getByCode(serviceCsCode.getCode()) != null) {
             log.warn("Ошибка при добавлении кода: данный код уже существует");

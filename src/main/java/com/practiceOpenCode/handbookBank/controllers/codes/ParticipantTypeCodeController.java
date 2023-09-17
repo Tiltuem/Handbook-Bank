@@ -1,8 +1,8 @@
 package com.practiceOpenCode.handbookBank.controllers.codes;
 
 
-import com.practiceOpenCode.handbookBank.exception.DuplicateFileException;
-import com.practiceOpenCode.handbookBank.exception.NotFoundPageException;
+import com.practiceOpenCode.handbookBank.exceptions.DuplicateFileException;
+import com.practiceOpenCode.handbookBank.exceptions.NotFoundPageException;
 import com.practiceOpenCode.handbookBank.models.codes.ParticipantTypeCode;
 import com.practiceOpenCode.handbookBank.services.codes.AbstractCodeService;
 import lombok.RequiredArgsConstructor;
@@ -41,7 +41,7 @@ public class ParticipantTypeCodeController {
     }
 
     @PostMapping("/add")
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public String addNewParticipantTypeCode(@Valid ParticipantTypeCode participantTypeCode, BindingResult bindingResult, Model model) {
         if (participantTypeCodeService.getByCode(participantTypeCode.getCode()) != null) {
             log.warn("Ошибка при добавлении кода: данный код уже существует");

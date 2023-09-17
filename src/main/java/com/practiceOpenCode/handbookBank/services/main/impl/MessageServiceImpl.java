@@ -1,7 +1,7 @@
 package com.practiceOpenCode.handbookBank.services.main.impl;
 
-import com.practiceOpenCode.handbookBank.exception.DuplicateFileException;
-import com.practiceOpenCode.handbookBank.exception.NotFoundFileXmlException;
+import com.practiceOpenCode.handbookBank.exceptions.DuplicateFileException;
+import com.practiceOpenCode.handbookBank.exceptions.NotFoundFileXmlException;
 
 import com.practiceOpenCode.handbookBank.models.main.FileInfo;
 import com.practiceOpenCode.handbookBank.models.main.Message;
@@ -13,6 +13,7 @@ import com.practiceOpenCode.handbookBank.services.main.MessageService;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.transaction.Transactional;
 
 import com.practiceOpenCode.handbookBank.services.security.impl.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -55,6 +56,7 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     public Page<Message> searchMessages(Pageable pageable, String value, Boolean showDeleted, String column, String columnDate, String dateFrom, String dateBy) {
+        if(dateBy=="") dateBy = LocalDate.now().toString();
         if (!value.equals("") || !dateFrom.equals(""))
             return search(pageable, value, column, columnDate, showDeleted, dateFrom, dateBy);
         if (showDeleted) return repository.findAll(pageable);

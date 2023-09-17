@@ -1,8 +1,8 @@
 package com.practiceOpenCode.handbookBank.models.main;
 
-import com.practiceOpenCode.handbookBank.models.adapters.AccountStatusCodeAdapter;
-import com.practiceOpenCode.handbookBank.models.adapters.LocalDateAdapter;
-import com.practiceOpenCode.handbookBank.models.adapters.RegulationAccountTypeCodeAdapter;
+import com.practiceOpenCode.handbookBank.adapters.AccountStatusCodeAdapter;
+import com.practiceOpenCode.handbookBank.adapters.LocalDateAdapter;
+import com.practiceOpenCode.handbookBank.adapters.RegulationAccountTypeCodeAdapter;
 import com.practiceOpenCode.handbookBank.models.codes.AccountStatusCode;
 import com.practiceOpenCode.handbookBank.models.codes.RegulationAccountTypeCode;
 import javax.persistence.*;
@@ -81,7 +81,7 @@ public class Accounts {
     private AccountStatusCode accountStatusCode;
 
     @XmlElement(name = "AccRstrList", namespace = "urn:cbr-ru:ed:v2.0")
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "account_restriction_list_id")
     private List<AccountRestrictionList> accountRestrictionList;
     private Boolean deleted;

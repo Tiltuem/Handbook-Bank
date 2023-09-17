@@ -1,6 +1,6 @@
 package com.practiceOpenCode.handbookBank.controllers.main;
 
-import com.practiceOpenCode.handbookBank.exception.NotFoundPageException;
+import com.practiceOpenCode.handbookBank.exceptions.NotFoundPageException;
 import com.practiceOpenCode.handbookBank.models.main.FileInfo;
 import com.practiceOpenCode.handbookBank.services.main.FileService;
 import com.practiceOpenCode.handbookBank.services.main.MessageService;
@@ -21,7 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RequiredArgsConstructor
 @RequestMapping("/import")
 @Slf4j
-@PreAuthorize("hasAuthority('ROLE_USER')")
+@PreAuthorize("hasAuthority('ROLE_USER') or hasAuthority('ROLE_ADMIN')")
 public class ImportController {
     @Autowired
     MessageService messageService;

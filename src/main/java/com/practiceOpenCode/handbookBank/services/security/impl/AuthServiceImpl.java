@@ -3,7 +3,7 @@ package com.practiceOpenCode.handbookBank.services.security.impl;
 import com.practiceOpenCode.handbookBank.dtos.JwtRequest;
 import com.practiceOpenCode.handbookBank.dtos.JwtResponse;
 import com.practiceOpenCode.handbookBank.dtos.RegistrationUserDto;
-import com.practiceOpenCode.handbookBank.exception.UnauthorizedException;
+import com.practiceOpenCode.handbookBank.exceptions.UnauthorizedException;
 import com.practiceOpenCode.handbookBank.services.security.AuthService;
 import com.practiceOpenCode.handbookBank.utils.JwtTokenUtils;
 import lombok.RequiredArgsConstructor;
@@ -11,18 +11,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.servlet.ModelAndView;
-
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 @Service
 @RequiredArgsConstructor
@@ -36,7 +29,7 @@ public class AuthServiceImpl implements AuthService {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
         } catch (BadCredentialsException e) {
-            throw new UnauthorizedException("invalid login/password");
+            throw new UnauthorizedException("Ошибка: неверный логин или пароль");
         }
         UserDetails userDetails = userService.loadUserByUsername(authRequest.getUsername());
         String token = jwtTokenUtils.generateToken(userDetails);

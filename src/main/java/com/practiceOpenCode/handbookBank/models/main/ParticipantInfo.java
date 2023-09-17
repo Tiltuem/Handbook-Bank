@@ -1,6 +1,6 @@
 package com.practiceOpenCode.handbookBank.models.main;
 
-import com.practiceOpenCode.handbookBank.models.adapters.*;
+import com.practiceOpenCode.handbookBank.adapters.*;
 import com.practiceOpenCode.handbookBank.models.codes.*;
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -9,15 +9,10 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.hibernate.annotations.SQLDelete;
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedBy;
-import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -122,7 +117,7 @@ public class ParticipantInfo {
     private ParticipantStatusCode participantStatusCode;
 
     @XmlElement(name = "RstrList", namespace = "urn:cbr-ru:ed:v2.0")
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "restriction_list_id")
     private List<RestrictionList> restrictionList;
 

@@ -13,7 +13,6 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <#if entries.getTotalPages() != 0>
                         <h2>Записи в Справочнике БИК</h2>
                         <br>
                         <br>
@@ -59,9 +58,10 @@
                             </div>
                             <#if search??>
                                 <br>
-                                <a class="btn btn-my" href="">Отменить поиск</a>
+                                <a class="btn btn-my" href="/message-${messageId}/directory-entry/${page}">Отменить поиск</a>
                             </#if>
                         </form>
+                    <#if entries.getTotalPages() != 0>
                         <div class="row">
                             <div class="col-md-2">
                                 <form action="/message-${messageId}/directory-entry/new-entry" method="get">

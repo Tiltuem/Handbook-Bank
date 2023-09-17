@@ -1,41 +1,38 @@
-package com.practiceOpenCode.handbookBank.models.adapters;
+package com.practiceOpenCode.handbookBank.adapters;
 
 
-import com.practiceOpenCode.handbookBank.exception.NoSuchCodeException;
-import com.practiceOpenCode.handbookBank.models.codes.AccountRestrictionCode;
-import com.practiceOpenCode.handbookBank.models.context.ApplicationContextHolder;
+import com.practiceOpenCode.handbookBank.exceptions.NoSuchCodeException;
 import com.practiceOpenCode.handbookBank.models.codes.AccountStatusCode;
-import com.practiceOpenCode.handbookBank.repositories.codes.AccountStatusCodeRepository;
+import com.practiceOpenCode.handbookBank.repositories.codes.AbstractCodeRepository;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
-
-import org.springframework.context.ApplicationContext;
-
 import java.util.List;
 
-public class AccountStatusCodeAdapter extends XmlAdapter<String, AccountStatusCode> {
-    private final List<AccountStatusCode> accountStatusCodeList;
-    private final ApplicationContext ctx;
 
-    public AccountStatusCodeAdapter() {
-        ctx = ApplicationContextHolder.getApplicationContext();
-        accountStatusCodeList = ctx.getBean(AccountStatusCodeRepository.class).findAll();
+public class AccountStatusCodeAdapter extends XmlAdapter<String, AccountStatusCode> {
+
+    private final List<AccountStatusCode> accountStatusCodeList;
+
+
+    public AccountStatusCodeAdapter(AbstractCodeRepository<AccountStatusCode> repository) {
+        accountStatusCodeList = repository.findAll();
     }
 
     @Override
     public AccountStatusCode unmarshal(String code) throws Exception {
         for (AccountStatusCode accountStatusCode : accountStatusCodeList) {
             if (accountStatusCode.getCode().equals(code)) {
-                if(!accountStatusCode.getDeleted())  return accountStatusCode;
+                if (!accountStatusCode.getDeleted()) return accountStatusCode;
                 else
                     throw new NoSuchCodeException("Ошибка: код '" + code + "' удалён.\nДля получения файла восстановите этот код в ограничения операций по счету");
             }
         }
-        return new AccountStatusCode(code);
+        throw new NoSuchCodeException("Ошибка: код '" + code + "' удалён.\nДля получения файла восстановите этот код в ограничения операций по счету");
     }
 
     @Override
     public String marshal(AccountStatusCode accountStatusCode) throws Exception {
         return accountStatusCode.getCode();
     }
+
 }

@@ -6,6 +6,7 @@ import com.practiceOpenCode.handbookBank.services.security.AuthService;
 import com.practiceOpenCode.handbookBank.services.security.impl.AuthServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,10 +36,4 @@ public class AuthRestController {
     public ModelAndView createNewUser(@Valid RegistrationUserDto registrationUserDto, BindingResult bindingResult) {
         return authService.createNewUser(registrationUserDto, bindingResult);
     }
-
-   /* @GetMapping("/logout")
-    public String logout(HttpServletRequest request, HttpServletResponse response) {
-        authService.logout(request, response);
-        return "redirect:/";
-    }*/
 }

@@ -1,9 +1,12 @@
 package com.practiceOpenCode.handbookBank.services.main.impl;
 
-import com.practiceOpenCode.handbookBank.exception.NotFoundFileXmlException;
-import com.practiceOpenCode.handbookBank.exception.UnmarshalXmlException;
+import com.practiceOpenCode.handbookBank.adapters.*;
+import com.practiceOpenCode.handbookBank.exceptions.NotFoundFileXmlException;
+import com.practiceOpenCode.handbookBank.exceptions.UnmarshalXmlException;
+import com.practiceOpenCode.handbookBank.models.codes.*;
 import com.practiceOpenCode.handbookBank.models.main.FileInfo;
 import com.practiceOpenCode.handbookBank.models.main.Message;
+import com.practiceOpenCode.handbookBank.repositories.codes.AbstractCodeRepository;
 import com.practiceOpenCode.handbookBank.repositories.main.FileRepository;
 import com.practiceOpenCode.handbookBank.services.main.FileService;
 
@@ -15,6 +18,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 
+import javax.transaction.Transactional;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Unmarshaller;
 import java.io.*;
@@ -31,6 +35,30 @@ import java.util.zip.ZipInputStream;
 public class FileServiceImpl implements FileService {
     @Autowired
     private FileRepository repository;
+    @Autowired
+    private AbstractCodeRepository<AccountRestrictionCode> repositoryAccountRestrictionCode;
+    @Autowired
+    private AbstractCodeRepository<AccountStatusCode> repositoryAccountStatusCode;
+    @Autowired
+    private AbstractCodeRepository<ChangeTypeCode> repositoryChangeTypeCode;
+    @Autowired
+    private AbstractCodeRepository<CreationReasonCode> repositoryCreationReasonCode;
+    @Autowired
+    private AbstractCodeRepository<ExchangeParticipantCode> repositoryExchangeParticipantCode;
+    @Autowired
+    private AbstractCodeRepository<InformationTypeCode> repositoryInformationTypeCode;
+    @Autowired
+    private AbstractCodeRepository<ParticipantStatusCode> repositoryParticipantStatusCode;
+    @Autowired
+    private AbstractCodeRepository<ParticipantTypeCode> repositoryParticipantTypeCode;
+    @Autowired
+    private AbstractCodeRepository<RegulationAccountTypeCode> repositoryRegulationAccountTypeCode;
+    @Autowired
+    private AbstractCodeRepository<RestrictionCode> repositoryRestrictionCode;
+    @Autowired
+    private AbstractCodeRepository<ServiceCsCode> repositoryServiceCsCode;
+
+
     private static final String START_URL_DOWNLOAD = "https://cbr.ru/vfs/mcirabis/BIKNew/";
     private static final String END_URL_DOWNLOAD = "ED01OSBR.zip";
     private static final String PATH_TO_STORAGE = "src/main/resources/storage/";
@@ -85,6 +113,7 @@ public class FileServiceImpl implements FileService {
         try {
             jaxbContext = JAXBContext.newInstance(Message.class);
             Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
+            setAdapter(unmarshaller);
             return (Message) unmarshaller.unmarshal(fileXml);
         } catch (Exception e) {
             log.warn("Ошибка при добавлении файла: неверная структура XML");
@@ -124,5 +153,20 @@ public class FileServiceImpl implements FileService {
     @Override
     public Boolean checkFileExist(String name) {
         return repository.findByName(name) != null;
+    }
+
+    private void setAdapter(Unmarshaller unmarshaller) {
+        unmarshaller.setAdapter(new AccountRestrictionCodeAdapter(repositoryAccountRestrictionCode));
+        unmarshaller.setAdapter(new AccountStatusCodeAdapter(repositoryAccountStatusCode));
+        unmarshaller.setAdapter(new CreationReasonCodeAdapter(repositoryCreationReasonCode));
+        unmarshaller.setAdapter(new ExchangeParticipantCodeAdapter(repositoryExchangeParticipantCode));
+        unmarshaller.setAdapter(new ChangeTypeCodeAdapter(repositoryChangeTypeCode));
+        unmarshaller.setAdapter(new InformationTypeCodeAdapter(repositoryInformationTypeCode));
+        unmarshaller.setAdapter(new ParticipantStatusCodeAdapter(repositoryParticipantStatusCode));
+        unmarshaller.setAdapter(new ParticipantTypeCodeAdapter(repositoryParticipantTypeCode));
+        unmarshaller.setAdapter(new RegulationAccountTypeCodeAdapter(repositoryRegulationAccountTypeCode));
+        unmarshaller.setAdapter(new RestrictionCodeAdapter(repositoryRestrictionCode));
+        unmarshaller.setAdapter(new ServiceCsCodeAdapter(repositoryServiceCsCode));
+
     }
 }

@@ -1,7 +1,7 @@
 package com.practiceOpenCode.handbookBank.controllers.codes;
 
-import com.practiceOpenCode.handbookBank.exception.DuplicateFileException;
-import com.practiceOpenCode.handbookBank.exception.NotFoundPageException;
+import com.practiceOpenCode.handbookBank.exceptions.DuplicateFileException;
+import com.practiceOpenCode.handbookBank.exceptions.NotFoundPageException;
 import com.practiceOpenCode.handbookBank.models.codes.ExchangeParticipantCode;
 import com.practiceOpenCode.handbookBank.services.codes.AbstractCodeService;
 import lombok.RequiredArgsConstructor;
@@ -40,7 +40,7 @@ public class ExchangeParticipantCodeController {
     }
 
     @PostMapping("/add")
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public String addNewExchangeParticipantCode(@Valid ExchangeParticipantCode exchangeParticipantCode, BindingResult bindingResult, Model model) {
         if (exchangeParticipantCodeService.getByCode(exchangeParticipantCode.getCode()) != null) {
             log.warn("Ошибка при добавлении кода: данный код уже существует");

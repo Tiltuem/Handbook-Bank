@@ -29,6 +29,6 @@ public class AuthController {
     }
     @GetMapping("/access-error")
     public String accessError() {
-        return "authorization/accessError";
+        return "errors/accessError";
     }
 }

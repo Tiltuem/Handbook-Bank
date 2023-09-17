@@ -1,7 +1,7 @@
 package com.practiceOpenCode.handbookBank.models.main;
 
-import com.practiceOpenCode.handbookBank.models.adapters.AccountRestrictionCodeAdapter;
-import com.practiceOpenCode.handbookBank.models.adapters.LocalDateAdapter;
+import com.practiceOpenCode.handbookBank.adapters.AccountRestrictionCodeAdapter;
+import com.practiceOpenCode.handbookBank.adapters.LocalDateAdapter;
 import com.practiceOpenCode.handbookBank.models.codes.AccountRestrictionCode;
 
 import javax.persistence.*;

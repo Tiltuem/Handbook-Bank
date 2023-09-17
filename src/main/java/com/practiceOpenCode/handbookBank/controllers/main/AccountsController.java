@@ -21,7 +21,7 @@ import javax.validation.Valid;
 @RequiredArgsConstructor
 @Controller
 @Slf4j
-@PreAuthorize("hasAuthority('ROLE_USER')")
+@PreAuthorize("hasAuthority('ROLE_USER') or hasAuthority('ROLE_ADMIN')")
 public class AccountsController {
     @Autowired
     AccountsService accountsService;

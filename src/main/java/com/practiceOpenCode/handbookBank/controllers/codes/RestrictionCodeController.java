@@ -1,8 +1,8 @@
 package com.practiceOpenCode.handbookBank.controllers.codes;
 
 
-import com.practiceOpenCode.handbookBank.exception.DuplicateFileException;
-import com.practiceOpenCode.handbookBank.exception.NotFoundPageException;
+import com.practiceOpenCode.handbookBank.exceptions.DuplicateFileException;
+import com.practiceOpenCode.handbookBank.exceptions.NotFoundPageException;
 import com.practiceOpenCode.handbookBank.models.codes.RestrictionCode;
 import com.practiceOpenCode.handbookBank.services.codes.AbstractCodeService;
 import lombok.RequiredArgsConstructor;
@@ -41,7 +41,7 @@ public class RestrictionCodeController {
     }
 
     @PostMapping("/add")
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public String addNewRestrictionCode(@Valid RestrictionCode restrictionCode, BindingResult bindingResult, Model model) {
         if (restrictionCodeService.getByCode(restrictionCode.getCode()) != null) {
             log.warn("Ошибка при добавлении кода: данный код уже существует");

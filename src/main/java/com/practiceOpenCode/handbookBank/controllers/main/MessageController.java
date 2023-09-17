@@ -1,6 +1,6 @@
 package com.practiceOpenCode.handbookBank.controllers.main;
 
-import com.practiceOpenCode.handbookBank.exception.NotFoundPageException;
+import com.practiceOpenCode.handbookBank.exceptions.NotFoundPageException;
 import com.practiceOpenCode.handbookBank.models.main.Message;
 import com.practiceOpenCode.handbookBank.services.main.MessageService;
 import lombok.RequiredArgsConstructor;
@@ -15,11 +15,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/messages")
 @Slf4j
-@PreAuthorize("hasAuthority('ROLE_USER')")
+@PreAuthorize("hasAuthority('ROLE_USER') or hasAuthority('ROLE_ADMIN')")
 public class MessageController {
     @Autowired
     MessageService messageService;
@@ -45,7 +47,6 @@ public class MessageController {
                                 @RequestParam(required = false) String columnDate,
                                 @PathVariable int page,
                                 final Model model) {
-
         Page<Message> messages = messageService.searchMessages(PageRequest.of(page, 10, Sort.by("id")), value, showDeleted, column, columnDate, dateFrom, dateBy);
         if (page > messages.getTotalPages())
             throw new NotFoundPageException("Страница не найдена");
