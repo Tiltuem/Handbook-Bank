@@ -41,23 +41,19 @@ public class BICDirectoryEntry {
     private String bic;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "change_type_id")
     @XmlAttribute(name = "ChangeType")
     @XmlJavaTypeAdapter(ChangeTypeCodeAdapter.class)
     private ChangeTypeCode changeTypeCode;
 
     @OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
-    @JoinColumn(name = "participant_info_id")
     @XmlElement(name = "ParticipantInfo", namespace = "urn:cbr-ru:ed:v2.0")
     private ParticipantInfo participantInfo;
 
     @OneToMany(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "accounts_id")
     @XmlElement(name = "Accounts", namespace = "urn:cbr-ru:ed:v2.0")
     private List<Accounts> accounts;
 
     @OneToMany(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "SWBICs_id")
     @XmlElement(name = "SWBICS", namespace = "urn:cbr-ru:ed:v2.0")
     private List<SWBICs> SWBICs;
 

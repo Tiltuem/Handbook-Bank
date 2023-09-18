@@ -46,7 +46,6 @@ public class Accounts {
     private String accountNumber;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "regulation_account_type")
     @XmlAttribute(name = "RegulationAccountType")
     @XmlJavaTypeAdapter(RegulationAccountTypeCodeAdapter.class)
     private RegulationAccountTypeCode regulationAccountTypeCode;
@@ -77,14 +76,12 @@ public class Accounts {
     private LocalDate dateOut;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "account_status")
     @XmlAttribute(name = "AccountStatus")
     @XmlJavaTypeAdapter(AccountStatusCodeAdapter.class)
     private AccountStatusCode accountStatusCode;
 
     @XmlElement(name = "AccRstrList", namespace = "urn:cbr-ru:ed:v2.0")
     @OneToMany(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "account_restriction_list_id")
     private List<AccountRestrictionList> accountRestrictionList;
     private Boolean deleted;
 

@@ -23,7 +23,6 @@ public class FileInfo {
     private String fileLink;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "message_id")
     private Message message;
 
     private Boolean deleted;

@@ -92,19 +92,16 @@ public class ParticipantInfo {
     private LocalDate dateOut;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "participant_type_id")
     @XmlAttribute(name = "PtType")
     @XmlJavaTypeAdapter(ParticipantTypeCodeAdapter.class)
     private ParticipantTypeCode participantTypeCode;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "service_cs_id")
     @XmlAttribute(name = "Srvcs")
     @XmlJavaTypeAdapter(ServiceCsCodeAdapter.class)
     private ServiceCsCode serviceCsCode;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "exchange_participant_id")
     @XmlAttribute(name = "XchType")
     @XmlJavaTypeAdapter(ExchangeParticipantCodeAdapter.class)
     private ExchangeParticipantCode exchangeParticipantCode;
@@ -115,13 +112,11 @@ public class ParticipantInfo {
     private String uid;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "participant_status_id")
     @XmlAttribute(name = "ParticipantStatus")
     @XmlJavaTypeAdapter(ParticipantStatusCodeAdapter.class)
     private ParticipantStatusCode participantStatusCode;
 
     @OneToMany(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "restriction_list_id")
     @XmlElement(name = "RstrList", namespace = "urn:cbr-ru:ed:v2.0")
     private List<RestrictionList> restrictionList;
 

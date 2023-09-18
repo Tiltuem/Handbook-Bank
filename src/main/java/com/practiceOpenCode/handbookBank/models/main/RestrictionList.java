@@ -33,7 +33,6 @@ public class RestrictionList {
     private long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "restriction_code_id")
     @XmlAttribute(name = "Rstr")
     @XmlJavaTypeAdapter(RestrictionCodeAdapter.class)
     private RestrictionCode restrictionCode;

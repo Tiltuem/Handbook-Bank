@@ -65,7 +65,6 @@ public class Message {
     private String edReceiver;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "creation_reason_code_id")
     @XmlAttribute(name = "CreationReason")
     @XmlJavaTypeAdapter(CreationReasonCodeAdapter.class)
     private CreationReasonCode creationReasonCode;
@@ -75,7 +74,6 @@ public class Message {
     private LocalDateTime creationDateTime;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "information_type_code_id")
     @XmlAttribute(name = "InfoTypeCode")
     @XmlJavaTypeAdapter(InformationTypeCodeAdapter.class)
     private InformationTypeCode informationTypeCode;
@@ -92,12 +90,10 @@ public class Message {
     private String directoryVersion;
 
     @OneToMany(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "bic_directory_entry_list_id")
     @XmlElement(name = "BICDirectoryEntry", namespace = "urn:cbr-ru:ed:v2.0")
     private List<BICDirectoryEntry> bicDirectoryEntryList = new ArrayList<>();
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "fileInfo_id")
     private FileInfo fileInfo;
 
     @ManyToOne(fetch = FetchType.LAZY)
