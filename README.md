@@ -33,7 +33,7 @@
 ## Запуск
 Чтобы собрать и запустить проект, выполните следующие действия:
 * Клонируйте репозиторий: `git clone https://github.com/Tiltuem/Handbook-Bank.git`
-* Перейдите в каталог проекта: cd Handbook-Bank-develop.;
+* Перейдите в каталог проекта: cd Handbook-Bank;
 * Сборка проекта: mvn clean install;
 * Запустите проект: mvn Spring-boot:run.
 
