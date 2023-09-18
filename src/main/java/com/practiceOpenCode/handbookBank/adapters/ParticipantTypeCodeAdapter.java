@@ -5,7 +5,6 @@ import com.practiceOpenCode.handbookBank.models.codes.ParticipantTypeCode;
 import com.practiceOpenCode.handbookBank.repositories.codes.AbstractCodeRepository;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
-
 import java.util.List;
 
 public class ParticipantTypeCodeAdapter extends XmlAdapter<String, ParticipantTypeCode> {

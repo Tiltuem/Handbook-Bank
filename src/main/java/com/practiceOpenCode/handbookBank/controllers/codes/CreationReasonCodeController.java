@@ -4,7 +4,6 @@ import com.practiceOpenCode.handbookBank.exceptions.DuplicateFileException;
 import com.practiceOpenCode.handbookBank.exceptions.NotFoundPageException;
 import com.practiceOpenCode.handbookBank.models.codes.CreationReasonCode;
 import com.practiceOpenCode.handbookBank.services.codes.AbstractCodeService;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -21,7 +20,6 @@ import javax.validation.Valid;
 import java.util.Objects;
 
 @Controller
-@RequiredArgsConstructor
 @RequestMapping("/codes/creationReason")
 @Slf4j
 public class CreationReasonCodeController {
@@ -46,12 +44,9 @@ public class CreationReasonCodeController {
             log.warn("Ошибка при добавлении кода: данный код уже существует");
             bindingResult.addError(new ObjectError("creationReasonCode", "Ошибка: данный код уже существует"));
         }
-
         if (!bindingResult.hasErrors()) {
-            creationReasonCode.setDeleted(false);
-            log.info("Код добавлен");
             creationReasonCodeService.save(creationReasonCode);
-
+            log.info("Код добавлен");
             return "redirect:/codes/creationReason/0";
         }
 
@@ -67,8 +62,8 @@ public class CreationReasonCodeController {
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public String deleteCreationReasonCode(@PathVariable long id, @RequestParam String page) {
         creationReasonCodeService.deleteById(id);
-        log.info("Код (id: " + id + ") удален");
 
+        log.info("Код (id: " + id + ") удален");
         return "redirect:/codes/creationReason/" + page;
     }
 
@@ -81,8 +76,8 @@ public class CreationReasonCodeController {
         CreationReasonCode creationReasonCode = creationReasonCodeService.getById(id);
         creationReasonCode.setCode(newCode);
         creationReasonCodeService.save(creationReasonCode);
-        log.info("Код (id: " + id + ") редактирован");
 
+        log.info("Код (id: " + id + ") редактирован");
         return "redirect:/codes/creationReason/" + page;
     }
 
@@ -91,7 +86,6 @@ public class CreationReasonCodeController {
     public String recoveryCreationReasonCode(@PathVariable long id) {
         creationReasonCodeService.recoveryById(id);
         log.info("Код (id: " + id + ") восстановлен");
-
         return "redirect:/codes/creationReason/0";
     }
 

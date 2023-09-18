@@ -68,6 +68,10 @@
                                     <th>Вид представления информации</th>
                                     <th>Дата ОД</th>
                                     <th>Номер версии Справочника</th>
+                                    <th>Кем создано</th>
+                                    <th>Когда создано</th>
+                                    <th>Кем изменено</th>
+                                    <th>Когда изменено</th>
                                     <th></th>
                                 </tr>
                                 </thead>
@@ -115,6 +119,18 @@
                                         </td>
                                         <td>
                                             ${message.directoryVersion}
+                                        </td>
+                                        <td>
+                                            ${message.createdBy}
+                                        </td>
+                                        <td>
+                                            ${message.createdDate}
+                                        </td>
+                                        <td>
+                                            ${message.modifiedBy}
+                                        </td>
+                                        <td>
+                                            ${message.modifiedDate}
                                         </td>
                                         <td>
                                             <#if message.deleted = true>

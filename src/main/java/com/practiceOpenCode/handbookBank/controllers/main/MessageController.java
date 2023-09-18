@@ -3,25 +3,20 @@ package com.practiceOpenCode.handbookBank.controllers.main;
 import com.practiceOpenCode.handbookBank.exceptions.NotFoundPageException;
 import com.practiceOpenCode.handbookBank.models.main.Message;
 import com.practiceOpenCode.handbookBank.services.main.MessageService;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-
 import org.springframework.data.domain.Sort;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
-
 @Controller
-@RequiredArgsConstructor
 @RequestMapping("/messages")
-@Slf4j
 @PreAuthorize("hasAuthority('ROLE_USER') or hasAuthority('ROLE_ADMIN')")
+@Slf4j
 public class MessageController {
     @Autowired
     MessageService messageService;
@@ -54,6 +49,7 @@ public class MessageController {
         model.addAttribute("search", true);
         model.addAttribute("messages", messages);
         model.addAttribute("page", page);
+
         return "mainPages/allMessage";
     }
 
@@ -61,14 +57,12 @@ public class MessageController {
     public String deleteMessage(@PathVariable long id, @RequestParam String page) {
         messageService.deleteById(id);
         log.info("ЭС (id: " + id + ") удалено");
-
         return "redirect:/messages/" + page;
     }
 
     @PostMapping("/recovery/{id}")
     public String recoveryMessage(@PathVariable long id, @RequestParam String page) {
         messageService.recoveryById(id);
-
         log.info("ЭС (id: " + id + ") восстановлено");
         return "redirect:/messages/" + page;
     }

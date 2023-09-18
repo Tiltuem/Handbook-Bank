@@ -4,7 +4,6 @@ import com.practiceOpenCode.handbookBank.exceptions.NotFoundPageException;
 import com.practiceOpenCode.handbookBank.models.main.FileInfo;
 import com.practiceOpenCode.handbookBank.services.main.FileService;
 import com.practiceOpenCode.handbookBank.services.main.MessageService;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,10 +17,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 
 @Controller
-@RequiredArgsConstructor
 @RequestMapping("/import")
-@Slf4j
 @PreAuthorize("hasAuthority('ROLE_USER') or hasAuthority('ROLE_ADMIN')")
+@Slf4j
 public class ImportController {
     @Autowired
     MessageService messageService;
@@ -44,7 +42,6 @@ public class ImportController {
     public String saveMessageByDate(@RequestParam String date, @RequestParam String page) {
         messageService.save(date);
         log.info("ЭС добавлено");
-
         return "redirect:/import/" + page;
     }
 
@@ -52,7 +49,6 @@ public class ImportController {
     public String saveMessageByFile(@RequestParam("fileXml") MultipartFile fileXml, @RequestParam String page) {
         messageService.save(fileXml);
         log.info("ЭС добавлено");
-
         return "redirect:/import/" + page;
     }
 
@@ -60,7 +56,6 @@ public class ImportController {
     public String deleteFile(@PathVariable long id, @RequestParam String page) {
         fileService.deleteById(id);
         log.info("ЭС (id: " + id + ") удалено");
-
         return "redirect:/import/" + page;
     }
 

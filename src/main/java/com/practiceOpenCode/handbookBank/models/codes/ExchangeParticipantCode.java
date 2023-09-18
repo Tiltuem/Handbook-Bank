@@ -1,22 +1,23 @@
 package com.practiceOpenCode.handbookBank.models.codes;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
-
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.Where;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "exchange_participant_codes")
 @SQLDelete(sql = "update exchange_participant_codes set deleted=true where id=?")
+@EqualsAndHashCode(callSuper = true)
 @Data
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
 public class ExchangeParticipantCode  extends AbstractCode{
     @Column(unique = true)
     @Size(min = 1, max = 1, message = "Ошибка: неверное количество символов")

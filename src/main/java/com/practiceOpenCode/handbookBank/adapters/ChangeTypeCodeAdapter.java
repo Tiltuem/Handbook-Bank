@@ -5,7 +5,6 @@ import com.practiceOpenCode.handbookBank.models.codes.ChangeTypeCode;
 import com.practiceOpenCode.handbookBank.repositories.codes.AbstractCodeRepository;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
-
 import java.util.List;
 
 public class ChangeTypeCodeAdapter extends XmlAdapter<String, ChangeTypeCode> {

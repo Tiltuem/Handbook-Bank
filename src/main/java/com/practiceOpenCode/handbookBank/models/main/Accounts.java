@@ -5,11 +5,6 @@ import com.practiceOpenCode.handbookBank.adapters.LocalDateAdapter;
 import com.practiceOpenCode.handbookBank.adapters.RegulationAccountTypeCodeAdapter;
 import com.practiceOpenCode.handbookBank.models.codes.AccountStatusCode;
 import com.practiceOpenCode.handbookBank.models.codes.RegulationAccountTypeCode;
-import javax.persistence.*;
-import javax.validation.constraints.*;
-import javax.xml.bind.annotation.*;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-
 import lombok.Data;
 import org.hibernate.annotations.SQLDelete;
 import org.springframework.data.annotation.CreatedBy;
@@ -19,6 +14,13 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.*;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
@@ -26,11 +28,11 @@ import java.util.List;
 @Entity
 @Table(name = "accounts")
 @SQLDelete(sql = "update accounts set deleted=true where id=?")
-@Data
 @XmlRootElement(namespace = "urn:cbr-ru:ed:v2.0")
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "Accounts")
 @EntityListeners(AuditingEntityListener.class)
+@Data
 public class Accounts {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,10 +45,10 @@ public class Accounts {
             message = "Ошибка: неверный формат")
     private String accountNumber;
 
-    @XmlAttribute(name = "RegulationAccountType")
-    @XmlJavaTypeAdapter(RegulationAccountTypeCodeAdapter.class)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "regulation_account_type")
+    @XmlAttribute(name = "RegulationAccountType")
+    @XmlJavaTypeAdapter(RegulationAccountTypeCodeAdapter.class)
     private RegulationAccountTypeCode regulationAccountTypeCode;
 
     @XmlAttribute(name = "AccountCBRBIC")
@@ -74,10 +76,10 @@ public class Accounts {
     @XmlJavaTypeAdapter(LocalDateAdapter.class)
     private LocalDate dateOut;
 
-    @XmlAttribute(name = "AccountStatus")
-    @XmlJavaTypeAdapter(AccountStatusCodeAdapter.class)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "account_status")
+    @XmlAttribute(name = "AccountStatus")
+    @XmlJavaTypeAdapter(AccountStatusCodeAdapter.class)
     private AccountStatusCode accountStatusCode;
 
     @XmlElement(name = "AccRstrList", namespace = "urn:cbr-ru:ed:v2.0")

@@ -7,10 +7,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.net.http.HttpRequest;
-
 @Service
 public interface AuthService {
     ResponseEntity<?> createAuthToken(JwtRequest authRequest);

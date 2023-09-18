@@ -5,7 +5,6 @@ import com.practiceOpenCode.handbookBank.exceptions.DuplicateFileException;
 import com.practiceOpenCode.handbookBank.exceptions.NotFoundPageException;
 import com.practiceOpenCode.handbookBank.models.codes.ParticipantTypeCode;
 import com.practiceOpenCode.handbookBank.services.codes.AbstractCodeService;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -22,7 +21,6 @@ import javax.validation.Valid;
 import java.util.Objects;
 
 @Controller
-@RequiredArgsConstructor
 @RequestMapping("/codes/participantType")
 @Slf4j
 public class ParticipantTypeCodeController {
@@ -47,12 +45,9 @@ public class ParticipantTypeCodeController {
             log.warn("Ошибка при добавлении кода: данный код уже существует");
             bindingResult.addError(new ObjectError("participantTypeCode", "Ошибка: данный код уже существует"));
         }
-
         if (!bindingResult.hasErrors()) {
-            participantTypeCode.setDeleted(false);
-            log.info("Код добавлен");
             participantTypeCodeService.save(participantTypeCode);
-
+            log.info("Код добавлен");
             return "redirect:/codes/participantType/0";
         }
 
@@ -69,7 +64,6 @@ public class ParticipantTypeCodeController {
     public String deleteParticipantTypeCode(@PathVariable long id, @RequestParam String page) {
         participantTypeCodeService.deleteById(id);
         log.info("Код (id: " + id + ") удален");
-
         return "redirect:/codes/participantType/" + page;
     }
 
@@ -82,8 +76,8 @@ public class ParticipantTypeCodeController {
         ParticipantTypeCode participantTypeCode = participantTypeCodeService.getById(id);
         participantTypeCode.setCode(newCode);
         participantTypeCodeService.save(participantTypeCode);
-        log.info("Код (id: " + id + ") редактирован");
 
+        log.info("Код (id: " + id + ") редактирован");
         return "redirect:/codes/participantType/" + page;
     }
 
@@ -92,7 +86,6 @@ public class ParticipantTypeCodeController {
     public String recoveryParticipantTypeCode(@PathVariable long id) {
         participantTypeCodeService.recoveryById(id);
         log.info("Код (id: " + id + ") восстановлен");
-
         return "redirect:/codes/participantType/0";
     }
 

@@ -1,29 +1,33 @@
 package com.practiceOpenCode.handbookBank.models.main;
 
 import com.practiceOpenCode.handbookBank.adapters.*;
-import com.practiceOpenCode.handbookBank.models.codes.*;
-import javax.persistence.*;
-import javax.validation.constraints.*;
-import javax.xml.bind.annotation.*;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-import lombok.AllArgsConstructor;
+import com.practiceOpenCode.handbookBank.models.codes.ExchangeParticipantCode;
+import com.practiceOpenCode.handbookBank.models.codes.ParticipantStatusCode;
+import com.practiceOpenCode.handbookBank.models.codes.ParticipantTypeCode;
+import com.practiceOpenCode.handbookBank.models.codes.ServiceCsCode;
 import lombok.Data;
 import org.hibernate.annotations.SQLDelete;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.*;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.time.LocalDate;
 import java.util.List;
 
 @Entity
 @Table(name = "participant_info")
 @SQLDelete(sql = "update participant_info set deleted=true where id=?")
-@Data
-@AllArgsConstructor
 @XmlRootElement(namespace = "urn:cbr-ru:ed:v2.0")
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "ParticipantInfo")
 @EntityListeners(AuditingEntityListener.class)
+@Data
 public class ParticipantInfo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -87,22 +91,22 @@ public class ParticipantInfo {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dateOut;
 
-    @XmlAttribute(name = "PtType")
-    @XmlJavaTypeAdapter(ParticipantTypeCodeAdapter.class)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "participant_type_id")
+    @XmlAttribute(name = "PtType")
+    @XmlJavaTypeAdapter(ParticipantTypeCodeAdapter.class)
     private ParticipantTypeCode participantTypeCode;
 
-    @XmlAttribute(name = "Srvcs")
-    @XmlJavaTypeAdapter(ServiceCsCodeAdapter.class)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "service_cs_id")
+    @XmlAttribute(name = "Srvcs")
+    @XmlJavaTypeAdapter(ServiceCsCodeAdapter.class)
     private ServiceCsCode serviceCsCode;
 
-    @XmlAttribute(name = "XchType")
-    @XmlJavaTypeAdapter(ExchangeParticipantCodeAdapter.class)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "exchange_participant_id")
+    @XmlAttribute(name = "XchType")
+    @XmlJavaTypeAdapter(ExchangeParticipantCodeAdapter.class)
     private ExchangeParticipantCode exchangeParticipantCode;
 
     @XmlAttribute(name = "UID")
@@ -110,15 +114,15 @@ public class ParticipantInfo {
             message = "Ошибка: неверный формат")
     private String uid;
 
-    @XmlAttribute(name = "ParticipantStatus")
-    @XmlJavaTypeAdapter(ParticipantStatusCodeAdapter.class)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "participant_status_id")
+    @XmlAttribute(name = "ParticipantStatus")
+    @XmlJavaTypeAdapter(ParticipantStatusCodeAdapter.class)
     private ParticipantStatusCode participantStatusCode;
 
-    @XmlElement(name = "RstrList", namespace = "urn:cbr-ru:ed:v2.0")
     @OneToMany(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "restriction_list_id")
+    @XmlElement(name = "RstrList", namespace = "urn:cbr-ru:ed:v2.0")
     private List<RestrictionList> restrictionList;
 
     private Boolean deleted;

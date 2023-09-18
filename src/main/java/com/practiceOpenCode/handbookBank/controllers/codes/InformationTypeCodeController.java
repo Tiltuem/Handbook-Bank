@@ -4,7 +4,6 @@ import com.practiceOpenCode.handbookBank.exceptions.DuplicateFileException;
 import com.practiceOpenCode.handbookBank.exceptions.NotFoundPageException;
 import com.practiceOpenCode.handbookBank.models.codes.InformationTypeCode;
 import com.practiceOpenCode.handbookBank.services.codes.AbstractCodeService;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -21,7 +20,6 @@ import javax.validation.Valid;
 import java.util.Objects;
 
 @Controller
-@RequiredArgsConstructor
 @RequestMapping("/codes/informationType")
 @Slf4j
 public class InformationTypeCodeController {
@@ -46,15 +44,11 @@ public class InformationTypeCodeController {
             log.warn("Ошибка при добавлении кода: данный код уже существует");
             bindingResult.addError(new ObjectError("informationTypeCode", "Ошибка: данный код уже существует"));
         }
-
         if (!bindingResult.hasErrors()) {
-            informationTypeCode.setDeleted(false);
-            log.info("Код добавлен");
             informationTypeCodeService.save(informationTypeCode);
-
+            log.info("Код добавлен");
             return "redirect:/codes/informationType/0";
         }
-
         Page<InformationTypeCode> codes = informationTypeCodeService.getAllCodes(PageRequest.of(0, 5, Sort.by("id")), null, null);
         model.addAttribute("page", 0);
         model.addAttribute("bindingResult", bindingResult);
@@ -68,7 +62,6 @@ public class InformationTypeCodeController {
     public String deleteInformationTypeCode(@PathVariable long id, @RequestParam String page) {
         informationTypeCodeService.deleteById(id);
         log.info("Код (id: " + id + ") удален");
-
         return "redirect:/codes/informationType/" + page;
     }
 
@@ -81,8 +74,8 @@ public class InformationTypeCodeController {
         InformationTypeCode informationTypeCode = informationTypeCodeService.getById(id);
         informationTypeCode.setCode(newCode);
         informationTypeCodeService.save(informationTypeCode);
-        log.info("Код (id: " + id + ") редактирован");
 
+        log.info("Код (id: " + id + ") редактирован");
         return "redirect:/codes/informationType/" + page;
     }
 
@@ -91,7 +84,6 @@ public class InformationTypeCodeController {
     public String recoveryInformationTypeCode(@PathVariable long id) {
         informationTypeCodeService.recoveryById(id);
         log.info("Код (id: " + id + ") восстановлен");
-
         return "redirect:/codes/informationType/0";
     }
 

@@ -9,5 +9,5 @@ import java.util.List;
 public interface AccountRestrictionListService {
     List<AccountRestrictionList> getAllAccounts();
     void save (AccountRestrictionList accountRestrictionList);
-    void deleteViaId(long id);
+    void deleteById(long id);
 }

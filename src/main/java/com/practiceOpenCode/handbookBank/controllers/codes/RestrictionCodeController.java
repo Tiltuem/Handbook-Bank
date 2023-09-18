@@ -5,7 +5,6 @@ import com.practiceOpenCode.handbookBank.exceptions.DuplicateFileException;
 import com.practiceOpenCode.handbookBank.exceptions.NotFoundPageException;
 import com.practiceOpenCode.handbookBank.models.codes.RestrictionCode;
 import com.practiceOpenCode.handbookBank.services.codes.AbstractCodeService;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -22,7 +21,6 @@ import javax.validation.Valid;
 import java.util.Objects;
 
 @Controller
-@RequiredArgsConstructor
 @RequestMapping("/codes/restriction")
 @Slf4j
 public class RestrictionCodeController {
@@ -47,12 +45,9 @@ public class RestrictionCodeController {
             log.warn("Ошибка при добавлении кода: данный код уже существует");
             bindingResult.addError(new ObjectError("restrictionCode", "Ошибка: данный код уже существует"));
         }
-
         if (!bindingResult.hasErrors()) {
-            restrictionCode.setDeleted(false);
-            log.info("Код добавлен");
             restrictionCodeService.save(restrictionCode);
-
+            log.info("Код добавлен");
             return "redirect:/codes/restriction/0";
         }
 
@@ -69,7 +64,6 @@ public class RestrictionCodeController {
     public String deleteRestrictionCode(@PathVariable long id, @RequestParam String page) {
         restrictionCodeService.deleteById(id);
         log.info("Код (id: " + id + ") удален");
-
         return "redirect:/codes/restriction/" + page;
     }
 
@@ -82,8 +76,8 @@ public class RestrictionCodeController {
         RestrictionCode restrictionCode = restrictionCodeService.getById(id);
         restrictionCode.setCode(newCode);
         restrictionCodeService.save(restrictionCode);
-        log.info("Код (id: " + id + ") редактирован");
 
+        log.info("Код (id: " + id + ") редактирован");
         return "redirect:/codes/restriction/" + page;
     }
 
@@ -92,7 +86,6 @@ public class RestrictionCodeController {
     public String recoveryRestrictionCode(@PathVariable long id) {
         restrictionCodeService.recoveryById(id);
         log.info("Код (id: " + id + ") восстановлен");
-
         return "redirect:/codes/restriction/0";
     }
 

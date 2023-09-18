@@ -4,7 +4,6 @@ import com.practiceOpenCode.handbookBank.exceptions.DuplicateFileException;
 import com.practiceOpenCode.handbookBank.exceptions.NotFoundPageException;
 import com.practiceOpenCode.handbookBank.models.codes.AccountStatusCode;
 import com.practiceOpenCode.handbookBank.services.codes.AbstractCodeService;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -21,7 +20,6 @@ import javax.validation.Valid;
 import java.util.Objects;
 
 @Controller
-@RequiredArgsConstructor
 @RequestMapping("/codes/accountStatus")
 @Slf4j
 public class AccountStatusCodeController {
@@ -46,12 +44,10 @@ public class AccountStatusCodeController {
             log.warn("Ошибка при добавлении кода: данный код уже существует");
             bindingResult.addError(new ObjectError("accountStatusCode", "Ошибка: данный код уже существует"));
         }
-
         if (!bindingResult.hasErrors()) {
-            accountStatusCode.setDeleted(false);
-            log.info("Код добавлен");
             accountStatusCodeService.save(accountStatusCode);
 
+            log.info("Код добавлен");
             return "redirect:/codes/accountStatus/0";
         }
 
@@ -81,8 +77,8 @@ public class AccountStatusCodeController {
         AccountStatusCode accountStatusCode = accountStatusCodeService.getById(id);
         accountStatusCode.setCode(newCode);
         accountStatusCodeService.save(accountStatusCode);
-        log.info("Код (id: " + id + ") редактирован");
 
+        log.info("Код (id: " + id + ") редактирован");
         return "redirect:/codes/accountStatus/" + page;
     }
 
@@ -90,8 +86,8 @@ public class AccountStatusCodeController {
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public String recoveryAccountStatusCode(@PathVariable long id) {
         accountStatusCodeService.recoveryById(id);
-        log.info("Код (id: " + id + ") восстановлен");
 
+        log.info("Код (id: " + id + ") восстановлен");
         return "redirect:/codes/accountStatus/0";
     }
 

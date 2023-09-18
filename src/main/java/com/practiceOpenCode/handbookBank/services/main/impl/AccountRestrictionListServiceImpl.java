@@ -6,7 +6,6 @@ import com.practiceOpenCode.handbookBank.services.main.AccountRestrictionListSer
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -25,7 +24,7 @@ public class AccountRestrictionListServiceImpl implements AccountRestrictionList
     }
 
     @Override
-    public void deleteViaId(long id) {
+    public void deleteById(long id) {
         repository.deleteById(id);
     }
 }

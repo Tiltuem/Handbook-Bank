@@ -4,7 +4,6 @@ import com.practiceOpenCode.handbookBank.exceptions.DuplicateFileException;
 import com.practiceOpenCode.handbookBank.exceptions.NotFoundPageException;
 import com.practiceOpenCode.handbookBank.models.codes.ChangeTypeCode;
 import com.practiceOpenCode.handbookBank.services.codes.AbstractCodeService;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -21,7 +20,6 @@ import javax.validation.Valid;
 import java.util.Objects;
 
 @Controller
-@RequiredArgsConstructor
 @RequestMapping("/codes/changeType")
 @Slf4j
 public class ChangeTypeCodeController {
@@ -36,6 +34,7 @@ public class ChangeTypeCodeController {
 
         setModel(model, codes, new ChangeTypeCode());
         model.addAttribute("search", code);
+
         return "codes/changeType";
     }
 
@@ -46,12 +45,9 @@ public class ChangeTypeCodeController {
             log.warn("Ошибка при добавлении кода: данный код уже существует");
             bindingResult.addError(new ObjectError("changeTypeCode", "Ошибка: данный код уже существует"));
         }
-
         if (!bindingResult.hasErrors()) {
-            changeTypeCode.setDeleted(false);
-            log.info("Код добавлен");
             changeTypeCodeService.save(changeTypeCode);
-
+            log.info("Код добавлен");
             return "redirect:/codes/changeType/0";
         }
 
@@ -68,7 +64,6 @@ public class ChangeTypeCodeController {
     public String deleteChangeTypeCode(@PathVariable long id, @RequestParam String page) {
         changeTypeCodeService.deleteById(id);
         log.info("Код (id: " + id + ") удален");
-
         return "redirect:/codes/changeType/" + page;
     }
 
@@ -81,8 +76,8 @@ public class ChangeTypeCodeController {
         ChangeTypeCode changeTypeCode = changeTypeCodeService.getById(id);
         changeTypeCode.setCode(newCode);
         changeTypeCodeService.save(changeTypeCode);
-        log.info("Код (id: " + id + ") редактирован");
 
+        log.info("Код (id: " + id + ") редактирован");
         return "redirect:/codes/changeType/" + page;
     }
 
@@ -91,7 +86,6 @@ public class ChangeTypeCodeController {
     public String recoveryChangeTypeCode(@PathVariable long id) {
         changeTypeCodeService.recoveryById(id);
         log.info("Код (id: " + id + ") восстановлен");
-
         return "redirect:/codes/changeType/0";
     }
 

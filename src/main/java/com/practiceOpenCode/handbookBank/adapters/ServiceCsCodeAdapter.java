@@ -5,7 +5,6 @@ import com.practiceOpenCode.handbookBank.models.codes.ServiceCsCode;
 import com.practiceOpenCode.handbookBank.repositories.codes.AbstractCodeRepository;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
-
 import java.util.List;
 
 public class ServiceCsCodeAdapter extends XmlAdapter<String, ServiceCsCode> {

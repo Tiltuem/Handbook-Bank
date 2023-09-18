@@ -1,16 +1,12 @@
 package com.practiceOpenCode.handbookBank.controllers.security;
 
-import com.practiceOpenCode.handbookBank.dtos.JwtRequest;
 import com.practiceOpenCode.handbookBank.dtos.RegistrationUserDto;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-@RequiredArgsConstructor
 public class AuthController {
-
     @GetMapping("/registration")
     public String registration(Model model) {
         model.addAttribute("registrationUserDto", new RegistrationUserDto());

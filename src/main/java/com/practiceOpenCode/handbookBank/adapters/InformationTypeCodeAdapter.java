@@ -5,7 +5,6 @@ import com.practiceOpenCode.handbookBank.models.codes.InformationTypeCode;
 import com.practiceOpenCode.handbookBank.repositories.codes.AbstractCodeRepository;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
-
 import java.util.List;
 
 public class InformationTypeCodeAdapter extends XmlAdapter<String, InformationTypeCode> {

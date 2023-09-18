@@ -6,20 +6,18 @@ import com.practiceOpenCode.handbookBank.models.main.BICDirectoryEntry;
 import com.practiceOpenCode.handbookBank.models.main.ParticipantInfo;
 import com.practiceOpenCode.handbookBank.models.main.SWBICs;
 import com.practiceOpenCode.handbookBank.repositories.main.BICDirectoryEntryRepository;
-import com.practiceOpenCode.handbookBank.services.main.BICDirectoryEntryService;
-
 import com.practiceOpenCode.handbookBank.services.codes.AbstractCodeService;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-
+import com.practiceOpenCode.handbookBank.services.main.BICDirectoryEntryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
@@ -27,10 +25,10 @@ import java.util.Objects;
 
 @Service
 public class BICDirectoryEntryServiceImpl implements BICDirectoryEntryService {
-    @Autowired
-    private BICDirectoryEntryRepository repository;
     @PersistenceContext
     EntityManager entityManager;
+    @Autowired
+    private BICDirectoryEntryRepository repository;
     @Autowired
     private AbstractCodeService<ParticipantTypeCode> participantTypeCodeService;
     @Autowired
@@ -63,9 +61,15 @@ public class BICDirectoryEntryServiceImpl implements BICDirectoryEntryService {
 
     @Override
     public Page<BICDirectoryEntry> searchEntries(Pageable pageable, String value, Boolean showDeleted, String column, String dateFrom, String dateBy) {
+        if(Objects.isNull(dateBy))
+            dateBy = LocalDate.now().toString();
+
         if (!value.equals("") || !Objects.isNull(dateFrom))
             return search(pageable, value, column, showDeleted, dateFrom, dateBy);
-        if (showDeleted) return repository.findAll(pageable);
+
+        if (showDeleted)
+            return repository.findAll(pageable);
+
         return repository.findByDeleted(pageable, false);
     }
 
@@ -87,13 +91,13 @@ public class BICDirectoryEntryServiceImpl implements BICDirectoryEntryService {
 
     @Override
     public void add(BICDirectoryEntry newEntry, ParticipantInfo info, String participantTypeCode, String serviceCsCode, String exchangeParticipantCode, String participantStatusCode, String changeTypeCode) {
-        newEntry.setDeleted(false);
         setInfo(newEntry, info, participantTypeCode, serviceCsCode, exchangeParticipantCode, participantStatusCode, changeTypeCode);
 
         repository.save(newEntry);
     }
 
     @Override
+    @Transactional
     public void deleteById(long id) {
         repository.deleteById(id);
     }
@@ -104,6 +108,7 @@ public class BICDirectoryEntryServiceImpl implements BICDirectoryEntryService {
     }
 
     @Override
+    @Transactional
     public void recoveryById(long id) {
         BICDirectoryEntry entry = repository.findById(id);
         entry.setDeleted(false);
@@ -125,7 +130,6 @@ public class BICDirectoryEntryServiceImpl implements BICDirectoryEntryService {
         Query query;
         StringBuilder queryString = new StringBuilder("SELECT a FROM BICDirectoryEntry a WHERE a.");
         if (!value.equals("")) {
-
             switch (column) {
                 case "bic", "participantInfo.bicParent", "participantInfo.uid" -> queryString.append(column + " = ?1");
                 default -> {
@@ -162,11 +166,11 @@ public class BICDirectoryEntryServiceImpl implements BICDirectoryEntryService {
                     query = entityManager.createQuery("SELECT a FROM BICDirectoryEntry a");
             }
         }
-
         List entries = query.getResultList();
         int start = (int) pageable.getOffset();
         int end = Math.min((start + pageable.getPageSize()), entries.size());
         List<BICDirectoryEntry> pageContent = entries.subList(start, end);
+
         return new PageImpl<>(pageContent, pageable, entries.size());
     }
 }

@@ -4,7 +4,6 @@ import com.practiceOpenCode.handbookBank.exceptions.DuplicateFileException;
 import com.practiceOpenCode.handbookBank.exceptions.NotFoundPageException;
 import com.practiceOpenCode.handbookBank.models.codes.ParticipantStatusCode;
 import com.practiceOpenCode.handbookBank.services.codes.AbstractCodeService;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -21,7 +20,6 @@ import javax.validation.Valid;
 import java.util.Objects;
 
 @Controller
-@RequiredArgsConstructor
 @RequestMapping("/codes/participantStatus")
 @Slf4j
 public class ParticipantStatusCodeController {
@@ -46,12 +44,9 @@ public class ParticipantStatusCodeController {
             log.warn("Ошибка при добавлении кода: данный код уже существует");
             bindingResult.addError(new ObjectError("participantStatusCode", "Ошибка: данный код уже существует"));
         }
-
         if (!bindingResult.hasErrors()) {
-            participantStatusCode.setDeleted(false);
-            log.info("Код добавлен");
             participantStatusCodeService.save(participantStatusCode);
-
+            log.info("Код добавлен");
             return "redirect:/codes/participantStatus/0";
         }
 
@@ -68,7 +63,6 @@ public class ParticipantStatusCodeController {
     public String deleteParticipantStatusCode(@PathVariable long id, @RequestParam String page) {
         participantStatusCodeService.deleteById(id);
         log.info("Код (id: " + id + ") удален");
-
         return "redirect:/codes/participantStatus/" + page;
     }
 
@@ -81,8 +75,8 @@ public class ParticipantStatusCodeController {
         ParticipantStatusCode participantStatusCode = participantStatusCodeService.getById(id);
         participantStatusCode.setCode(newCode);
         participantStatusCodeService.save(participantStatusCode);
-        log.info("Код (id: " + id + ") редактирован");
 
+        log.info("Код (id: " + id + ") редактирован");
         return "redirect:/codes/participantStatus/" + page;
     }
 
@@ -91,7 +85,6 @@ public class ParticipantStatusCodeController {
     public String recoveryParticipantStatusCode(@PathVariable long id) {
         participantStatusCodeService.recoveryById(id);
         log.info("Код (id: " + id + ") восстановлен");
-
         return "redirect:/codes/participantStatus/0";
     }
 

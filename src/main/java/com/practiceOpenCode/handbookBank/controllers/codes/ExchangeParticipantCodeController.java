@@ -4,7 +4,6 @@ import com.practiceOpenCode.handbookBank.exceptions.DuplicateFileException;
 import com.practiceOpenCode.handbookBank.exceptions.NotFoundPageException;
 import com.practiceOpenCode.handbookBank.models.codes.ExchangeParticipantCode;
 import com.practiceOpenCode.handbookBank.services.codes.AbstractCodeService;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -21,7 +20,6 @@ import javax.validation.Valid;
 import java.util.Objects;
 
 @Controller
-@RequiredArgsConstructor
 @RequestMapping("/codes/exchangeParticipant")
 @Slf4j
 public class ExchangeParticipantCodeController {
@@ -46,12 +44,9 @@ public class ExchangeParticipantCodeController {
             log.warn("Ошибка при добавлении кода: данный код уже существует");
             bindingResult.addError(new ObjectError("exchangeParticipantCode", "Ошибка: данный код уже существует"));
         }
-
         if (!bindingResult.hasErrors()) {
-            exchangeParticipantCode.setDeleted(false);
-            log.info("Код добавлен");
             exchangeParticipantCodeService.save(exchangeParticipantCode);
-
+            log.info("Код добавлен");
             return "redirect:/codes/exchangeParticipant/0";
         }
 
@@ -68,7 +63,6 @@ public class ExchangeParticipantCodeController {
     public String deleteExchangeParticipantCode(@PathVariable long id, @RequestParam String page) {
         exchangeParticipantCodeService.deleteById(id);
         log.info("Код (id: " + id + ") удален");
-
         return "redirect:/codes/exchangeParticipant/" + page;
     }
 
@@ -81,8 +75,8 @@ public class ExchangeParticipantCodeController {
         ExchangeParticipantCode exchangeParticipantCode = exchangeParticipantCodeService.getById(id);
         exchangeParticipantCode.setCode(newCode);
         exchangeParticipantCodeService.save(exchangeParticipantCode);
-        log.info("Код (id: " + id + ") редактирован");
 
+        log.info("Код (id: " + id + ") редактирован");
         return "redirect:/codes/exchangeParticipant/" + page;
     }
 
@@ -90,8 +84,8 @@ public class ExchangeParticipantCodeController {
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public String recoveryExchangeParticipantCode(@PathVariable long id) {
         exchangeParticipantCodeService.recoveryById(id);
-        log.info("Код (id: " + id + ") восстановлен");
 
+        log.info("Код (id: " + id + ") восстановлен");
         return "redirect:/codes/exchangeParticipant/0";
     }
 

@@ -6,8 +6,8 @@ import javax.persistence.*;
 import java.util.Collection;
 
 @Entity
-@Data
 @Table(name = "users")
+@Data
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

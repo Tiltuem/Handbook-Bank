@@ -4,7 +4,6 @@ import com.practiceOpenCode.handbookBank.exceptions.DuplicateFileException;
 import com.practiceOpenCode.handbookBank.exceptions.NotFoundPageException;
 import com.practiceOpenCode.handbookBank.models.codes.ServiceCsCode;
 import com.practiceOpenCode.handbookBank.services.codes.AbstractCodeService;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -21,7 +20,6 @@ import javax.validation.Valid;
 import java.util.Objects;
 
 @Controller
-@RequiredArgsConstructor
 @RequestMapping("/codes/serviceCs")
 @Slf4j
 public class ServiceCsCodeController {
@@ -46,12 +44,9 @@ public class ServiceCsCodeController {
             log.warn("Ошибка при добавлении кода: данный код уже существует");
             bindingResult.addError(new ObjectError("serviceCsCode", "Ошибка: данный код уже существует"));
         }
-
         if (!bindingResult.hasErrors()) {
-            serviceCsCode.setDeleted(false);
-            log.info("Код добавлен");
             serviceCsCodeService.save(serviceCsCode);
-
+            log.info("Код добавлен");
             return "redirect:/codes/serviceCs/0";
         }
 
@@ -68,7 +63,6 @@ public class ServiceCsCodeController {
     public String deleteServiceCsCode(@PathVariable long id, @RequestParam String page) {
         serviceCsCodeService.deleteById(id);
         log.info("Код (id: " + id + ") удален");
-
         return "redirect:/codes/serviceCs/" + page;
     }
 
@@ -81,8 +75,8 @@ public class ServiceCsCodeController {
         ServiceCsCode serviceCsCode = serviceCsCodeService.getById(id);
         serviceCsCode.setCode(newCode);
         serviceCsCodeService.save(serviceCsCode);
-        log.info("Код (id: " + id + ") редактирован");
 
+        log.info("Код (id: " + id + ") редактирован");
         return "redirect:/codes/serviceCs/" + page;
     }
 
@@ -90,8 +84,8 @@ public class ServiceCsCodeController {
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public String recoveryServiceCsCode(@PathVariable long id) {
         serviceCsCodeService.recoveryById(id);
-        log.info("Код (id: " + id + ") восстановлен");
 
+        log.info("Код (id: " + id + ") восстановлен");
         return "redirect:/codes/serviceCs/0";
     }
 

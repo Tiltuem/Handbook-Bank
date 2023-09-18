@@ -1,13 +1,9 @@
 package com.practiceOpenCode.handbookBank.controllers.main;
 
 
-import javax.validation.Valid;
-
-
 import com.practiceOpenCode.handbookBank.models.main.SWBICs;
 import com.practiceOpenCode.handbookBank.services.main.BICDirectoryEntryService;
 import com.practiceOpenCode.handbookBank.services.main.SWBICsService;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -16,11 +12,12 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-@RequestMapping("/message-{messageId}/entry-{entryId}")
-@RequiredArgsConstructor
+import javax.validation.Valid;
+
 @Controller
-@Slf4j
+@RequestMapping("/message-{messageId}/entry-{entryId}")
 @PreAuthorize("hasAuthority('ROLE_USER') or hasAuthority('ROLE_ADMIN')")
+@Slf4j
 public class SWBICsController {
     @Autowired
     SWBICsService SWBICsService;
@@ -31,7 +28,6 @@ public class SWBICsController {
     @GetMapping("/swbics-edit")
     public String getSWBICsById(@RequestParam long id, Model model, @PathVariable long messageId, @PathVariable long entryId, @RequestParam String page) {
         setModel(model, messageId, entryId, SWBICsService.getById(id), page);
-
         return "update/updateSWBICs";
     }
 
@@ -39,7 +35,6 @@ public class SWBICsController {
     public String deleteSWBICs(@PathVariable long id, @RequestParam String page) {
         SWBICsService.deleteById(id);
         log.info("Список ограничений (id: " + id + ") удалён");
-
         return "redirect:/message-{messageId}/directory-entry/" + page;
     }
 
@@ -47,14 +42,12 @@ public class SWBICsController {
     public String recoverySWBICs(@PathVariable long id, @RequestParam String page) {
         SWBICsService.recoveryById(id);
         log.info("Список ограничений (id: " + id + ") восстановлен");
-
         return "redirect:/message-{messageId}/directory-entry/" + page;
     }
 
     @GetMapping("/new-swbics")
     public String newSWBICs(Model model, @PathVariable long messageId, @PathVariable long entryId, @RequestParam String page) {
         setModel(model, messageId, entryId, new SWBICs(), page);
-
         return "add/addSWBICs";
     }
 
@@ -87,7 +80,6 @@ public class SWBICsController {
         if (!bindingResult.hasErrors()) {
             SWBICsService.update(swbics);
             log.info("Перечень БИК (id: " + swbics.getId() + ") редактирован");
-
             return "redirect:/message-{messageId}/directory-entry/" + page;
         }
 

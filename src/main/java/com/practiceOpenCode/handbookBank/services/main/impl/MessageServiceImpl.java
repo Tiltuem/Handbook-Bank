@@ -2,19 +2,12 @@ package com.practiceOpenCode.handbookBank.services.main.impl;
 
 import com.practiceOpenCode.handbookBank.exceptions.DuplicateFileException;
 import com.practiceOpenCode.handbookBank.exceptions.NotFoundFileXmlException;
-
 import com.practiceOpenCode.handbookBank.models.main.FileInfo;
 import com.practiceOpenCode.handbookBank.models.main.Message;
 import com.practiceOpenCode.handbookBank.models.security.User;
 import com.practiceOpenCode.handbookBank.repositories.main.MessageRepository;
 import com.practiceOpenCode.handbookBank.services.main.FileService;
 import com.practiceOpenCode.handbookBank.services.main.MessageService;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-import javax.transaction.Transactional;
-
 import com.practiceOpenCode.handbookBank.services.security.impl.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +19,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import javax.transaction.Transactional;
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -56,14 +53,20 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     public Page<Message> searchMessages(Pageable pageable, String value, Boolean showDeleted, String column, String columnDate, String dateFrom, String dateBy) {
-        if(dateBy=="") dateBy = LocalDate.now().toString();
+        if(dateBy.equals(""))
+            dateBy = LocalDate.now().toString();
+
         if (!value.equals("") || !dateFrom.equals(""))
             return search(pageable, value, column, columnDate, showDeleted, dateFrom, dateBy);
-        if (showDeleted) return repository.findAll(pageable);
+
+        if (showDeleted)
+            return repository.findAll(pageable);
+
         return repository.findByDeleted(pageable, false);
     }
 
     @Override
+    @Transactional
     public void save(String date) {
         try {
             String nameFileZip = fileService.download(date);
@@ -79,6 +82,7 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
+    @Transactional
     public void save(MultipartFile file) {
         String path = "src/main/resources/storage/" + file.getOriginalFilename();
         File fileXml = new File(path);
@@ -109,6 +113,7 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
+    @Transactional
     public void deleteById(long id) {
         repository.deleteById(id);
     }
@@ -118,14 +123,8 @@ public class MessageServiceImpl implements MessageService {
         return repository.findById(id);
     }
 
-    private void checkFile(String name) {
-        if (fileService.checkFileExist(name)) {
-            log.warn("Ошибка при добавлении файла: файл уже существует");
-            throw new DuplicateFileException("Ошибка: файл уже существует");
-        }
-    }
-
     @Override
+    @Transactional
     public void recoveryById(long id) {
         Message message = repository.findById(id);
         message.setDeleted(false);
@@ -186,14 +185,20 @@ public class MessageServiceImpl implements MessageService {
 
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userService.findByUsername(username).get();
-        newMessage.setUser(user);
 
         FileInfo newFileInfo = fileService.addFileInfo(fileXml);
         newFileInfo.setMessage(newMessage);
-        newMessage.setFileInfo(newFileInfo);
 
+        newMessage.setUser(user);
+        newMessage.setFileInfo(newFileInfo);
         newMessage.setDeleted(false);
 
         return newMessage;
+    }
+    private void checkFile(String name) {
+        if (fileService.checkFileExist(name)) {
+            log.warn("Ошибка при добавлении файла: файл уже существует");
+            throw new DuplicateFileException("Ошибка: файл уже существует");
+        }
     }
 }

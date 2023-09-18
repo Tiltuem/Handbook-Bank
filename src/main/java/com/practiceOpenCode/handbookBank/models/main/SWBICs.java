@@ -1,11 +1,6 @@
 package com.practiceOpenCode.handbookBank.models.main;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.*;
-
-import lombok.*;
+import lombok.Data;
 import org.hibernate.annotations.SQLDelete;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
@@ -13,16 +8,20 @@ import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.*;
 import java.util.Date;
 
 @Entity
 @Table(name = "SWBIC")
 @SQLDelete(sql = "update SWBIC set deleted=true where id=?")
-@Data
 @XmlRootElement(namespace = "urn:cbr-ru:ed:v2.0")
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "SWBIC")
 @EntityListeners(AuditingEntityListener.class)
+@Data
 public class SWBICs {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

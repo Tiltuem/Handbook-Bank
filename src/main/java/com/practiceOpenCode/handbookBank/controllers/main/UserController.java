@@ -2,7 +2,6 @@ package com.practiceOpenCode.handbookBank.controllers.main;
 
 import com.practiceOpenCode.handbookBank.models.security.User;
 import com.practiceOpenCode.handbookBank.services.security.impl.UserServiceImpl;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -12,10 +11,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@RequiredArgsConstructor
 @Controller
-@Slf4j
 @PreAuthorize("hasAuthority('ROLE_USER') or hasAuthority('ROLE_ADMIN')")
+@Slf4j
 public class UserController {
     @Autowired
     UserServiceImpl userService;

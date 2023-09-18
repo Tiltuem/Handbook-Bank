@@ -1,16 +1,10 @@
 package com.practiceOpenCode.handbookBank.adapters;
 
 import com.practiceOpenCode.handbookBank.exceptions.NoSuchCodeException;
-
 import com.practiceOpenCode.handbookBank.models.codes.AccountRestrictionCode;
 import com.practiceOpenCode.handbookBank.repositories.codes.AbstractCodeRepository;
 
-
 import javax.xml.bind.annotation.adapters.XmlAdapter;
-
-
-
-
 import java.util.List;
 
 

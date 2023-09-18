@@ -6,30 +6,34 @@ import com.practiceOpenCode.handbookBank.adapters.LocalDateAdapter;
 import com.practiceOpenCode.handbookBank.adapters.LocalDateTimeAdapter;
 import com.practiceOpenCode.handbookBank.models.codes.CreationReasonCode;
 import com.practiceOpenCode.handbookBank.models.codes.InformationTypeCode;
+import com.practiceOpenCode.handbookBank.models.security.User;
+import lombok.Data;
+import org.hibernate.annotations.SQLDelete;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.*;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-
-import com.practiceOpenCode.handbookBank.models.security.User;
-import lombok.Data;
-
-import javax.persistence.*;
-import org.hibernate.annotations.SQLDelete;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Entity
 @Table(name = "messages")
-@Data
 @SQLDelete(sql = "update messages set deleted=true where id=?")
 @XmlRootElement(name = "ED807", namespace = "urn:cbr-ru:ed:v2.0")
 @XmlAccessorType(XmlAccessType.FIELD)
+@EntityListeners(AuditingEntityListener.class)
+@Data
 public class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,9 +46,9 @@ public class Message {
     @NotBlank(message = "Ошибка: поле не может быть пустым")
     private String edNumber;
 
+    @Column(unique = true)
     @XmlAttribute(name = "EDDate")
     @XmlJavaTypeAdapter(LocalDateAdapter.class)
-    @Column(unique = true)
     private LocalDate edDate;
 
     @XmlAttribute(name = "EDAuthor")
@@ -60,20 +64,20 @@ public class Message {
             message = "Ошибка: неверный формат")
     private String edReceiver;
 
-    @XmlAttribute(name = "CreationReason")
-    @XmlJavaTypeAdapter(CreationReasonCodeAdapter.class)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "creation_reason_code_id")
+    @XmlAttribute(name = "CreationReason")
+    @XmlJavaTypeAdapter(CreationReasonCodeAdapter.class)
     private CreationReasonCode creationReasonCode;
 
     @XmlAttribute(name = "CreationDateTime")
     @XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
     private LocalDateTime creationDateTime;
 
-    @XmlAttribute(name = "InfoTypeCode")
-    @XmlJavaTypeAdapter(InformationTypeCodeAdapter.class)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "information_type_code_id")
+    @XmlAttribute(name = "InfoTypeCode")
+    @XmlJavaTypeAdapter(InformationTypeCodeAdapter.class)
     private InformationTypeCode informationTypeCode;
 
     @XmlAttribute(name = "BusinessDay")
@@ -87,9 +91,9 @@ public class Message {
     @NotBlank(message = "Ошибка: поле не может быть пустым")
     private String directoryVersion;
 
-    @XmlElement(name = "BICDirectoryEntry", namespace = "urn:cbr-ru:ed:v2.0")
     @OneToMany(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "bic_directory_entry_list_id")
+    @XmlElement(name = "BICDirectoryEntry", namespace = "urn:cbr-ru:ed:v2.0")
     private List<BICDirectoryEntry> bicDirectoryEntryList = new ArrayList<>();
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -100,5 +104,17 @@ public class Message {
     private User user;
 
     private Boolean deleted;
+
+    @CreatedDate
+    private Date createdDate;
+
+    @LastModifiedDate
+    private Date modifiedDate;
+
+    @CreatedBy
+    private String createdBy;
+
+    @LastModifiedBy
+    private String modifiedBy;
 }
 

@@ -1,11 +1,10 @@
 package com.practiceOpenCode.handbookBank.models.main;
 
 
-import javax.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.SQLDelete;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity

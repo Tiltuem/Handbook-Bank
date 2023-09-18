@@ -1,7 +1,6 @@
 package com.practiceOpenCode.handbookBank.adapters;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
-
 import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

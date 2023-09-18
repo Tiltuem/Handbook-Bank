@@ -4,29 +4,25 @@ import com.practiceOpenCode.handbookBank.exceptions.NotFoundPageException;
 import com.practiceOpenCode.handbookBank.models.codes.*;
 import com.practiceOpenCode.handbookBank.models.main.BICDirectoryEntry;
 import com.practiceOpenCode.handbookBank.models.main.ParticipantInfo;
-import com.practiceOpenCode.handbookBank.services.main.BICDirectoryEntryService;
 import com.practiceOpenCode.handbookBank.services.codes.AbstractCodeService;
-
-import javax.validation.Valid;
-
-import lombok.RequiredArgsConstructor;
+import com.practiceOpenCode.handbookBank.services.main.BICDirectoryEntryService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-
-import org.springframework.validation.BindingResult;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @Controller
-@RequiredArgsConstructor
 @RequestMapping("/message-{messageId}/directory-entry")
-@Slf4j
 @PreAuthorize("hasAuthority('ROLE_USER') or hasAuthority('ROLE_ADMIN')")
+@Slf4j
 public class EntryController {
     @Autowired
     private BICDirectoryEntryService bicDirectoryEntryService;
@@ -40,7 +36,6 @@ public class EntryController {
     private AbstractCodeService<ParticipantStatusCode> participantStatusCodeService;
     @Autowired
     private AbstractCodeService<ChangeTypeCode> changeTypeCodeService;
-
 
     @GetMapping("/{page}")
     public String getAllEntries(@PathVariable int page, @PathVariable int messageId, final Model model) {
@@ -64,7 +59,6 @@ public class EntryController {
                                 @PathVariable int page,
                                 @PathVariable int messageId,
                                 final Model model) {
-
         Page<BICDirectoryEntry> entries = bicDirectoryEntryService.searchEntries(PageRequest.of(page, 10, Sort.by("id")), value, showDeleted, column, dateFrom, dateBy);
         if (page > entries.getTotalPages())
             throw new NotFoundPageException("Страница не найдена");
@@ -81,7 +75,6 @@ public class EntryController {
     public String deleteEntry(@PathVariable long id, @RequestParam String page) {
         bicDirectoryEntryService.deleteById(id);
         log.info("Запись (id: " + id + ") уделена");
-
         return "redirect:/message-{messageId}/directory-entry/" + page;
     }
 
@@ -89,7 +82,6 @@ public class EntryController {
     public String recoveryEntry(@PathVariable long id, @RequestParam String page) {
         bicDirectoryEntryService.recoveryById(id);
         log.info("Аккаунт (id: " + id + ") восстановлена");
-
         return "redirect:/message-{messageId}/directory-entry/" + page;
     }
 
@@ -129,7 +121,6 @@ public class EntryController {
         if (!bicDirectoryEntryBindingResult.hasErrors() && !participantInfoBindingResult.hasErrors()) {
             bicDirectoryEntryService.add(bicDirectoryEntry, participantInfo, participantType, serviceCs, exchangeParticipant, participantStatus, changeType);
             log.info("Запись добавлена");
-
             return "redirect:/message-{messageId}/directory-entry/" + page;
         }
         setModel(model, page, messageId);
@@ -156,7 +147,6 @@ public class EntryController {
         if (!bicDirectoryEntryBindingResult.hasErrors() && !participantInfoBindingResult.hasErrors()) {
             bicDirectoryEntryService.update(bicDirectoryEntry, participantInfo, participantType, serviceCs, exchangeParticipant, participantStatus, changeType);
             log.info("Запись (id: " + bicDirectoryEntry.getId() + ") редактирована");
-
             return "redirect:/message-{messageId}/directory-entry/" + page;
         }
 

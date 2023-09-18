@@ -1,14 +1,10 @@
 package com.practiceOpenCode.handbookBank.controllers.main;
 
-import com.practiceOpenCode.handbookBank.models.main.RestrictionList;
 import com.practiceOpenCode.handbookBank.models.codes.RestrictionCode;
+import com.practiceOpenCode.handbookBank.models.main.RestrictionList;
+import com.practiceOpenCode.handbookBank.services.codes.AbstractCodeService;
 import com.practiceOpenCode.handbookBank.services.main.ParticipantInfoService;
 import com.practiceOpenCode.handbookBank.services.main.RestrictionListService;
-import com.practiceOpenCode.handbookBank.services.codes.AbstractCodeService;
-
-import javax.validation.Valid;
-
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -17,11 +13,12 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-@RequestMapping("/message-{messageId}/entry-{entryId}")
-@RequiredArgsConstructor
+import javax.validation.Valid;
+
 @Controller
-@Slf4j
+@RequestMapping("/message-{messageId}/entry-{entryId}")
 @PreAuthorize("hasAuthority('ROLE_USER') or hasAuthority('ROLE_ADMIN')")
+@Slf4j
 public class RestrictionListController {
     @Autowired
     RestrictionListService restrictionListService;
@@ -33,7 +30,6 @@ public class RestrictionListController {
     @GetMapping("/restriction-list-edit")
     public String getRestrictionListById(@RequestParam long id, Model model, @PathVariable long messageId, @PathVariable long entryId, @RequestParam String page) {
         setModel(model, messageId, entryId, restrictionListService.getById(id), page);
-
         return "update/updateRestrictionList";
     }
 
@@ -41,7 +37,6 @@ public class RestrictionListController {
     public String deleteRestrictionList(@PathVariable long id, @RequestParam String page) {
         restrictionListService.deleteById(id);
         log.info("Список ограничений (id: " + id + ") удалён");
-
         return "redirect:/message-{messageId}/directory-entry/" + page;
     }
 
@@ -49,14 +44,12 @@ public class RestrictionListController {
     public String recoveryRestrictionList(@PathVariable long id, @RequestParam String page) {
         restrictionListService.recoveryById(id);
         log.info("Список ограничений (id: " + id + ") восстановлен");
-
         return "redirect:/message-{messageId}/directory-entry/" + page;
     }
 
     @GetMapping("/new-restriction-list")
     public String newRestrictionList(Model model, @PathVariable long messageId, @PathVariable long entryId, @RequestParam String page) {
         setModel(model, messageId, entryId, new RestrictionList(), page);
-
         return "add/addRestrictionList";
     }
 
@@ -74,6 +67,7 @@ public class RestrictionListController {
             log.info("Добавлен новый список ограничений");
             return "redirect:/message-{messageId}/directory-entry/" + page;
         }
+
         setModel(model, messageId, entryId, restrictionList, page);
         model.addAttribute("bindingResult", bindingResult);
 
@@ -97,6 +91,7 @@ public class RestrictionListController {
 
         setModel(model, messageId, entryId, restrictionList, page);
         model.addAttribute("bindingResult", bindingResult);
+
         return "update/updateRestrictionList";
     }
 

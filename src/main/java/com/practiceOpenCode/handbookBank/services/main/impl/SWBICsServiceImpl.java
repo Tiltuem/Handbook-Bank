@@ -6,7 +6,6 @@ import com.practiceOpenCode.handbookBank.services.main.SWBICsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -46,5 +45,6 @@ public class SWBICsServiceImpl implements SWBICsService {
     public void recoveryById(long id) {
         SWBICs swbiCs = repository.findById(id);
         swbiCs.setDeleted(false);
+        repository.save(swbiCs);
     }
 }

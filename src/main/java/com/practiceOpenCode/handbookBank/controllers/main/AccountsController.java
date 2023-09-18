@@ -1,12 +1,11 @@
 package com.practiceOpenCode.handbookBank.controllers.main;
 
-import com.practiceOpenCode.handbookBank.models.main.Accounts;
 import com.practiceOpenCode.handbookBank.models.codes.AccountStatusCode;
 import com.practiceOpenCode.handbookBank.models.codes.RegulationAccountTypeCode;
+import com.practiceOpenCode.handbookBank.models.main.Accounts;
+import com.practiceOpenCode.handbookBank.services.codes.AbstractCodeService;
 import com.practiceOpenCode.handbookBank.services.main.AccountsService;
 import com.practiceOpenCode.handbookBank.services.main.BICDirectoryEntryService;
-import com.practiceOpenCode.handbookBank.services.codes.AbstractCodeService;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -17,11 +16,10 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
-@RequestMapping("/message-{messageId}/entry-{entryId}")
-@RequiredArgsConstructor
 @Controller
-@Slf4j
+@RequestMapping("/message-{messageId}/entry-{entryId}")
 @PreAuthorize("hasAuthority('ROLE_USER') or hasAuthority('ROLE_ADMIN')")
+@Slf4j
 public class AccountsController {
     @Autowired
     AccountsService accountsService;
@@ -35,7 +33,6 @@ public class AccountsController {
     @GetMapping("/account-edit")
     public String getAccountById(@RequestParam long id, Model model, @PathVariable long messageId, @PathVariable long entryId, @RequestParam String page) {
         setModel(model, messageId, entryId, accountsService.getById(id), page);
-
         return "update/updateAccount";
     }
 
@@ -43,7 +40,6 @@ public class AccountsController {
     public String deleteAccount(@PathVariable long id, @RequestParam String page) {
         accountsService.deleteById(id);
         log.info("Аккаунт (id: " + id + ") удалён");
-
         return "redirect:/message-{messageId}/directory-entry/" + page;
     }
 
@@ -51,14 +47,12 @@ public class AccountsController {
     public String recoveryAccount(@PathVariable long id, @RequestParam String page) {
         accountsService.recoveryById(id);
         log.info("Аккаунт (id: " + id + ") восстановлен");
-
         return "redirect:/message-{messageId}/directory-entry/" + page;
     }
 
     @GetMapping("/new-account")
     public String newAccount(Model model, @PathVariable long messageId, @PathVariable long entryId, @RequestParam String page) {
         setModel(model, messageId, entryId, new Accounts(), page);
-
         return "add/addAccount";
     }
 
@@ -75,9 +69,9 @@ public class AccountsController {
             setCodes(account, regulationAccountTypeCode, accountStatusCode);
             bicDirectoryEntryService.updateById(entryId, account);
             log.info("Аккаунт добавлен");
-
             return "redirect:/message-{messageId}/directory-entry/" + page;
         }
+
         setModel(model, messageId, entryId, account, page);
         model.addAttribute("bindingResult", bindingResult);
 
@@ -97,7 +91,6 @@ public class AccountsController {
         if (bindingResult.getErrorCount() == 2) {
             accountsService.update(account);
             log.info("Аккаунт (id: " + account.getId() + ") редактирован");
-
             return "redirect:/message-{messageId}/directory-entry/" + page;
         }
 
