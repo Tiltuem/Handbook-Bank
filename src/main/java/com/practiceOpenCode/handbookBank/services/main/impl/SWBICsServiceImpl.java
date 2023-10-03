@@ -28,6 +28,7 @@ public class SWBICsServiceImpl implements SWBICsService {
         SWBICs swbiCs = repository.findById(newSWBICs.getId());
         swbiCs.setSwbic(newSWBICs.getSwbic());
         swbiCs.setDefaultSWBIC(newSWBICs.isDefaultSWBIC());
+
         repository.save(swbiCs);
     }
 
@@ -45,6 +46,7 @@ public class SWBICsServiceImpl implements SWBICsService {
     public void recoveryById(long id) {
         SWBICs swbiCs = repository.findById(id);
         swbiCs.setDeleted(false);
+
         repository.save(swbiCs);
     }
 }

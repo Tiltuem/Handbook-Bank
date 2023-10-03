@@ -22,8 +22,9 @@ public class MessageController {
     MessageService messageService;
 
     @GetMapping("/{page}")
-    public String getAllEntries(@PathVariable int page, final Model model) {
+    public String getAllEntries(@PathVariable int page, Model model) {
         Page<Message> messages = messageService.getAllMessages(PageRequest.of(page, 10, Sort.by("id")));
+
         if (page > messages.getTotalPages())
             throw new NotFoundPageException("Страница не найдена");
 
@@ -41,8 +42,9 @@ public class MessageController {
                                 @RequestParam(required = false) String column,
                                 @RequestParam(required = false) String columnDate,
                                 @PathVariable int page,
-                                final Model model) {
+                                Model model) {
         Page<Message> messages = messageService.searchMessages(PageRequest.of(page, 10, Sort.by("id")), value, showDeleted, column, columnDate, dateFrom, dateBy);
+
         if (page > messages.getTotalPages())
             throw new NotFoundPageException("Страница не найдена");
 
@@ -56,6 +58,7 @@ public class MessageController {
     @PostMapping("/delete/{id}")
     public String deleteMessage(@PathVariable long id, @RequestParam String page) {
         messageService.deleteById(id);
+
         log.info("ЭС (id: " + id + ") удалено");
         return "redirect:/messages/" + page;
     }
@@ -63,6 +66,7 @@ public class MessageController {
     @PostMapping("/recovery/{id}")
     public String recoveryMessage(@PathVariable long id, @RequestParam String page) {
         messageService.recoveryById(id);
+
         log.info("ЭС (id: " + id + ") восстановлено");
         return "redirect:/messages/" + page;
     }

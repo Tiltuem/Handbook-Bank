@@ -22,11 +22,15 @@ public abstract class AbstractCodeServiceImpl<E extends AbstractCode, T extends 
     }
     @Override
     public Page<E> getAllCodes(Pageable pageable, String code, Boolean showDeleted) {
-        if (showDeleted != null && showDeleted) {
-            if (!Objects.isNull(code)) return repository.findByCodeContaining(pageable, code);
+        if (!Objects.isNull(showDeleted) && showDeleted) {
+            if (!Objects.isNull(code))
+                return repository.findByCodeContaining(pageable, code);
+
             return repository.findAll(pageable);
         }
-        if (!Objects.isNull(code)) return repository.findByCodeContainingAndDeleted(pageable, code, false);
+
+        if (!Objects.isNull(code))
+            return repository.findByCodeContainingAndDeleted(pageable, code, false);
 
         return repository.findByDeleted(pageable, false);
     }
@@ -50,6 +54,7 @@ public abstract class AbstractCodeServiceImpl<E extends AbstractCode, T extends 
     public void recoveryById(long id) {
         E code = repository.findById(id);
         code.setDeleted(false);
+
         repository.save(code);
     }
 

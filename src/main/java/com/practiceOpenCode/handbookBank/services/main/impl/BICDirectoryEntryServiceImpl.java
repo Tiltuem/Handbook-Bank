@@ -44,6 +44,7 @@ public class BICDirectoryEntryServiceImpl implements BICDirectoryEntryService {
     public void updateById(long id, SWBICs swbiCs) {
         BICDirectoryEntry entry = repository.findById(id);
         entry.getSWBICs().add(swbiCs);
+
         repository.save(entry);
     }
 
@@ -51,6 +52,7 @@ public class BICDirectoryEntryServiceImpl implements BICDirectoryEntryService {
     public void updateById(long id, Accounts account) {
         BICDirectoryEntry entry = repository.findById(id);
         entry.getAccounts().add(account);
+
         repository.save(entry);
     }
 
@@ -60,7 +62,12 @@ public class BICDirectoryEntryServiceImpl implements BICDirectoryEntryService {
     }
 
     @Override
-    public Page<BICDirectoryEntry> searchEntries(Pageable pageable, String value, Boolean showDeleted, String column, String dateFrom, String dateBy) {
+    public Page<BICDirectoryEntry> searchEntries(Pageable pageable,
+                                                 String value,
+                                                 Boolean showDeleted,
+                                                 String column,
+                                                 String dateFrom,
+                                                 String dateBy) {
         if(Objects.isNull(dateBy))
             dateBy = LocalDate.now().toString();
 
@@ -79,7 +86,13 @@ public class BICDirectoryEntryServiceImpl implements BICDirectoryEntryService {
     }
 
     @Override
-    public void update(BICDirectoryEntry entry, ParticipantInfo info, String participantTypeCode, String serviceCsCode, String exchangeParticipantCode, String participantStatusCode, String changeTypeCode) {
+    public void update(BICDirectoryEntry entry,
+                       ParticipantInfo info,
+                       String participantTypeCode,
+                       String serviceCsCode,
+                       String exchangeParticipantCode,
+                       String participantStatusCode,
+                       String changeTypeCode) {
         BICDirectoryEntry oldEntry = repository.findById(entry.getId());
         info.setId(oldEntry.getParticipantInfo().getId());
         info.setRestrictionList(oldEntry.getParticipantInfo().getRestrictionList());
@@ -90,7 +103,13 @@ public class BICDirectoryEntryServiceImpl implements BICDirectoryEntryService {
     }
 
     @Override
-    public void add(BICDirectoryEntry newEntry, ParticipantInfo info, String participantTypeCode, String serviceCsCode, String exchangeParticipantCode, String participantStatusCode, String changeTypeCode) {
+    public void add(BICDirectoryEntry newEntry,
+                    ParticipantInfo info,
+                    String participantTypeCode,
+                    String serviceCsCode,
+                    String exchangeParticipantCode,
+                    String participantStatusCode,
+                    String changeTypeCode) {
         setInfo(newEntry, info, participantTypeCode, serviceCsCode, exchangeParticipantCode, participantStatusCode, changeTypeCode);
 
         repository.save(newEntry);
@@ -115,7 +134,13 @@ public class BICDirectoryEntryServiceImpl implements BICDirectoryEntryService {
         repository.save(entry);
     }
 
-    private void setInfo(BICDirectoryEntry entry, ParticipantInfo info, String participantTypeCode, String serviceCsCode, String exchangeParticipantCode, String participantStatusCode, String changeTypeCode) {
+    private void setInfo(BICDirectoryEntry entry,
+                         ParticipantInfo info,
+                         String participantTypeCode,
+                         String serviceCsCode,
+                         String exchangeParticipantCode,
+                         String participantStatusCode,
+                         String changeTypeCode) {
         info.setExchangeParticipantCode(exchangeParticipantCodeService.getByCode(exchangeParticipantCode));
         info.setParticipantStatusCode(participantStatusCodeService.getByCode(participantStatusCode));
         info.setServiceCsCode(serviceCsCodeService.getByCode(serviceCsCode));
@@ -126,9 +151,15 @@ public class BICDirectoryEntryServiceImpl implements BICDirectoryEntryService {
         entry.setParticipantInfo(info);
     }
 
-    private Page<BICDirectoryEntry> search(Pageable pageable, String value, String column, Boolean deleted, String dateFrom, String dateBy) {
+    private Page<BICDirectoryEntry> search(Pageable pageable,
+                                           String value,
+                                           String column,
+                                           Boolean deleted,
+                                           String dateFrom,
+                                           String dateBy) {
         Query query;
         StringBuilder queryString = new StringBuilder("SELECT a FROM BICDirectoryEntry a WHERE a.");
+
         if (!value.equals("")) {
             switch (column) {
                 case "bic", "participantInfo.bicParent", "participantInfo.uid" -> queryString.append(column + " = ?1");
@@ -153,6 +184,7 @@ public class BICDirectoryEntryServiceImpl implements BICDirectoryEntryService {
         } else {
             if (!dateFrom.equals("")) {
                 queryString.append("participantInfo.dateIn BETWEEN ?1 AND ?2");
+
                 if (!deleted)
                     queryString.append(" AND a.deleted = false");
 
@@ -166,6 +198,7 @@ public class BICDirectoryEntryServiceImpl implements BICDirectoryEntryService {
                     query = entityManager.createQuery("SELECT a FROM BICDirectoryEntry a");
             }
         }
+
         List entries = query.getResultList();
         int start = (int) pageable.getOffset();
         int end = Math.min((start + pageable.getPageSize()), entries.size());

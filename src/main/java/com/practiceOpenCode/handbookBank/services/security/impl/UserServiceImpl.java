@@ -37,6 +37,7 @@ public class UserServiceImpl implements UserDetailsService {
         User user  = findByUsername(username).orElseThrow(() -> new UsernameNotFoundException(
                 String.format("Пользователь '%s' не найден", username)
         ));
+
         return new org.springframework.security.core.userdetails.User(
                 user.getUsername(),
                 user.getPassword(),
@@ -51,6 +52,7 @@ public class UserServiceImpl implements UserDetailsService {
         user.setEmail(registrationUserDto.getEmail());
         user.setPassword(passwordEncoder.encode(registrationUserDto.getPassword()));
         user.setRoles(List.of(roleService.getUserRole()));
+
         return userRepository.save(user);
     }
 }

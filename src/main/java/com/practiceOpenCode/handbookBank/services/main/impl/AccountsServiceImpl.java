@@ -24,6 +24,7 @@ public class AccountsServiceImpl implements AccountsService {
         account.setCreatedDate(oldAccount.getCreatedDate());
         account.setModifiedBy(oldAccount.getModifiedBy());
         account.setModifiedDate(oldAccount.getModifiedDate());
+
         repository.save(account);
     }
 
@@ -42,6 +43,7 @@ public class AccountsServiceImpl implements AccountsService {
     public void recoveryById(long id) {
         Accounts account = repository.findById(id);
         account.setDeleted(false);
+
         repository.save(account);
     }
 }

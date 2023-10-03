@@ -27,8 +27,13 @@ public class ChangeTypeCodeController {
     AbstractCodeService<ChangeTypeCode> changeTypeCodeService;
 
     @GetMapping("/{page}")
-    public String getAllChangeTypeCode(@RequestParam(name = "code", required = false) String code, @RequestParam(name = "deleted", defaultValue = "false") Boolean showDeleted, @PathVariable int page, final Model model) {
-        Page<ChangeTypeCode> codes = changeTypeCodeService.getAllCodes(PageRequest.of(page, 5, Sort.by("id")), code, showDeleted);
+    public String getAllChangeTypeCode(@RequestParam(name = "code", required = false) String code, 
+                                       @RequestParam(name = "deleted", defaultValue = "false") Boolean showDeleted, 
+                                       @PathVariable int page, 
+                                       Model model) {
+        Page<ChangeTypeCode> codes = 
+                changeTypeCodeService.getAllCodes(PageRequest.of(page, 5, Sort.by("id")), code, showDeleted);
+        
         if (codes.isEmpty() && Objects.isNull(code))
             throw new NotFoundPageException("Страница не найдена");
 
@@ -40,18 +45,24 @@ public class ChangeTypeCodeController {
 
     @PostMapping("/add")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public String addNewChangeTypeCode(@Valid ChangeTypeCode changeTypeCode, BindingResult bindingResult, Model model) {
+    public String addNewChangeTypeCode(@Valid ChangeTypeCode changeTypeCode, 
+                                       BindingResult bindingResult, 
+                                       Model model) {
         if (changeTypeCodeService.getByCode(changeTypeCode.getCode()) != null) {
             log.warn("Ошибка при добавлении кода: данный код уже существует");
             bindingResult.addError(new ObjectError("changeTypeCode", "Ошибка: данный код уже существует"));
         }
+
         if (!bindingResult.hasErrors()) {
             changeTypeCodeService.save(changeTypeCode);
             log.info("Код добавлен");
+
             return "redirect:/codes/changeType/0";
         }
 
-        Page<ChangeTypeCode> codes = changeTypeCodeService.getAllCodes(PageRequest.of(0, 5, Sort.by("id")), null, null);
+        Page<ChangeTypeCode> codes =
+                changeTypeCodeService.getAllCodes(PageRequest.of(0, 5, Sort.by("id")), null, null);
+
         model.addAttribute("page", 0);
         model.addAttribute("bindingResult", bindingResult);
         setModel(model, codes, changeTypeCode);
@@ -64,15 +75,19 @@ public class ChangeTypeCodeController {
     public String deleteChangeTypeCode(@PathVariable long id, @RequestParam String page) {
         changeTypeCodeService.deleteById(id);
         log.info("Код (id: " + id + ") удален");
+
         return "redirect:/codes/changeType/" + page;
     }
 
     @PostMapping("/update")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public String updateChangeTypeCode(@RequestParam long id, @RequestParam String newCode, @RequestParam String page) {
+    public String updateChangeTypeCode(@RequestParam long id,
+                                       @RequestParam String newCode,
+                                       @RequestParam String page) {
         if (changeTypeCodeService.getByCode(newCode) != null) {
             throw new DuplicateFileException("Ошибка: данный код уже существует") ;
         }
+
         ChangeTypeCode changeTypeCode = changeTypeCodeService.getById(id);
         changeTypeCode.setCode(newCode);
         changeTypeCodeService.save(changeTypeCode);
@@ -85,6 +100,7 @@ public class ChangeTypeCodeController {
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public String recoveryChangeTypeCode(@PathVariable long id) {
         changeTypeCodeService.recoveryById(id);
+
         log.info("Код (id: " + id + ") восстановлен");
         return "redirect:/codes/changeType/0";
     }

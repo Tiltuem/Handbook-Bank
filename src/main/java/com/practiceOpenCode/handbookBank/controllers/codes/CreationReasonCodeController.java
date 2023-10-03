@@ -27,30 +27,42 @@ public class CreationReasonCodeController {
     AbstractCodeService<CreationReasonCode> creationReasonCodeService;
 
     @GetMapping("/{page}")
-    public String getAllCreationReasonCode(@RequestParam(name = "code", required = false) String code, @RequestParam(name = "deleted", defaultValue = "false") Boolean showDeleted, @PathVariable int page, final Model model) {
-        Page<CreationReasonCode> codes = creationReasonCodeService.getAllCodes(PageRequest.of(page, 5, Sort.by("id")), code, showDeleted);
+    public String getAllCreationReasonCode(@RequestParam(name = "code", required = false) String code,
+                                           @RequestParam(name = "deleted", defaultValue = "false") Boolean showDeleted,
+                                           @PathVariable int page,
+                                           Model model) {
+        Page<CreationReasonCode> codes =
+                creationReasonCodeService.getAllCodes(PageRequest.of(page, 5, Sort.by("id")), code, showDeleted);
+
         if (codes.isEmpty() && Objects.isNull(code))
             throw new NotFoundPageException("Страница не найдена");
 
         setModel(model, codes, new CreationReasonCode());
         model.addAttribute("search", code);
+
         return "codes/creationReason";
     }
 
     @PostMapping("/add")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public String addNewCreationReasonCode(@Valid CreationReasonCode creationReasonCode, BindingResult bindingResult, Model model) {
+    public String addNewCreationReasonCode(@Valid CreationReasonCode creationReasonCode,
+                                           BindingResult bindingResult,
+                                           Model model) {
         if (creationReasonCodeService.getByCode(creationReasonCode.getCode()) != null) {
             log.warn("Ошибка при добавлении кода: данный код уже существует");
             bindingResult.addError(new ObjectError("creationReasonCode", "Ошибка: данный код уже существует"));
         }
+
         if (!bindingResult.hasErrors()) {
             creationReasonCodeService.save(creationReasonCode);
             log.info("Код добавлен");
+
             return "redirect:/codes/creationReason/0";
         }
 
-        Page<CreationReasonCode> codes = creationReasonCodeService.getAllCodes(PageRequest.of(0, 5, Sort.by("id")), null, null);
+        Page<CreationReasonCode> codes =
+                creationReasonCodeService.getAllCodes(PageRequest.of(0, 5, Sort.by("id")), null, null);
+
         model.addAttribute("page", 0);
         model.addAttribute("bindingResult", bindingResult);
         setModel(model, codes, creationReasonCode);
@@ -69,10 +81,13 @@ public class CreationReasonCodeController {
 
     @PostMapping("/update")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public String updateCreationReasonCode(@RequestParam long id, @RequestParam String newCode, @RequestParam String page) {
+    public String updateCreationReasonCode(@RequestParam long id,
+                                           @RequestParam String newCode,
+                                           @RequestParam String page) {
         if (creationReasonCodeService.getByCode(newCode) != null) {
             throw new DuplicateFileException("Ошибка: данный код уже существует") ;
         }
+
         CreationReasonCode creationReasonCode = creationReasonCodeService.getById(id);
         creationReasonCode.setCode(newCode);
         creationReasonCodeService.save(creationReasonCode);

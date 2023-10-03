@@ -27,13 +27,19 @@ public class ExchangeParticipantCodeController {
     AbstractCodeService<ExchangeParticipantCode> exchangeParticipantCodeService;
 
     @GetMapping("/{page}")
-    public String getAllExchangeParticipantCode(@RequestParam(name = "code", required = false) String code, @RequestParam(name = "deleted", defaultValue = "false") Boolean showDeleted, @PathVariable int page, final Model model) {
-        Page<ExchangeParticipantCode> codes = exchangeParticipantCodeService.getAllCodes(PageRequest.of(page, 5, Sort.by("id")), code, showDeleted);
+    public String getAllExchangeParticipantCode(@RequestParam(name = "code", required = false) String code,
+                                                @RequestParam(name = "deleted", defaultValue = "false") Boolean showDeleted,
+                                                @PathVariable int page,
+                                                Model model) {
+        Page<ExchangeParticipantCode> codes =
+                exchangeParticipantCodeService.getAllCodes(PageRequest.of(page, 5, Sort.by("id")), code, showDeleted);
+
         if (codes.isEmpty() && Objects.isNull(code))
             throw new NotFoundPageException("Страница не найдена");
 
         setModel(model, codes, new ExchangeParticipantCode());
         model.addAttribute("search", code);
+
         return "codes/exchangeParticipant";
     }
 
@@ -44,13 +50,17 @@ public class ExchangeParticipantCodeController {
             log.warn("Ошибка при добавлении кода: данный код уже существует");
             bindingResult.addError(new ObjectError("exchangeParticipantCode", "Ошибка: данный код уже существует"));
         }
+
         if (!bindingResult.hasErrors()) {
             exchangeParticipantCodeService.save(exchangeParticipantCode);
             log.info("Код добавлен");
+
             return "redirect:/codes/exchangeParticipant/0";
         }
 
-        Page<ExchangeParticipantCode> codes = exchangeParticipantCodeService.getAllCodes(PageRequest.of(0, 5, Sort.by("id")), null, null);
+        Page<ExchangeParticipantCode> codes =
+                exchangeParticipantCodeService.getAllCodes(PageRequest.of(0, 5, Sort.by("id")), null, null);
+
         model.addAttribute("page", 0);
         model.addAttribute("bindingResult", bindingResult);
         setModel(model, codes, exchangeParticipantCode);
@@ -63,15 +73,19 @@ public class ExchangeParticipantCodeController {
     public String deleteExchangeParticipantCode(@PathVariable long id, @RequestParam String page) {
         exchangeParticipantCodeService.deleteById(id);
         log.info("Код (id: " + id + ") удален");
+
         return "redirect:/codes/exchangeParticipant/" + page;
     }
 
     @PostMapping("/update")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public String updateExchangeParticipantCode(@RequestParam long id, @RequestParam String newCode, @RequestParam String page) {
+    public String updateExchangeParticipantCode(@RequestParam long id,
+                                                @RequestParam String newCode,
+                                                @RequestParam String page) {
         if (exchangeParticipantCodeService.getByCode(newCode) != null) {
             throw new DuplicateFileException("Ошибка: данный код уже существует") ;
         }
+
         ExchangeParticipantCode exchangeParticipantCode = exchangeParticipantCodeService.getById(id);
         exchangeParticipantCode.setCode(newCode);
         exchangeParticipantCodeService.save(exchangeParticipantCode);

@@ -27,30 +27,42 @@ public class ServiceCsCodeController {
     AbstractCodeService<ServiceCsCode> serviceCsCodeService;
 
     @GetMapping("/{page}")
-    public String getAllServiceCsCode(@RequestParam(name = "code", required = false) String code, @RequestParam(name = "deleted", defaultValue = "false") Boolean showDeleted, @PathVariable int page, final Model model) {
-        Page<ServiceCsCode> codes = serviceCsCodeService.getAllCodes(PageRequest.of(page, 5, Sort.by("id")), code, showDeleted);
+    public String getAllServiceCsCode(@RequestParam(name = "code", required = false) String code,
+                                      @RequestParam(name = "deleted", defaultValue = "false") Boolean showDeleted,
+                                      @PathVariable int page,
+                                      Model model) {
+        Page<ServiceCsCode> codes =
+                serviceCsCodeService.getAllCodes(PageRequest.of(page, 5, Sort.by("id")), code, showDeleted);
+
         if (codes.isEmpty() && Objects.isNull(code))
             throw new NotFoundPageException("Страница не найдена");
 
         setModel(model, codes, new ServiceCsCode());
         model.addAttribute("search", code);
+
         return "codes/serviceCs";
     }
 
     @PostMapping("/add")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public String addNewServiceCsCode(@Valid ServiceCsCode serviceCsCode, BindingResult bindingResult, Model model) {
+    public String addNewServiceCsCode(@Valid ServiceCsCode serviceCsCode,
+                                      BindingResult bindingResult,
+                                      Model model) {
         if (serviceCsCodeService.getByCode(serviceCsCode.getCode()) != null) {
             log.warn("Ошибка при добавлении кода: данный код уже существует");
             bindingResult.addError(new ObjectError("serviceCsCode", "Ошибка: данный код уже существует"));
         }
+
         if (!bindingResult.hasErrors()) {
             serviceCsCodeService.save(serviceCsCode);
             log.info("Код добавлен");
+
             return "redirect:/codes/serviceCs/0";
         }
 
-        Page<ServiceCsCode> codes = serviceCsCodeService.getAllCodes(PageRequest.of(0, 5, Sort.by("id")), null, null);
+        Page<ServiceCsCode> codes =
+                serviceCsCodeService.getAllCodes(PageRequest.of(0, 5, Sort.by("id")), null, null);
+
         model.addAttribute("page", 0);
         model.addAttribute("bindingResult", bindingResult);
         setModel(model, codes, serviceCsCode);
@@ -63,15 +75,18 @@ public class ServiceCsCodeController {
     public String deleteServiceCsCode(@PathVariable long id, @RequestParam String page) {
         serviceCsCodeService.deleteById(id);
         log.info("Код (id: " + id + ") удален");
+
         return "redirect:/codes/serviceCs/" + page;
     }
 
     @PostMapping("/update")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public String updateServiceCsCode(@RequestParam long id, @RequestParam String newCode, @RequestParam String page) {
-        if (serviceCsCodeService.getByCode(newCode) != null) {
+    public String updateServiceCsCode(@RequestParam long id,
+                                      @RequestParam String newCode,
+                                      @RequestParam String page) {
+        if (serviceCsCodeService.getByCode(newCode) != null)
             throw new DuplicateFileException("Ошибка: данный код уже существует") ;
-        }
+
         ServiceCsCode serviceCsCode = serviceCsCodeService.getById(id);
         serviceCsCode.setCode(newCode);
         serviceCsCodeService.save(serviceCsCode);

@@ -28,14 +28,20 @@ public class RestrictionListController {
     AbstractCodeService<RestrictionCode> restrictionCodeService;
 
     @GetMapping("/restriction-list-edit")
-    public String getRestrictionListById(@RequestParam long id, Model model, @PathVariable long messageId, @PathVariable long entryId, @RequestParam String page) {
+    public String getRestrictionListById(@RequestParam long id,
+                                         @PathVariable long messageId,
+                                         @PathVariable long entryId,
+                                         @RequestParam String page,
+                                         Model model) {
         setModel(model, messageId, entryId, restrictionListService.getById(id), page);
+
         return "update/updateRestrictionList";
     }
 
     @PostMapping("/restriction-list-delete/{id}")
     public String deleteRestrictionList(@PathVariable long id, @RequestParam String page) {
         restrictionListService.deleteById(id);
+
         log.info("Список ограничений (id: " + id + ") удалён");
         return "redirect:/message-{messageId}/directory-entry/" + page;
     }
@@ -43,26 +49,32 @@ public class RestrictionListController {
     @PostMapping("/restriction-list-recovery/{id}")
     public String recoveryRestrictionList(@PathVariable long id, @RequestParam String page) {
         restrictionListService.recoveryById(id);
+
         log.info("Список ограничений (id: " + id + ") восстановлен");
         return "redirect:/message-{messageId}/directory-entry/" + page;
     }
 
     @GetMapping("/new-restriction-list")
-    public String newRestrictionList(Model model, @PathVariable long messageId, @PathVariable long entryId, @RequestParam String page) {
+    public String newRestrictionList(@PathVariable long messageId,
+                                     @PathVariable long entryId,
+                                     @RequestParam String page,
+                                     Model model) {
         setModel(model, messageId, entryId, new RestrictionList(), page);
+
         return "add/addRestrictionList";
     }
 
     @PostMapping("/restriction-list-add")
     public String addRestrictionList(@Valid RestrictionList restrictionList,
                                      BindingResult bindingResult,
-                                     Model model,
                                      @PathVariable long entryId,
                                      @PathVariable long messageId,
                                      @RequestParam String restrictionCode,
-                                     @RequestParam String page) {
+                                     @RequestParam String page,
+                                     Model model) {
         if (bindingResult.getErrorCount() == 1) {
             setCodes(restrictionList, restrictionCode);
+
             participantInfoService.updateById(entryId, restrictionList);
             log.info("Добавлен новый список ограничений");
             return "redirect:/message-{messageId}/directory-entry/" + page;
@@ -77,14 +89,16 @@ public class RestrictionListController {
     @PostMapping("/restriction-list-edit")
     public String updateRestrictionList(@Valid RestrictionList restrictionList,
                                         BindingResult bindingResult,
-                                        Model model,
                                         @PathVariable long entryId,
                                         @PathVariable long messageId,
                                         @RequestParam String restrictionCode,
-                                        @RequestParam String page) {
+                                        @RequestParam String page,
+                                        Model model) {
         setCodes(restrictionList, restrictionCode);
+
         if (bindingResult.getErrorCount() == 1) {
             restrictionListService.update(restrictionList);
+
             log.info("Список ограничений (id: " + restrictionList.getId() + ") редактирован");
             return "redirect:/message-{messageId}/directory-entry/" + page;
         }

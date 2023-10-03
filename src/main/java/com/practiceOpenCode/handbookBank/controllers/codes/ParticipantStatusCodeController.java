@@ -27,30 +27,42 @@ public class ParticipantStatusCodeController {
     AbstractCodeService<ParticipantStatusCode> participantStatusCodeService;
 
     @GetMapping("/{page}")
-    public String getAllParticipantStatusCode(@RequestParam(name = "code", required = false) String code, @RequestParam(name = "deleted", defaultValue = "false") Boolean showDeleted, @PathVariable int page, final Model model) {
-        Page<ParticipantStatusCode> codes = participantStatusCodeService.getAllCodes(PageRequest.of(page, 5, Sort.by("id")), code, showDeleted);
+    public String getAllParticipantStatusCode(@RequestParam(name = "code", required = false) String code,
+                                              @RequestParam(name = "deleted", defaultValue = "false") Boolean showDeleted,
+                                              @PathVariable int page,
+                                              Model model) {
+        Page<ParticipantStatusCode> codes =
+                participantStatusCodeService.getAllCodes(PageRequest.of(page, 5, Sort.by("id")), code, showDeleted);
+
         if (codes.isEmpty() && Objects.isNull(code))
             throw new NotFoundPageException("Страница не найдена");
 
         setModel(model, codes, new ParticipantStatusCode());
         model.addAttribute("search", code);
+
         return "codes/participantStatus";
     }
 
     @PostMapping("/add")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public String addNewParticipantStatusCode(@Valid ParticipantStatusCode participantStatusCode, BindingResult bindingResult, Model model) {
+    public String addNewParticipantStatusCode(@Valid ParticipantStatusCode participantStatusCode,
+                                              BindingResult bindingResult,
+                                              Model model) {
         if (participantStatusCodeService.getByCode(participantStatusCode.getCode()) != null) {
             log.warn("Ошибка при добавлении кода: данный код уже существует");
             bindingResult.addError(new ObjectError("participantStatusCode", "Ошибка: данный код уже существует"));
         }
+
         if (!bindingResult.hasErrors()) {
             participantStatusCodeService.save(participantStatusCode);
             log.info("Код добавлен");
+
             return "redirect:/codes/participantStatus/0";
         }
 
-        Page<ParticipantStatusCode> codes = participantStatusCodeService.getAllCodes(PageRequest.of(0, 5, Sort.by("id")), null, null);
+        Page<ParticipantStatusCode> codes =
+                participantStatusCodeService.getAllCodes(PageRequest.of(0, 5, Sort.by("id")), null, null);
+
         model.addAttribute("page", 0);
         model.addAttribute("bindingResult", bindingResult);
         setModel(model, codes, participantStatusCode);
@@ -68,10 +80,13 @@ public class ParticipantStatusCodeController {
 
     @PostMapping("/update")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public String updateParticipantStatusCode(@RequestParam long id, @RequestParam String newCode, @RequestParam String page) {
+    public String updateParticipantStatusCode(@RequestParam long id,
+                                              @RequestParam String newCode,
+                                              @RequestParam String page) {
         if (participantStatusCodeService.getByCode(newCode) != null) {
             throw new DuplicateFileException("Ошибка: данный код уже существует") ;
         }
+
         ParticipantStatusCode participantStatusCode = participantStatusCodeService.getById(id);
         participantStatusCode.setCode(newCode);
         participantStatusCodeService.save(participantStatusCode);
@@ -84,6 +99,7 @@ public class ParticipantStatusCodeController {
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public String recoveryParticipantStatusCode(@PathVariable long id) {
         participantStatusCodeService.recoveryById(id);
+
         log.info("Код (id: " + id + ") восстановлен");
         return "redirect:/codes/participantStatus/0";
     }

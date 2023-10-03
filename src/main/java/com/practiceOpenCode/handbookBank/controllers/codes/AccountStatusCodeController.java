@@ -27,23 +27,32 @@ public class AccountStatusCodeController {
     AbstractCodeService<AccountStatusCode> accountStatusCodeService;
 
     @GetMapping("/{page}")
-    public String getAllAccountStatusCode(@RequestParam(name = "code", required = false) String code, @RequestParam(name = "deleted", defaultValue = "false") Boolean showDeleted, @PathVariable int page, final Model model) {
-        Page<AccountStatusCode> codes = accountStatusCodeService.getAllCodes(PageRequest.of(page, 5, Sort.by("id")), code, showDeleted);
+    public String getAllAccountStatusCode(@RequestParam(name = "code", required = false) String code,
+                                          @RequestParam(name = "deleted", defaultValue = "false") Boolean showDeleted,
+                                          @PathVariable int page,
+                                          Model model) {
+        Page<AccountStatusCode> codes =
+                accountStatusCodeService.getAllCodes(PageRequest.of(page, 5, Sort.by("id")), code, showDeleted);
+
         if (codes.isEmpty() && Objects.isNull(code))
             throw new NotFoundPageException("Страница не найдена");
 
         setModel(model, codes, new AccountStatusCode());
         model.addAttribute("search", code);
+
         return "codes/accountStatus";
     }
 
     @PostMapping("/add")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public String addNewAccountStatusCode(@Valid AccountStatusCode accountStatusCode, BindingResult bindingResult, Model model) {
+    public String addNewAccountStatusCode(@Valid AccountStatusCode accountStatusCode,
+                                          BindingResult bindingResult,
+                                          Model model) {
         if (accountStatusCodeService.getByCode(accountStatusCode.getCode()) != null) {
             log.warn("Ошибка при добавлении кода: данный код уже существует");
             bindingResult.addError(new ObjectError("accountStatusCode", "Ошибка: данный код уже существует"));
         }
+
         if (!bindingResult.hasErrors()) {
             accountStatusCodeService.save(accountStatusCode);
 
@@ -51,7 +60,9 @@ public class AccountStatusCodeController {
             return "redirect:/codes/accountStatus/0";
         }
 
-        Page<AccountStatusCode> codes = accountStatusCodeService.getAllCodes(PageRequest.of(0, 5, Sort.by("id")), null, null);
+        Page<AccountStatusCode> codes =
+                accountStatusCodeService.getAllCodes(PageRequest.of(0, 5, Sort.by("id")), null, null);
+
         model.addAttribute("page", 0);
         model.addAttribute("bindingResult", bindingResult);
         setModel(model, codes, accountStatusCode);

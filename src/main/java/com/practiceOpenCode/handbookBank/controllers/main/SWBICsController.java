@@ -26,14 +26,20 @@ public class SWBICsController {
 
 
     @GetMapping("/swbics-edit")
-    public String getSWBICsById(@RequestParam long id, Model model, @PathVariable long messageId, @PathVariable long entryId, @RequestParam String page) {
+    public String getSWBICsById(@RequestParam long id,
+                                @PathVariable long messageId,
+                                @PathVariable long entryId,
+                                @RequestParam String page,
+                                Model model) {
         setModel(model, messageId, entryId, SWBICsService.getById(id), page);
+
         return "update/updateSWBICs";
     }
 
     @PostMapping("/swbics-delete/{id}")
     public String deleteSWBICs(@PathVariable long id, @RequestParam String page) {
         SWBICsService.deleteById(id);
+
         log.info("Список ограничений (id: " + id + ") удалён");
         return "redirect:/message-{messageId}/directory-entry/" + page;
     }
@@ -41,25 +47,31 @@ public class SWBICsController {
     @PostMapping("/swbics-recovery/{id}")
     public String recoverySWBICs(@PathVariable long id, @RequestParam String page) {
         SWBICsService.recoveryById(id);
+
         log.info("Список ограничений (id: " + id + ") восстановлен");
         return "redirect:/message-{messageId}/directory-entry/" + page;
     }
 
     @GetMapping("/new-swbics")
-    public String newSWBICs(Model model, @PathVariable long messageId, @PathVariable long entryId, @RequestParam String page) {
+    public String newSWBICs(@PathVariable long messageId,
+                            @PathVariable long entryId,
+                            @RequestParam String page,
+                            Model model) {
         setModel(model, messageId, entryId, new SWBICs(), page);
+
         return "add/addSWBICs";
     }
 
     @PostMapping("/swbics-add")
     public String addSWBICs(@Valid SWBICs swbics,
                             BindingResult bindingResult,
-                            Model model,
                             @PathVariable long entryId,
                             @PathVariable long messageId,
-                            @RequestParam String page) {
+                            @RequestParam String page,
+                            Model model) {
         if (!bindingResult.hasErrors()) {
             bicDirectoryEntryService.updateById(entryId, swbics);
+
             log.info("Добавлен новый перечень БИК");
             return "redirect:/message-{messageId}/directory-entry/" + page;
         }
@@ -73,12 +85,13 @@ public class SWBICsController {
     @PostMapping("/swbics-edit")
     public String updateSWBICs(@Valid SWBICs swbics,
                                BindingResult bindingResult,
-                               Model model,
                                @PathVariable long entryId,
                                @PathVariable long messageId,
-                               @RequestParam String page) {
+                               @RequestParam String page,
+                               Model model) {
         if (!bindingResult.hasErrors()) {
             SWBICsService.update(swbics);
+
             log.info("Перечень БИК (id: " + swbics.getId() + ") редактирован");
             return "redirect:/message-{messageId}/directory-entry/" + page;
         }

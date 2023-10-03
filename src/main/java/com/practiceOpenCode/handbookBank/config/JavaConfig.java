@@ -52,6 +52,7 @@ public class JavaConfig {
         DataSourceInitializer dataSourceInitializer = new DataSourceInitializer();
         dataSourceInitializer.setDataSource(dataSource);
         dataSourceInitializer.setDatabasePopulator(databasePopulator);
+
         return dataSourceInitializer;
     }
 
@@ -63,6 +64,7 @@ public class JavaConfig {
         jaxbContext = JAXBContext.newInstance(Message.class);
         Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
         setAdapter(unmarshaller);
+
         return unmarshaller;
     }
     private void setAdapter(Unmarshaller unmarshaller) {

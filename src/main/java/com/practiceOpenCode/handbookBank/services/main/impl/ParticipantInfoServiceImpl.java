@@ -33,6 +33,7 @@ public class ParticipantInfoServiceImpl implements ParticipantInfoService {
     public void updateById(long id, RestrictionList restrictionList) {
         ParticipantInfo participantInfo = repository.findById(id);
         participantInfo.getRestrictionList().add(restrictionList);
+
         repository.save(participantInfo);
     }
 }

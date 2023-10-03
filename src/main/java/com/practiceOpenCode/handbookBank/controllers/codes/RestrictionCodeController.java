@@ -28,30 +28,42 @@ public class RestrictionCodeController {
     AbstractCodeService<RestrictionCode> restrictionCodeService;
 
     @GetMapping("/{page}")
-    public String getAllRestrictionCode(@RequestParam(name = "code", required = false) String code, @RequestParam(name = "deleted", defaultValue = "false") Boolean showDeleted, @PathVariable int page, final Model model) {
-        Page<RestrictionCode> codes = restrictionCodeService.getAllCodes(PageRequest.of(page, 5, Sort.by("id")), code, showDeleted);
+    public String getAllRestrictionCode(@RequestParam(name = "code", required = false) String code,
+                                        @RequestParam(name = "deleted", defaultValue = "false") Boolean showDeleted,
+                                        @PathVariable int page,
+                                        Model model) {
+        Page<RestrictionCode> codes =
+                restrictionCodeService.getAllCodes(PageRequest.of(page, 5, Sort.by("id")), code, showDeleted);
+
         if (codes.isEmpty() && Objects.isNull(code))
             throw new NotFoundPageException("Страница не найдена");
 
         setModel(model, codes, new RestrictionCode());
         model.addAttribute("search", code);
+
         return "codes/restriction";
     }
 
     @PostMapping("/add")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public String addNewRestrictionCode(@Valid RestrictionCode restrictionCode, BindingResult bindingResult, Model model) {
+    public String addNewRestrictionCode(@Valid RestrictionCode restrictionCode,
+                                        BindingResult bindingResult,
+                                        Model model) {
         if (restrictionCodeService.getByCode(restrictionCode.getCode()) != null) {
             log.warn("Ошибка при добавлении кода: данный код уже существует");
             bindingResult.addError(new ObjectError("restrictionCode", "Ошибка: данный код уже существует"));
         }
+
         if (!bindingResult.hasErrors()) {
             restrictionCodeService.save(restrictionCode);
             log.info("Код добавлен");
+
             return "redirect:/codes/restriction/0";
         }
 
-        Page<RestrictionCode> codes = restrictionCodeService.getAllCodes(PageRequest.of(0, 5, Sort.by("id")), null, null);
+        Page<RestrictionCode> codes =
+                restrictionCodeService.getAllCodes(PageRequest.of(0, 5, Sort.by("id")), null, null);
+
         model.addAttribute("page", 0);
         model.addAttribute("bindingResult", bindingResult);
         setModel(model, codes, restrictionCode);
@@ -64,15 +76,18 @@ public class RestrictionCodeController {
     public String deleteRestrictionCode(@PathVariable long id, @RequestParam String page) {
         restrictionCodeService.deleteById(id);
         log.info("Код (id: " + id + ") удален");
+
         return "redirect:/codes/restriction/" + page;
     }
 
     @PostMapping("/update")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public String updateRestrictionCode(@RequestParam long id, @RequestParam String newCode, @RequestParam String page) {
-        if (restrictionCodeService.getByCode(newCode) != null) {
+    public String updateRestrictionCode(@RequestParam long id,
+                                        @RequestParam String newCode,
+                                        @RequestParam String page) {
+        if (restrictionCodeService.getByCode(newCode) != null)
             throw new DuplicateFileException("Ошибка: данный код уже существует") ;
-        }
+
         RestrictionCode restrictionCode = restrictionCodeService.getById(id);
         restrictionCode.setCode(newCode);
         restrictionCodeService.save(restrictionCode);
@@ -85,6 +100,7 @@ public class RestrictionCodeController {
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public String recoveryRestrictionCode(@PathVariable long id) {
         restrictionCodeService.recoveryById(id);
+
         log.info("Код (id: " + id + ") восстановлен");
         return "redirect:/codes/restriction/0";
     }

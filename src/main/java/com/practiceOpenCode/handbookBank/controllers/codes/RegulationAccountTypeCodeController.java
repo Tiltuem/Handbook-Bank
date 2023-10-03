@@ -27,30 +27,42 @@ public class RegulationAccountTypeCodeController {
     AbstractCodeService<RegulationAccountTypeCode> regulationAccountTypeCodeService;
 
     @GetMapping("/{page}")
-    public String getAllRegulationAccountTypeCode(@RequestParam(name = "code", required = false) String code, @RequestParam(name = "deleted", defaultValue = "false") Boolean showDeleted, @PathVariable int page, final Model model) {
-        Page<RegulationAccountTypeCode> codes = regulationAccountTypeCodeService.getAllCodes(PageRequest.of(page, 5, Sort.by("id")), code, showDeleted);
+    public String getAllRegulationAccountTypeCode(@RequestParam(name = "code", required = false) String code,
+                                                  @RequestParam(name = "deleted", defaultValue = "false") Boolean showDeleted,
+                                                  @PathVariable int page,
+                                                  Model model) {
+        Page<RegulationAccountTypeCode> codes =
+                regulationAccountTypeCodeService.getAllCodes(PageRequest.of(page, 5, Sort.by("id")), code, showDeleted);
+
         if (codes.isEmpty() && Objects.isNull(code))
             throw new NotFoundPageException("Страница не найдена");
 
         setModel(model, codes, new RegulationAccountTypeCode());
         model.addAttribute("search", code);
+
         return "codes/regulationAccountType";
     }
 
     @PostMapping("/add")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public String addNewRegulationAccountTypeCode(@Valid RegulationAccountTypeCode regulationAccountType, BindingResult bindingResult, Model model) {
+    public String addNewRegulationAccountTypeCode(@Valid RegulationAccountTypeCode regulationAccountType,
+                                                  BindingResult bindingResult,
+                                                  Model model) {
         if (regulationAccountTypeCodeService.getByCode(regulationAccountType.getCode()) != null) {
             log.warn("Ошибка при добавлении кода: данный код уже существует");
             bindingResult.addError(new ObjectError("regulationAccountType", "Ошибка: данный код уже существует"));
         }
+
         if (!bindingResult.hasErrors()) {
             regulationAccountTypeCodeService.save(regulationAccountType);
             log.info("Код добавлен");
+
             return "redirect:/codes/regulationAccountType/0";
         }
 
-        Page<RegulationAccountTypeCode> codes = regulationAccountTypeCodeService.getAllCodes(PageRequest.of(0, 5, Sort.by("id")), null, null);
+        Page<RegulationAccountTypeCode> codes =
+                regulationAccountTypeCodeService.getAllCodes(PageRequest.of(0, 5, Sort.by("id")), null, null);
+
         model.addAttribute("page", 0);
         model.addAttribute("bindingResult", bindingResult);
         setModel(model, codes, regulationAccountType);
@@ -63,15 +75,19 @@ public class RegulationAccountTypeCodeController {
     public String deleteRegulationAccountTypeCode(@PathVariable long id, @RequestParam String page) {
         regulationAccountTypeCodeService.deleteById(id);
         log.info("Код (id: " + id + ") удален");
+
         return "redirect:/codes/regulationAccountType/" + page;
     }
 
     @PostMapping("/update")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public String updateRegulationAccountTypeCode(@RequestParam long id, @RequestParam String newCode, @RequestParam String page) {
-        if (regulationAccountTypeCodeService.getByCode(newCode) != null) {
+    public String updateRegulationAccountTypeCode(@RequestParam long id,
+                                                  @RequestParam String newCode,
+                                                  @RequestParam String page) {
+        if (regulationAccountTypeCodeService.getByCode(newCode) != null)
             throw new DuplicateFileException("Ошибка: данный код уже существует") ;
-        }
+
+
         RegulationAccountTypeCode regulationAccountType = regulationAccountTypeCodeService.getById(id);
         regulationAccountType.setCode(newCode);
         regulationAccountTypeCodeService.save(regulationAccountType);
@@ -84,6 +100,7 @@ public class RegulationAccountTypeCodeController {
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public String recoveryRegulationAccountTypeCode(@PathVariable long id) {
         regulationAccountTypeCodeService.recoveryById(id);
+
         log.info("Код (id: " + id + ") восстановлен");
         return "redirect:/codes/regulationAccountType/0";
     }

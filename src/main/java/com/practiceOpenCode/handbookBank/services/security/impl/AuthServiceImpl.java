@@ -31,8 +31,10 @@ public class AuthServiceImpl implements AuthService {
         } catch (BadCredentialsException e) {
             throw new UnauthorizedException("Ошибка: неверный логин или пароль");
         }
+
         UserDetails userDetails = userService.loadUserByUsername(authRequest.getUsername());
         String token = jwtTokenUtils.generateToken(userDetails);
+
         return ResponseEntity.ok(new JwtResponse(token));
     }
 

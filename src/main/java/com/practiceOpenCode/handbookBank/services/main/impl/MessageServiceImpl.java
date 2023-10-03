@@ -52,7 +52,13 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public Page<Message> searchMessages(Pageable pageable, String value, Boolean showDeleted, String column, String columnDate, String dateFrom, String dateBy) {
+    public Page<Message> searchMessages(Pageable pageable,
+                                        String value,
+                                        Boolean showDeleted,
+                                        String column,
+                                        String columnDate,
+                                        String dateFrom,
+                                        String dateBy) {
         if(dateBy.equals(""))
             dateBy = LocalDate.now().toString();
 
@@ -89,6 +95,7 @@ public class MessageServiceImpl implements MessageService {
 
         if (path.endsWith(".xml")) {
             checkFile(file.getOriginalFilename());
+
             try (OutputStream os = Files.newOutputStream(fileXml.toPath())) {
                 os.write(file.getBytes());
             } catch (IOException e) {
@@ -128,14 +135,21 @@ public class MessageServiceImpl implements MessageService {
     public void recoveryById(long id) {
         Message message = repository.findById(id);
         message.setDeleted(false);
+
         repository.save(message);
     }
 
-    private Page<Message> search(Pageable pageable, String value, String column, String columnDate, Boolean deleted, String dateFrom, String dateBy) {
+    private Page<Message> search(Pageable pageable,
+                                 String value,
+                                 String column,
+                                 String columnDate,
+                                 Boolean deleted,
+                                 String dateFrom,
+                                 String dateBy) {
         Query query;
         StringBuilder queryString = new StringBuilder("SELECT a FROM Message a WHERE a.");
-        if (!value.equals("")) {
 
+        if (!value.equals("")) {
             switch (column) {
                 case "edNumber", "edAuthor", "edReceiver", "directoryVersion" -> queryString.append(column + " = ?1");
                 default -> {
@@ -159,6 +173,7 @@ public class MessageServiceImpl implements MessageService {
         } else {
             if (!dateFrom.equals("")) {
                 queryString.append(columnDate + " BETWEEN ?1 AND ?2");
+
                 if (!deleted)
                     queryString.append(" AND a.deleted = false");
 
@@ -177,6 +192,7 @@ public class MessageServiceImpl implements MessageService {
         int start = (int) pageable.getOffset();
         int end = Math.min((start + pageable.getPageSize()), entries.size());
         List<Message> pageContent = entries.subList(start, end);
+
         return new PageImpl<>(pageContent, pageable, entries.size());
     }
 

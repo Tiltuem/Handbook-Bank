@@ -27,29 +27,42 @@ public class InformationTypeCodeController {
     AbstractCodeService<InformationTypeCode> informationTypeCodeService;
 
     @GetMapping("/{page}")
-    public String getAllAInformationTypeCode(@RequestParam(name = "code", required = false) String code, @RequestParam(name = "deleted", defaultValue = "false") Boolean showDeleted, @PathVariable int page, final Model model) {
-        Page<InformationTypeCode> codes = informationTypeCodeService.getAllCodes(PageRequest.of(page, 5, Sort.by("id")), code, showDeleted);
+    public String getAllAInformationTypeCode(@RequestParam(name = "code", required = false) String code,
+                                             @RequestParam(name = "deleted", defaultValue = "false") Boolean showDeleted,
+                                             @PathVariable int page,
+                                             Model model) {
+        Page<InformationTypeCode> codes =
+                informationTypeCodeService.getAllCodes(PageRequest.of(page, 5, Sort.by("id")), code, showDeleted);
+
         if (codes.isEmpty() && Objects.isNull(code))
             throw new NotFoundPageException("Страница не найдена");
 
         setModel(model, codes, new InformationTypeCode());
         model.addAttribute("search", code);
+
         return "codes/informationType";
     }
 
     @PostMapping("/add")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public String addNewInformationTypeCode(@Valid InformationTypeCode informationTypeCode, BindingResult bindingResult, Model model) {
+    public String addNewInformationTypeCode(@Valid InformationTypeCode informationTypeCode,
+                                            BindingResult bindingResult,
+                                            Model model) {
         if (informationTypeCodeService.getByCode(informationTypeCode.getCode()) != null) {
             log.warn("Ошибка при добавлении кода: данный код уже существует");
             bindingResult.addError(new ObjectError("informationTypeCode", "Ошибка: данный код уже существует"));
         }
+
         if (!bindingResult.hasErrors()) {
             informationTypeCodeService.save(informationTypeCode);
             log.info("Код добавлен");
+
             return "redirect:/codes/informationType/0";
         }
-        Page<InformationTypeCode> codes = informationTypeCodeService.getAllCodes(PageRequest.of(0, 5, Sort.by("id")), null, null);
+
+        Page<InformationTypeCode> codes =
+                informationTypeCodeService.getAllCodes(PageRequest.of(0, 5, Sort.by("id")), null, null);
+
         model.addAttribute("page", 0);
         model.addAttribute("bindingResult", bindingResult);
         setModel(model, codes, informationTypeCode);
@@ -67,10 +80,13 @@ public class InformationTypeCodeController {
 
     @PostMapping("/update")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public String updateInformationTypeCode(@RequestParam long id, @RequestParam String newCode, @RequestParam String page) {
+    public String updateInformationTypeCode(@RequestParam long id,
+                                            @RequestParam String newCode,
+                                            @RequestParam String page) {
         if (informationTypeCodeService.getByCode(newCode) != null) {
             throw new DuplicateFileException("Ошибка: данный код уже существует") ;
         }
+
         InformationTypeCode informationTypeCode = informationTypeCodeService.getById(id);
         informationTypeCode.setCode(newCode);
         informationTypeCodeService.save(informationTypeCode);
@@ -83,6 +99,7 @@ public class InformationTypeCodeController {
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public String recoveryInformationTypeCode(@PathVariable long id) {
         informationTypeCodeService.recoveryById(id);
+
         log.info("Код (id: " + id + ") восстановлен");
         return "redirect:/codes/informationType/0";
     }

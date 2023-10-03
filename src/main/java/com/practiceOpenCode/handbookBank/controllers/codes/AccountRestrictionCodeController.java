@@ -31,31 +31,39 @@ public class AccountRestrictionCodeController {
     public String getAllAccountRestrictionCode(@RequestParam(name = "code", required = false) String code,
                                                @RequestParam(name = "deleted", defaultValue = "false") Boolean showDeleted,
                                                @PathVariable int page,
-                                               final Model model) {
-        Page<AccountRestrictionCode> codes = accountRestrictionCodeService.getAllCodes(PageRequest.of(page, 5, Sort.by("id")), code, showDeleted);
+                                               Model model) {
+        Page<AccountRestrictionCode> codes =
+                accountRestrictionCodeService.getAllCodes(PageRequest.of(page, 5, Sort.by("id")), code, showDeleted);
+
         if (codes.isEmpty() && Objects.isNull(code))
             throw new NotFoundPageException("Страница не найдена");
 
         setModel(model, codes, new AccountRestrictionCode());
         model.addAttribute("search", code);
-        
+
         return "codes/accountRestriction";
     }
 
     @PostMapping("/add")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public String addNewAccountRestrictionCode(@Valid AccountRestrictionCode accountRestrictionCode, BindingResult bindingResult, Model model) {
+    public String addNewAccountRestrictionCode(@Valid AccountRestrictionCode accountRestrictionCode,
+                                               BindingResult bindingResult,
+                                               Model model) {
         if (accountRestrictionCodeService.getByCode(accountRestrictionCode.getCode()) != null) {
             bindingResult.addError(new ObjectError("accountRestrictionCode", "Ошибка: данный код уже существует"));
             log.warn("Ошибка при добавлении кода: данный код уже существует");
         }
+
         if (!bindingResult.hasErrors()) {
             accountRestrictionCodeService.save(accountRestrictionCode);
 
             log.info("Код добавлен");
             return "redirect:/codes/accountRestriction/0";
         }
-        Page<AccountRestrictionCode> codes = accountRestrictionCodeService.getAllCodes(PageRequest.of(0, 5, Sort.by("id")), null, null);
+
+        Page<AccountRestrictionCode> codes =
+                accountRestrictionCodeService.getAllCodes(PageRequest.of(0, 5, Sort.by("id")), null, null);
+
         model.addAttribute("page", 0);
         model.addAttribute("bindingResult", bindingResult);
         setModel(model, codes, accountRestrictionCode);
@@ -65,7 +73,8 @@ public class AccountRestrictionCodeController {
 
     @PostMapping("/delete/{id}")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public String deleteAccountRestrictionCode(@PathVariable long id, @RequestParam String page) {
+    public String deleteAccountRestrictionCode(@PathVariable long id,
+                                               @RequestParam String page) {
         accountRestrictionCodeService.deleteById(id);
 
         log.info("Код с id: " + id + " удален");
@@ -74,10 +83,13 @@ public class AccountRestrictionCodeController {
 
     @PostMapping("/update")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public String updateAccountRestrictionCode(@RequestParam long id, @RequestParam String newCode, @RequestParam String page) {
+    public String updateAccountRestrictionCode(@RequestParam long id,
+                                               @RequestParam String newCode,
+                                               @RequestParam String page) {
         if (accountRestrictionCodeService.getByCode(newCode) != null) {
             throw new DuplicateFileException("Ошибка: данный код уже существует") ;
         }
+
         AccountRestrictionCode accountRestrictionCode = accountRestrictionCodeService.getById(id);
         accountRestrictionCode.setCode(newCode);
         accountRestrictionCodeService.save(accountRestrictionCode);
@@ -90,11 +102,14 @@ public class AccountRestrictionCodeController {
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public String recoveryAccountRestrictionCode(@PathVariable long id) {
         accountRestrictionCodeService.recoveryById(id);
+
         log.info("Код с id: " + id + " восстановлен");
         return "redirect:/codes/accountRestriction/0";
     }
 
-    private void setModel(Model model, Page<AccountRestrictionCode> codes, AccountRestrictionCode accountRestrictionCode) {
+    private void setModel(Model model,
+                          Page<AccountRestrictionCode> codes,
+                          AccountRestrictionCode accountRestrictionCode) {
         model.addAttribute("codes", codes);
         model.addAttribute("accountRestrictionCode", accountRestrictionCode);
     }

@@ -31,14 +31,20 @@ public class AccountsController {
     AbstractCodeService<AccountStatusCode> accountStatusCodeService;
 
     @GetMapping("/account-edit")
-    public String getAccountById(@RequestParam long id, Model model, @PathVariable long messageId, @PathVariable long entryId, @RequestParam String page) {
+    public String getAccountById(@RequestParam long id,
+                                 @PathVariable long messageId,
+                                 @PathVariable long entryId,
+                                 @RequestParam String page,
+                                 Model model) {
         setModel(model, messageId, entryId, accountsService.getById(id), page);
+
         return "update/updateAccount";
     }
 
     @PostMapping("/account-delete/{id}")
     public String deleteAccount(@PathVariable long id, @RequestParam String page) {
         accountsService.deleteById(id);
+
         log.info("Аккаунт (id: " + id + ") удалён");
         return "redirect:/message-{messageId}/directory-entry/" + page;
     }
@@ -46,28 +52,34 @@ public class AccountsController {
     @PostMapping("/account-recovery/{id}")
     public String recoveryAccount(@PathVariable long id, @RequestParam String page) {
         accountsService.recoveryById(id);
+
         log.info("Аккаунт (id: " + id + ") восстановлен");
         return "redirect:/message-{messageId}/directory-entry/" + page;
     }
 
     @GetMapping("/new-account")
-    public String newAccount(Model model, @PathVariable long messageId, @PathVariable long entryId, @RequestParam String page) {
+    public String newAccount(@PathVariable long messageId,
+                             @PathVariable long entryId,
+                             @RequestParam String page,
+                             Model model) {
         setModel(model, messageId, entryId, new Accounts(), page);
+
         return "add/addAccount";
     }
 
     @PostMapping("/account-add")
     public String addAccount(@Valid Accounts account,
                              BindingResult bindingResult,
-                             Model model,
                              @PathVariable long entryId,
                              @PathVariable long messageId,
                              @RequestParam String accountStatusCode,
                              @RequestParam String regulationAccountTypeCode,
-                             @RequestParam String page) {
+                             @RequestParam String page,
+                             Model model) {
         if (bindingResult.getErrorCount() == 2) {
             setCodes(account, regulationAccountTypeCode, accountStatusCode);
             bicDirectoryEntryService.updateById(entryId, account);
+
             log.info("Аккаунт добавлен");
             return "redirect:/message-{messageId}/directory-entry/" + page;
         }
@@ -81,15 +93,17 @@ public class AccountsController {
     @PostMapping("/account-edit")
     public String updateAccount(@Valid Accounts account,
                                 BindingResult bindingResult,
-                                Model model,
                                 @PathVariable long entryId,
                                 @PathVariable long messageId,
                                 @RequestParam String accountStatusCode,
                                 @RequestParam String regulationAccountTypeCode,
-                                @RequestParam String page) {
+                                @RequestParam String page,
+                                Model model) {
         setCodes(account, regulationAccountTypeCode, accountStatusCode);
+
         if (bindingResult.getErrorCount() == 2) {
             accountsService.update(account);
+
             log.info("Аккаунт (id: " + account.getId() + ") редактирован");
             return "redirect:/message-{messageId}/directory-entry/" + page;
         }

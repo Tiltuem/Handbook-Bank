@@ -28,6 +28,7 @@ public class RestrictionListServiceImpl implements RestrictionListService {
         RestrictionList restrictionList = repository.findById(newRestrictionList.getId());
         restrictionList.setRestrictionCode(newRestrictionList.getRestrictionCode());
         restrictionList.setRestrictionDate(newRestrictionList.getRestrictionDate());
+
         repository.save(restrictionList);
     }
 
@@ -45,6 +46,7 @@ public class RestrictionListServiceImpl implements RestrictionListService {
     public void recoveryById(long id) {
         RestrictionList restrictionList = repository.findById(id);
         restrictionList.setDeleted(false);
+
         repository.save(restrictionList);
     }
 

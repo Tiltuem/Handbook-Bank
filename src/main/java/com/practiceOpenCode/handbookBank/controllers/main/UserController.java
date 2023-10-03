@@ -22,6 +22,7 @@ public class UserController {
     public String getUserInfo(Model model, @RequestParam(required = false) boolean success) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         User user  = userService.findByUsername(username).get();
+
         model.addAttribute("user", user);
         model.addAttribute("success", success);
 
