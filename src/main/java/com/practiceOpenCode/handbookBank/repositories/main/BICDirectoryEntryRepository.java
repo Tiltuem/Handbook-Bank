@@ -10,6 +10,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface BICDirectoryEntryRepository extends JpaRepository<BICDirectoryEntry, Long> {
     Page<BICDirectoryEntry> findAll(Pageable pageable);
+
     BICDirectoryEntry findById(long id);
+
     Page<BICDirectoryEntry> findByDeleted(Pageable pageable, Boolean deleted);
 }

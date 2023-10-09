@@ -18,7 +18,7 @@ import javax.validation.constraints.Size;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @NoArgsConstructor
-public class ParticipantStatusCode  extends AbstractCode{
+public class ParticipantStatusCode  extends AbstractCode {
     @Column(unique = true)
     @Size(min = 4, max = 4, message = "Ошибка: неверное количество символов")
     @NotBlank(message = "Ошибка: введите код")
@@ -27,7 +27,6 @@ public class ParticipantStatusCode  extends AbstractCode{
     private String code;
 
     public ParticipantStatusCode(String code) {
-        super();
         this.code = code;
     }
 }

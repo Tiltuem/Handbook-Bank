@@ -26,17 +26,19 @@ import java.util.Objects;
 public class AccountRestrictionCodeController {
     @Autowired
     AbstractCodeService<AccountRestrictionCode> accountRestrictionCodeService;
+    private static final int SIZE_PAGE = 5;
 
     @GetMapping("/{page}")
-    public String getAllAccountRestrictionCode(@RequestParam(name = "code", required = false) String code,
-                                               @RequestParam(name = "deleted", defaultValue = "false") Boolean showDeleted,
+    public String getAllAccountRestrictionCode(@RequestParam(required = false) String code,
+                                               @RequestParam(defaultValue = "false") Boolean deleted,
                                                @PathVariable int page,
                                                Model model) {
-        Page<AccountRestrictionCode> codes =
-                accountRestrictionCodeService.getAllCodes(PageRequest.of(page, 5, Sort.by("id")), code, showDeleted);
+        Page<AccountRestrictionCode> codes = accountRestrictionCodeService
+                .getAllCodes(PageRequest.of(page, SIZE_PAGE, Sort.by("id")), code, deleted);
 
-        if (codes.isEmpty() && Objects.isNull(code))
+        if (codes.isEmpty() && Objects.isNull(code)) {
             throw new NotFoundPageException("Страница не найдена");
+        }
 
         setModel(model, codes, new AccountRestrictionCode());
         model.addAttribute("search", code);
@@ -62,7 +64,7 @@ public class AccountRestrictionCodeController {
         }
 
         Page<AccountRestrictionCode> codes =
-                accountRestrictionCodeService.getAllCodes(PageRequest.of(0, 5, Sort.by("id")), null, null);
+                accountRestrictionCodeService.getAllCodes(PageRequest.of(0, SIZE_PAGE, Sort.by("id")), null, null);
 
         model.addAttribute("page", 0);
         model.addAttribute("bindingResult", bindingResult);
@@ -87,7 +89,7 @@ public class AccountRestrictionCodeController {
                                                @RequestParam String newCode,
                                                @RequestParam String page) {
         if (accountRestrictionCodeService.getByCode(newCode) != null) {
-            throw new DuplicateFileException("Ошибка: данный код уже существует") ;
+            throw new DuplicateFileException("Ошибка: данный код уже существует");
         }
 
         AccountRestrictionCode accountRestrictionCode = accountRestrictionCodeService.getById(id);

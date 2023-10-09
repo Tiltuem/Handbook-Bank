@@ -12,7 +12,8 @@ import java.util.List;
 import java.util.Objects;
 
 @Service
-public abstract class AbstractCodeServiceImpl<E extends AbstractCode, T extends AbstractCodeRepository<E>> implements AbstractCodeService<E> {
+public abstract class AbstractCodeServiceImpl<E extends AbstractCode, T extends AbstractCodeRepository<E>>
+        implements AbstractCodeService<E> {
     @Autowired
     protected T repository;
 
@@ -20,17 +21,20 @@ public abstract class AbstractCodeServiceImpl<E extends AbstractCode, T extends 
     public List<E> getAllCodeList() {
         return repository.findAll();
     }
+
     @Override
-    public Page<E> getAllCodes(Pageable pageable, String code, Boolean showDeleted) {
-        if (!Objects.isNull(showDeleted) && showDeleted) {
-            if (!Objects.isNull(code))
+    public Page<E> getAllCodes(Pageable pageable, String code, Boolean deleted) {
+        if (!Objects.isNull(deleted) && deleted) {
+            if (!Objects.isNull(code)) {
                 return repository.findByCodeContaining(pageable, code);
+            }
 
             return repository.findAll(pageable);
         }
 
-        if (!Objects.isNull(code))
+        if (!Objects.isNull(code)) {
             return repository.findByCodeContainingAndDeleted(pageable, code, false);
+        }
 
         return repository.findByDeleted(pageable, false);
     }

@@ -18,13 +18,18 @@ public class ParticipantStatusCodeAdapter extends XmlAdapter<String, Participant
     public ParticipantStatusCode unmarshal(String code) throws Exception {
         for (ParticipantStatusCode participantStatusCode : participantStatusCodeList) {
             if (participantStatusCode.getCode().equals(code)) {
-                if(!participantStatusCode.getDeleted())  return participantStatusCode;
-                else
-                    throw new NoSuchCodeException("Ошибка: код '" + code + "' удалён.\nДля получения файла восстановите этот код в ограничения операций по счету");
+                if (!participantStatusCode.getDeleted()) {
+                    return participantStatusCode;
+                } else {
+                    throw new NoSuchCodeException("Ошибка: код '" + code
+                            + "' удалён.\nДля получения файла восстановите этот код в ограничения операций по счету");
+                }
             }
         }
-        throw new NoSuchCodeException("Ошибка: код '" + code + "' отсутствует.\nДля получения файла добавьте этот код в ограничения операций по счету");
+        throw new NoSuchCodeException("Ошибка: код '" + code
+                            + "' отсутствует.\nДля получения файла добавьте этот код в ограничения операций по счету");
     }
+
     @Override
     public String marshal(ParticipantStatusCode participantStatusCode) throws Exception {
         return participantStatusCode.getCode();

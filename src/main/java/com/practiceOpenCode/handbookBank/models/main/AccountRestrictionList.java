@@ -40,12 +40,12 @@ public class AccountRestrictionList {
     @XmlAttribute(name = "AccRstrDate")
     @XmlJavaTypeAdapter(LocalDateAdapter.class)
     @NotNull(message = "Ошибка: поле не может быть пустым")
-    private LocalDate AccountRestrictionDate;
+    private LocalDate accountRestrictionDate;
 
     @XmlAttribute(name = "SuccessorBIC")
     @Pattern(regexp = "(\\d{9})|(^$)",
             message = "Ошибка: неверный формат")
-    private String SuccessorBic;
+    private String successorBic;
 
     private Boolean deleted;
 

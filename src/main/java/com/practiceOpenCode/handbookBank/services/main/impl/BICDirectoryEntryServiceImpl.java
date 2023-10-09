@@ -4,7 +4,7 @@ import com.practiceOpenCode.handbookBank.models.codes.*;
 import com.practiceOpenCode.handbookBank.models.main.Accounts;
 import com.practiceOpenCode.handbookBank.models.main.BICDirectoryEntry;
 import com.practiceOpenCode.handbookBank.models.main.ParticipantInfo;
-import com.practiceOpenCode.handbookBank.models.main.SWBICs;
+import com.practiceOpenCode.handbookBank.models.main.Swbics;
 import com.practiceOpenCode.handbookBank.repositories.main.BICDirectoryEntryRepository;
 import com.practiceOpenCode.handbookBank.services.codes.AbstractCodeService;
 import com.practiceOpenCode.handbookBank.services.main.BICDirectoryEntryService;
@@ -41,9 +41,9 @@ public class BICDirectoryEntryServiceImpl implements BICDirectoryEntryService {
     private AbstractCodeService<ChangeTypeCode> changeTypeCodeService;
 
     @Override
-    public void updateById(long id, SWBICs swbiCs) {
+    public void updateById(long id, Swbics swbics) {
         BICDirectoryEntry entry = repository.findById(id);
-        entry.getSWBICs().add(swbiCs);
+        entry.getSwbics().add(swbics);
 
         repository.save(entry);
     }
@@ -64,18 +64,22 @@ public class BICDirectoryEntryServiceImpl implements BICDirectoryEntryService {
     @Override
     public Page<BICDirectoryEntry> searchEntries(Pageable pageable,
                                                  String value,
-                                                 Boolean showDeleted,
+                                                 Boolean deleted,
                                                  String column,
                                                  String dateFrom,
                                                  String dateBy) {
-        if(Objects.isNull(dateBy))
-            dateBy = LocalDate.now().toString();
+        String date = dateBy;
+        if (dateBy.equals("")) {
+            date = LocalDate.now().toString();
+        }
 
-        if (!value.equals("") || !Objects.isNull(dateFrom))
-            return search(pageable, value, column, showDeleted, dateFrom, dateBy);
+        if (!value.equals("") || !dateFrom.equals("")) {
+            return search(pageable, value, column, deleted, dateFrom, date);
+        }
 
-        if (showDeleted)
+        if (deleted) {
             return repository.findAll(pageable);
+        }
 
         return repository.findByDeleted(pageable, false);
     }
@@ -97,7 +101,8 @@ public class BICDirectoryEntryServiceImpl implements BICDirectoryEntryService {
         info.setId(oldEntry.getParticipantInfo().getId());
         info.setRestrictionList(oldEntry.getParticipantInfo().getRestrictionList());
         oldEntry.setBic(entry.getBic());
-        setInfo(oldEntry, info, participantTypeCode, serviceCsCode, exchangeParticipantCode, participantStatusCode, changeTypeCode);
+        setInfo(oldEntry, info, participantTypeCode, serviceCsCode,
+                exchangeParticipantCode, participantStatusCode, changeTypeCode);
 
         repository.save(oldEntry);
     }
@@ -110,7 +115,8 @@ public class BICDirectoryEntryServiceImpl implements BICDirectoryEntryService {
                     String exchangeParticipantCode,
                     String participantStatusCode,
                     String changeTypeCode) {
-        setInfo(newEntry, info, participantTypeCode, serviceCsCode, exchangeParticipantCode, participantStatusCode, changeTypeCode);
+        setInfo(newEntry, info, participantTypeCode, serviceCsCode,
+                exchangeParticipantCode, participantStatusCode, changeTypeCode);
 
         repository.save(newEntry);
     }
@@ -159,43 +165,46 @@ public class BICDirectoryEntryServiceImpl implements BICDirectoryEntryService {
                                            String dateBy) {
         Query query;
         StringBuilder queryString = new StringBuilder("SELECT a FROM BICDirectoryEntry a WHERE a.");
-
+        String myValue = value;
         if (!value.equals("")) {
             switch (column) {
                 case "bic", "participantInfo.bicParent", "participantInfo.uid" -> queryString.append(column + " = ?1");
                 default -> {
-                    value = "%" + value + "%";
+                    myValue = "%" + value + "%";
                     queryString.append(column + " LIKE ?1");
                 }
             }
 
-            if (!Objects.isNull(deleted))
+            if (!Objects.isNull(deleted)) {
                 queryString.append(" AND a.deleted = false");
+            }
 
-            if (!Objects.isNull(dateFrom)) {
+            if (!dateFrom.equals("")) {
                 queryString.append(" AND a.participantInfo.dateIn BETWEEN ?2 AND ?3");
                 query = entityManager.createQuery(queryString.toString())
-                        .setParameter(1, value)
+                        .setParameter(1, myValue)
                         .setParameter(2, LocalDate.parse(dateFrom))
                         .setParameter(3, LocalDate.parse(dateBy));
-            } else
+            } else {
                 query = entityManager.createQuery(queryString.toString())
-                        .setParameter(1, value);
+                        .setParameter(1, myValue);
+            }
         } else {
             if (!dateFrom.equals("")) {
                 queryString.append("participantInfo.dateIn BETWEEN ?1 AND ?2");
 
-                if (!deleted)
+                if (!deleted) {
                     queryString.append(" AND a.deleted = false");
-
+                }
                 query = entityManager.createQuery(queryString.toString())
                         .setParameter(1, LocalDate.parse(dateFrom))
                         .setParameter(2, LocalDate.parse(dateBy));
             } else {
-                if (!deleted)
+                if (!deleted) {
                     query = entityManager.createQuery("SELECT a FROM BICDirectoryEntry a WHERE a.deleted = false");
-                else
+                } else {
                     query = entityManager.createQuery("SELECT a FROM BICDirectoryEntry a");
+                }
             }
         }
 

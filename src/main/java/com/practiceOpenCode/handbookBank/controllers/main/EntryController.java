@@ -36,16 +36,16 @@ public class EntryController {
     private AbstractCodeService<ParticipantStatusCode> participantStatusCodeService;
     @Autowired
     private AbstractCodeService<ChangeTypeCode> changeTypeCodeService;
+    private static final int SIZE_PAGE = 10;
 
     @GetMapping("/{page}")
-    public String getAllEntries(@PathVariable int page,
-                                @PathVariable int messageId,
-                                Model model) {
-        Page<BICDirectoryEntry> entries =
-                bicDirectoryEntryService.getAllEntries(PageRequest.of(page, 10, Sort.by("id")));
+    public String getAllEntries(@PathVariable int page, @PathVariable int messageId, Model model) {
+        Page<BICDirectoryEntry> entries = bicDirectoryEntryService
+                .getAllEntries(PageRequest.of(page, SIZE_PAGE, Sort.by("id")));
 
-        if (page > entries.getTotalPages())
+        if (page > entries.getTotalPages()) {
             throw new NotFoundPageException("Страница не найдена");
+        }
 
         model.addAttribute("entries", entries);
         model.addAttribute("page", page);
@@ -56,18 +56,19 @@ public class EntryController {
 
     @GetMapping("/{page}-search")
     public String searchEntries(@RequestParam(required = false) String value,
-                                @RequestParam(defaultValue = "false") Boolean showDeleted,
+                                @RequestParam(defaultValue = "false") Boolean deleted,
                                 @RequestParam(name = "dateFrom", required = false) String dateFrom,
                                 @RequestParam(name = "dateBy", required = false) String dateBy,
                                 @RequestParam(required = false) String column,
                                 @PathVariable int page,
                                 @PathVariable int messageId,
                                 Model model) {
-        Page<BICDirectoryEntry> entries =
-                bicDirectoryEntryService.searchEntries(PageRequest.of(page, 10, Sort.by("id")), value, showDeleted, column, dateFrom, dateBy);
+        Page<BICDirectoryEntry> entries = bicDirectoryEntryService.searchEntries(
+                PageRequest.of(page, SIZE_PAGE, Sort.by("id")), value, deleted, column, dateFrom, dateBy);
 
-        if (page > entries.getTotalPages())
+        if (page > entries.getTotalPages()) {
             throw new NotFoundPageException("Страница не найдена");
+        }
 
         model.addAttribute("entries", entries);
         model.addAttribute("page", page);
@@ -108,9 +109,7 @@ public class EntryController {
     }
 
     @GetMapping("/new-entry")
-    public String addEntry(@PathVariable String messageId,
-                           @RequestParam String page,
-                           Model model) {
+    public String addEntry(@PathVariable String messageId, @RequestParam String page, Model model) {
         setModel(model, page, messageId);
         model.addAttribute("bicDirectoryEntry", new BICDirectoryEntry());
         model.addAttribute("participantInfo", new ParticipantInfo());
@@ -132,8 +131,9 @@ public class EntryController {
                               @RequestParam String page,
                               Model model) {
         if (!bicDirectoryEntryBindingResult.hasErrors() && !participantInfoBindingResult.hasErrors()) {
+            bicDirectoryEntryService.add(bicDirectoryEntry, participantInfo, participantType,
+                    serviceCs, exchangeParticipant, participantStatus, changeType);
 
-            bicDirectoryEntryService.add(bicDirectoryEntry, participantInfo, participantType, serviceCs, exchangeParticipant, participantStatus, changeType);
             log.info("Запись добавлена");
             return "redirect:/message-{messageId}/directory-entry/" + page;
         }
@@ -161,7 +161,9 @@ public class EntryController {
                               Model model) {
         if (!bicDirectoryEntryBindingResult.hasErrors() && !participantInfoBindingResult.hasErrors()) {
 
-            bicDirectoryEntryService.update(bicDirectoryEntry, participantInfo, participantType, serviceCs, exchangeParticipant, participantStatus, changeType);
+            bicDirectoryEntryService.update(bicDirectoryEntry, participantInfo, participantType, serviceCs,
+                    exchangeParticipant, participantStatus, changeType);
+
             log.info("Запись (id: " + bicDirectoryEntry.getId() + ") редактирована");
             return "redirect:/message-{messageId}/directory-entry/" + page;
         }

@@ -25,17 +25,19 @@ import java.util.Objects;
 public class InformationTypeCodeController {
     @Autowired
     AbstractCodeService<InformationTypeCode> informationTypeCodeService;
+    private static final int SIZE_PAGE = 5;
 
     @GetMapping("/{page}")
-    public String getAllAInformationTypeCode(@RequestParam(name = "code", required = false) String code,
-                                             @RequestParam(name = "deleted", defaultValue = "false") Boolean showDeleted,
+    public String getAllAInformationTypeCode(@RequestParam(required = false) String code,
+                                             @RequestParam(defaultValue = "false") Boolean deleted,
                                              @PathVariable int page,
                                              Model model) {
-        Page<InformationTypeCode> codes =
-                informationTypeCodeService.getAllCodes(PageRequest.of(page, 5, Sort.by("id")), code, showDeleted);
+        Page<InformationTypeCode> codes = informationTypeCodeService
+                .getAllCodes(PageRequest.of(page, SIZE_PAGE, Sort.by("id")), code, deleted);
 
-        if (codes.isEmpty() && Objects.isNull(code))
+        if (codes.isEmpty() && Objects.isNull(code)) {
             throw new NotFoundPageException("Страница не найдена");
+        }
 
         setModel(model, codes, new InformationTypeCode());
         model.addAttribute("search", code);
@@ -61,7 +63,7 @@ public class InformationTypeCodeController {
         }
 
         Page<InformationTypeCode> codes =
-                informationTypeCodeService.getAllCodes(PageRequest.of(0, 5, Sort.by("id")), null, null);
+                informationTypeCodeService.getAllCodes(PageRequest.of(0, SIZE_PAGE, Sort.by("id")), null, null);
 
         model.addAttribute("page", 0);
         model.addAttribute("bindingResult", bindingResult);
@@ -84,7 +86,7 @@ public class InformationTypeCodeController {
                                             @RequestParam String newCode,
                                             @RequestParam String page) {
         if (informationTypeCodeService.getByCode(newCode) != null) {
-            throw new DuplicateFileException("Ошибка: данный код уже существует") ;
+            throw new DuplicateFileException("Ошибка: данный код уже существует");
         }
 
         InformationTypeCode informationTypeCode = informationTypeCodeService.getById(id);

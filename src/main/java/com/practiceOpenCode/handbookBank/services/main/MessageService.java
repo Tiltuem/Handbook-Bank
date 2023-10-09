@@ -10,10 +10,17 @@ import org.springframework.web.multipart.MultipartFile;
 @Service
 public interface MessageService {
     Page<Message> getAllMessages(Pageable pageable);
-    Page<Message> searchMessages(Pageable pageable, String value, Boolean showDeleted, String column, String columnDate, String dateFrom, String dateBy);
-    void save (String date);
-    void save (MultipartFile file);
+
+    Page<Message> searchMessages(Pageable pageable, String value, Boolean deleted, String column,
+                                 String columnDate, String dateFrom, String dateBy);
+
+    void save(String date);
+
+    void save(MultipartFile file);
+
     void deleteById(long id);
+
     Message getMessageById(long id);
+
     void recoveryById(long id);
 }

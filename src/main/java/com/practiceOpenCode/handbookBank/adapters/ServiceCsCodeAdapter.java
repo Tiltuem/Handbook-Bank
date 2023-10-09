@@ -18,12 +18,16 @@ public class ServiceCsCodeAdapter extends XmlAdapter<String, ServiceCsCode> {
     public ServiceCsCode unmarshal(String code) throws Exception {
         for (ServiceCsCode serviceCsCode : serviceCsCodeList) {
             if (serviceCsCode.getCode().equals(code)) {
-                if(!serviceCsCode.getDeleted())  return serviceCsCode;
-                else
-                    throw new NoSuchCodeException("Ошибка: код '" + code + "' удалён.\nДля получения файла восстановите этот код в ограничения операций по счету");
+                if (!serviceCsCode.getDeleted()) {
+                    return serviceCsCode;
+                } else {
+                    throw new NoSuchCodeException("Ошибка: код '" + code
+                            + "' удалён.\nДля получения файла восстановите этот код в ограничения операций по счету");
+                }
             }
         }
-        throw new NoSuchCodeException("Ошибка: код '" + code + "' отсутствует.\nДля получения файла добавьте этот код в ограничения операций по счету");
+        throw new NoSuchCodeException("Ошибка: код '" + code
+                            + "' отсутствует.\nДля получения файла добавьте этот код в ограничения операций по счету");
     }
 
     @Override

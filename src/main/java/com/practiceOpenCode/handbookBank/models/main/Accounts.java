@@ -96,6 +96,7 @@ public class Accounts {
 
     @LastModifiedBy
     private String modifiedBy;
+
     public Accounts() {
         this.deleted = false;
     }

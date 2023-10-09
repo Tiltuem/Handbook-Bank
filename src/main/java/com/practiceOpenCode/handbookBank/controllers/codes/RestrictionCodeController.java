@@ -26,17 +26,19 @@ import java.util.Objects;
 public class RestrictionCodeController {
     @Autowired
     AbstractCodeService<RestrictionCode> restrictionCodeService;
+    private static final int SIZE_PAGE = 5;
 
     @GetMapping("/{page}")
-    public String getAllRestrictionCode(@RequestParam(name = "code", required = false) String code,
-                                        @RequestParam(name = "deleted", defaultValue = "false") Boolean showDeleted,
+    public String getAllRestrictionCode(@RequestParam(required = false) String code,
+                                        @RequestParam(defaultValue = "false") Boolean deleted,
                                         @PathVariable int page,
                                         Model model) {
         Page<RestrictionCode> codes =
-                restrictionCodeService.getAllCodes(PageRequest.of(page, 5, Sort.by("id")), code, showDeleted);
+                restrictionCodeService.getAllCodes(PageRequest.of(page, SIZE_PAGE, Sort.by("id")), code, deleted);
 
-        if (codes.isEmpty() && Objects.isNull(code))
+        if (codes.isEmpty() && Objects.isNull(code)) {
             throw new NotFoundPageException("Страница не найдена");
+        }
 
         setModel(model, codes, new RestrictionCode());
         model.addAttribute("search", code);
@@ -62,7 +64,7 @@ public class RestrictionCodeController {
         }
 
         Page<RestrictionCode> codes =
-                restrictionCodeService.getAllCodes(PageRequest.of(0, 5, Sort.by("id")), null, null);
+                restrictionCodeService.getAllCodes(PageRequest.of(0, SIZE_PAGE, Sort.by("id")), null, null);
 
         model.addAttribute("page", 0);
         model.addAttribute("bindingResult", bindingResult);
@@ -85,8 +87,9 @@ public class RestrictionCodeController {
     public String updateRestrictionCode(@RequestParam long id,
                                         @RequestParam String newCode,
                                         @RequestParam String page) {
-        if (restrictionCodeService.getByCode(newCode) != null)
-            throw new DuplicateFileException("Ошибка: данный код уже существует") ;
+        if (restrictionCodeService.getByCode(newCode) != null) {
+            throw new DuplicateFileException("Ошибка: данный код уже существует");
+        }
 
         RestrictionCode restrictionCode = restrictionCodeService.getById(id);
         restrictionCode.setCode(newCode);

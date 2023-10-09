@@ -5,5 +5,6 @@ import com.practiceOpenCode.handbookBank.repositories.codes.ExchangeParticipantC
 import org.springframework.stereotype.Service;
 
 @Service
-public class ExchangeParticipantCodeServiceImpl extends AbstractCodeServiceImpl<ExchangeParticipantCode, ExchangeParticipantCodeRepository> {
+public class ExchangeParticipantCodeServiceImpl
+        extends AbstractCodeServiceImpl<ExchangeParticipantCode, ExchangeParticipantCodeRepository> {
 }

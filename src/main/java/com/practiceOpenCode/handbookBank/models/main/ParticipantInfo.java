@@ -121,6 +121,7 @@ public class ParticipantInfo {
     private List<RestrictionList> restrictionList;
 
     private Boolean deleted;
+
     public ParticipantInfo() {
         this.deleted = false;
     }

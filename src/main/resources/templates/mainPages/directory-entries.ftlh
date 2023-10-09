@@ -25,7 +25,6 @@
                             </div>
                             <select name="column" class="btn btn-outline-light">
                                 <option disabled>Выберите параметр</option>
-                                <option value="messageId">ID ЭС</option>
                                 <option value="bic">БИК</option>
                                 <option value="participantInfo.participantName">Наименование участника</option>
                                 <option value="participantInfo.englishName">Иностранное наименование</option>
@@ -50,7 +49,7 @@
                             </h5>
                             с <input type="date" name="dateFrom"> по <input type="date" name="dateBy">
                             <div class="checkbox">
-                                <input id="checkbox1" class="checkbox__input" type="checkbox" name="showDeleted">
+                                <input id="checkbox1" class="checkbox__input" type="checkbox" name="deleted">
                                 <label for="checkbox1" class="checkbox__label">
                                     <span class="checkbox__custom"></span>
                                     Показать удалённые

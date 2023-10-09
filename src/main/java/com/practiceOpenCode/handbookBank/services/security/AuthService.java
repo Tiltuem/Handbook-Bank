@@ -10,5 +10,6 @@ import org.springframework.web.servlet.ModelAndView;
 @Service
 public interface AuthService {
     ResponseEntity<?> createAuthToken(JwtRequest authRequest);
+
     ModelAndView createNewUser(RegistrationUserDto registrationUserDto, BindingResult bindingResult);
 }

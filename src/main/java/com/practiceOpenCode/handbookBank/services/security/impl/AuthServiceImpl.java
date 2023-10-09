@@ -27,7 +27,8 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public ResponseEntity<?> createAuthToken(JwtRequest authRequest) {
         try {
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
         } catch (BadCredentialsException e) {
             throw new UnauthorizedException("Ошибка: неверный логин или пароль");
         }
@@ -40,11 +41,15 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public ModelAndView createNewUser(RegistrationUserDto registrationUserDto, BindingResult bindingResult) {
-        if(!registrationUserDto.getPassword().equals(registrationUserDto.getConfirmPassword()))
-            bindingResult.addError(new FieldError("registrationUserDto", "confirmPassword", "Ошибка: пароли не совпадают"));
+        if (!registrationUserDto.getPassword().equals(registrationUserDto.getConfirmPassword())) {
+            bindingResult.addError(new FieldError(
+                    "registrationUserDto", "confirmPassword", "Ошибка: пароли не совпадают"));
+        }
 
-        if(userService.findByUsername(registrationUserDto.getUsername()).isPresent())
-            bindingResult.addError(new FieldError("registrationUserDto", "username", "Ошибка: пользователь с данным именем уже существует"));
+        if (userService.findByUsername(registrationUserDto.getUsername()).isPresent()) {
+            bindingResult.addError(new FieldError(
+                    "registrationUserDto", "username", "Ошибка: пользователь с данным именем уже существует"));
+        }
 
         if (!bindingResult.hasErrors()) {
             userService.createNewUser(registrationUserDto);

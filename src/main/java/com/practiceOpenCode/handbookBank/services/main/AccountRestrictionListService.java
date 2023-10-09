@@ -8,6 +8,8 @@ import java.util.List;
 @Service
 public interface AccountRestrictionListService {
     List<AccountRestrictionList> getAllAccounts();
-    void save (AccountRestrictionList accountRestrictionList);
+
+    void save(AccountRestrictionList accountRestrictionList);
+
     void deleteById(long id);
 }

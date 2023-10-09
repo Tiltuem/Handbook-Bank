@@ -22,12 +22,16 @@ public class AccountStatusCodeAdapter extends XmlAdapter<String, AccountStatusCo
     public AccountStatusCode unmarshal(String code) throws Exception {
         for (AccountStatusCode accountStatusCode : accountStatusCodeList) {
             if (accountStatusCode.getCode().equals(code)) {
-                if (!accountStatusCode.getDeleted()) return accountStatusCode;
-                else
-                    throw new NoSuchCodeException("Ошибка: код '" + code + "' удалён.\nДля получения файла восстановите этот код в ограничения операций по счету");
+                if (!accountStatusCode.getDeleted()) {
+                    return accountStatusCode;
+                } else {
+                    throw new NoSuchCodeException("Ошибка: код '" + code
+                            + "' удалён.\nДля получения файла восстановите этот код в ограничения операций по счету");
+                }
             }
         }
-        throw new NoSuchCodeException("Ошибка: код '" + code + "' удалён.\nДля получения файла восстановите этот код в ограничения операций по счету");
+        throw new NoSuchCodeException("Ошибка: код '" + code
+                + "' удалён.\nДля получения файла восстановите этот код в ограничения операций по счету");
     }
 
     @Override

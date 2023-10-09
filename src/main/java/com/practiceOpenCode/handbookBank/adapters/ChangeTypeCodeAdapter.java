@@ -18,12 +18,16 @@ public class ChangeTypeCodeAdapter extends XmlAdapter<String, ChangeTypeCode> {
     public ChangeTypeCode unmarshal(String code) throws Exception {
         for (ChangeTypeCode changeTypeCode : changeTypeCodeList) {
             if (changeTypeCode.getCode().equals(code)) {
-                if(!changeTypeCode.getDeleted())  return changeTypeCode;
-                else
-                    throw new NoSuchCodeException("Ошибка: код '" + code + "' удалён.\nДля получения файла восстановите этот код в ограничения операций по счету");
+                if (!changeTypeCode.getDeleted()) {
+                    return changeTypeCode;
+                } else {
+                    throw new NoSuchCodeException("Ошибка: код '" + code
+                            + "' удалён.\nДля получения файла восстановите этот код в ограничения операций по счету");
+                }
             }
         }
-        throw new NoSuchCodeException("Ошибка: код '" + code + "' отсутствует.\nДля получения файла добавьте этот код в ограничения операций по счету");
+        throw new NoSuchCodeException("Ошибка: код '" + code
+                            + "' отсутствует.\nДля получения файла добавьте этот код в ограничения операций по счету");
     }
 
     @Override

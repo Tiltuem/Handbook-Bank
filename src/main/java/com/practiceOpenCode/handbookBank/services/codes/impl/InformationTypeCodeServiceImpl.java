@@ -5,5 +5,6 @@ import com.practiceOpenCode.handbookBank.repositories.codes.InformationTypeCodeR
 import org.springframework.stereotype.Service;
 
 @Service
-public class InformationTypeCodeServiceImpl extends AbstractCodeServiceImpl<InformationTypeCode, InformationTypeCodeRepository> {
+public class InformationTypeCodeServiceImpl
+        extends AbstractCodeServiceImpl<InformationTypeCode, InformationTypeCodeRepository> {
 }

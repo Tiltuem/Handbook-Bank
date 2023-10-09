@@ -24,9 +24,11 @@ import java.util.stream.Collectors;
 @Slf4j
 public class JwtRequestFilter extends OncePerRequestFilter {
     private final JwtTokenUtils jwtTokenUtils;
+    private static final int START_INDEX = 6;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+            throws ServletException, IOException {
         String authHeader = request.getHeader("Cookie");
         String username = null;
         String jwt = null;
@@ -37,7 +39,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                 bearer = authHeader.split("; ")[1];
             }
             if (StringUtils.hasText(bearer) && bearer.startsWith("token=")) {
-                jwt = bearer.substring(6);
+                jwt = bearer.substring(START_INDEX);
                 try {
                     username = jwtTokenUtils.getUsername(jwt);
                 } catch (ExpiredJwtException e) {

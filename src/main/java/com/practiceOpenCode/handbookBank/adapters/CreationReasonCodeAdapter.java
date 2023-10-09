@@ -18,12 +18,16 @@ public class CreationReasonCodeAdapter extends XmlAdapter<String, CreationReason
     public CreationReasonCode unmarshal(String code) throws Exception {
         for (CreationReasonCode creationReasonCode : creationReasonCodeList) {
             if (creationReasonCode.getCode().equals(code)) {
-                if(!creationReasonCode.getDeleted())  return creationReasonCode;
-                else
-                    throw new NoSuchCodeException("Ошибка: код '" + code + "' удалён.\nДля получения файла восстановите этот код в ограничения операций по счету");
+                if (!creationReasonCode.getDeleted()) {
+                    return creationReasonCode;
+                } else {
+                    throw new NoSuchCodeException("Ошибка: код '" + code
+                            + "' удалён.\nДля получения файла восстановите этот код в ограничения операций по счету");
+                }
             }
         }
-        throw new NoSuchCodeException("Ошибка: код '" + code + "' отсутствует.\nДля получения файла добавьте этот код в ограничения операций по счету");
+        throw new NoSuchCodeException("Ошибка: код '" + code
+                            + "' отсутствует.\nДля получения файла добавьте этот код в ограничения операций по счету");
     }
 
     @Override

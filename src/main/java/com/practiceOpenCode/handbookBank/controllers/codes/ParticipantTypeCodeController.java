@@ -26,17 +26,19 @@ import java.util.Objects;
 public class ParticipantTypeCodeController {
     @Autowired
     AbstractCodeService<ParticipantTypeCode> participantTypeCodeService;
+    private static final int SIZE_PAGE = 5;
 
     @GetMapping("/{page}")
-    public String getAllParticipantTypeCode(@RequestParam(name = "code", required = false) String code,
-                                            @RequestParam(name = "deleted", defaultValue = "false") Boolean showDeleted,
+    public String getAllParticipantTypeCode(@RequestParam(required = false) String code,
+                                            @RequestParam(defaultValue = "false") Boolean deleted,
                                             @PathVariable int page,
                                             Model model) {
-        Page<ParticipantTypeCode> codes =
-                participantTypeCodeService.getAllCodes(PageRequest.of(page, 5, Sort.by("id")), code, showDeleted);
+        Page<ParticipantTypeCode> codes = participantTypeCodeService
+                .getAllCodes(PageRequest.of(page, SIZE_PAGE, Sort.by("id")), code, deleted);
 
-        if (codes.isEmpty() && Objects.isNull(code))
+        if (codes.isEmpty() && Objects.isNull(code)) {
             throw new NotFoundPageException("Страница не найдена");
+        }
 
         setModel(model, codes, new ParticipantTypeCode());
         model.addAttribute("search", code);
@@ -61,7 +63,7 @@ public class ParticipantTypeCodeController {
         }
 
         Page<ParticipantTypeCode> codes =
-                participantTypeCodeService.getAllCodes(PageRequest.of(0, 5, Sort.by("id")), null, null);
+                participantTypeCodeService.getAllCodes(PageRequest.of(0, SIZE_PAGE, Sort.by("id")), null, null);
 
         model.addAttribute("page", 0);
         model.addAttribute("bindingResult", bindingResult);
@@ -85,7 +87,7 @@ public class ParticipantTypeCodeController {
                                             @RequestParam String newCode,
                                             @RequestParam String page) {
         if (participantTypeCodeService.getByCode(newCode) != null) {
-            throw new DuplicateFileException("Ошибка: данный код уже существует") ;
+            throw new DuplicateFileException("Ошибка: данный код уже существует");
         }
 
         ParticipantTypeCode participantTypeCode = participantTypeCodeService.getById(id);

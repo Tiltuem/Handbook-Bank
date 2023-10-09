@@ -18,13 +18,18 @@ public class ParticipantTypeCodeAdapter extends XmlAdapter<String, ParticipantTy
     public ParticipantTypeCode unmarshal(String code) throws Exception {
         for (ParticipantTypeCode participantTypeCode : participantTypeCodeList) {
             if (participantTypeCode.getCode().equals(code)) {
-                if(!participantTypeCode.getDeleted())  return participantTypeCode;
-                else
-                    throw new NoSuchCodeException("Ошибка: код '" + code + "' удалён.\nДля получения файла восстановите этот код в ограничения операций по счету");
+                if (!participantTypeCode.getDeleted()) {
+                    return participantTypeCode;
+                } else {
+                    throw new NoSuchCodeException("Ошибка: код '" + code
+                            + "' удалён.\nДля получения файла восстановите этот код в ограничения операций по счету");
+                }
             }
         }
-        throw new NoSuchCodeException("Ошибка: код '" + code + "' отсутствует.\nДля получения добавьте восстановите этот код в ограничения операций по счету");
+        throw new NoSuchCodeException("Ошибка: код '" + code
+                            + "' отсутствует.\nВосстановите код в ограничения операций по счету");
     }
+
     @Override
     public String marshal(ParticipantTypeCode participantTypeCode) throws Exception {
         return participantTypeCode.getCode();

@@ -10,6 +10,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface MessageRepository extends JpaRepository<Message, Long> {
     Page<Message> findByDeleted(Pageable pageable, Boolean deleted);
+
     Message findById(long id);
+
     Page<Message> findAll(Pageable pageable);
 }

@@ -20,13 +20,15 @@ import org.springframework.web.bind.annotation.*;
 public class MessageController {
     @Autowired
     MessageService messageService;
+    private static final int SIZE_PAGE = 10;
 
     @GetMapping("/{page}")
     public String getAllEntries(@PathVariable int page, Model model) {
-        Page<Message> messages = messageService.getAllMessages(PageRequest.of(page, 10, Sort.by("id")));
+        Page<Message> messages = messageService.getAllMessages(PageRequest.of(page, SIZE_PAGE, Sort.by("id")));
 
-        if (page > messages.getTotalPages())
+        if (page > messages.getTotalPages()) {
             throw new NotFoundPageException("Страница не найдена");
+        }
 
         model.addAttribute("messages", messages);
         model.addAttribute("page", page);
@@ -36,18 +38,19 @@ public class MessageController {
 
     @GetMapping("/{page}-search")
     public String searchEntries(@RequestParam(required = false) String value,
-                                @RequestParam(defaultValue = "false") Boolean showDeleted,
+                                @RequestParam(defaultValue = "false") Boolean deleted,
                                 @RequestParam(required = false) String dateFrom,
                                 @RequestParam(required = false) String dateBy,
                                 @RequestParam(required = false) String column,
                                 @RequestParam(required = false) String columnDate,
                                 @PathVariable int page,
                                 Model model) {
-        Page<Message> messages = messageService.searchMessages(PageRequest.of(page, 10, Sort.by("id")), value, showDeleted, column, columnDate, dateFrom, dateBy);
+        Page<Message> messages = messageService.searchMessages(
+                PageRequest.of(page, SIZE_PAGE, Sort.by("id")), value, deleted, column, columnDate, dateFrom, dateBy);
 
-        if (page > messages.getTotalPages())
+        if (page > messages.getTotalPages()) {
             throw new NotFoundPageException("Страница не найдена");
-
+        }
         model.addAttribute("search", true);
         model.addAttribute("messages", messages);
         model.addAttribute("page", page);

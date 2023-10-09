@@ -19,12 +19,16 @@ public class AccountRestrictionCodeAdapter extends XmlAdapter<String, AccountRes
     public AccountRestrictionCode unmarshal(String code) throws Exception {
         for (AccountRestrictionCode accountRestrictionCode : accountRestrictionCodeList) {
             if (accountRestrictionCode.getCode().equals(code)) {
-                if (!accountRestrictionCode.getDeleted()) return accountRestrictionCode;
-                else
-                    throw new NoSuchCodeException("Ошибка: код '" + code + "' удалён.\nДля получения файла восстановите этот код в ограничения операций по счету");
+                if (!accountRestrictionCode.getDeleted()) {
+                    return accountRestrictionCode;
+                } else {
+                    throw new NoSuchCodeException("Ошибка: код '" + code
+                            + "' удалён.\nДля получения файла восстановите этот код в ограничения операций по счету");
+                }
             }
         }
-        throw new NoSuchCodeException("Ошибка: код '" + code + "' отсутствует.\nДля получения файла добавьте этот код в ограничения операций по счету");
+        throw new NoSuchCodeException("Ошибка: код '" + code
+                + "' отсутствует.\nДля получения файла добавьте этот код в ограничения операций по счету");
     }
 
 

@@ -54,20 +54,23 @@ public class MessageServiceImpl implements MessageService {
     @Override
     public Page<Message> searchMessages(Pageable pageable,
                                         String value,
-                                        Boolean showDeleted,
+                                        Boolean deleted,
                                         String column,
                                         String columnDate,
                                         String dateFrom,
                                         String dateBy) {
-        if(dateBy.equals(""))
-            dateBy = LocalDate.now().toString();
+        String date = dateBy;
+        if (dateBy.equals("")) {
+            date = LocalDate.now().toString();
+        }
 
-        if (!value.equals("") || !dateFrom.equals(""))
-            return search(pageable, value, column, columnDate, showDeleted, dateFrom, dateBy);
+        if (!value.equals("") || !dateFrom.equals("")) {
+            return search(pageable, value, column, columnDate, deleted, dateFrom, date);
+        }
 
-        if (showDeleted)
+        if (deleted) {
             return repository.findAll(pageable);
-
+        }
         return repository.findByDeleted(pageable, false);
     }
 
@@ -148,43 +151,46 @@ public class MessageServiceImpl implements MessageService {
                                  String dateBy) {
         Query query;
         StringBuilder queryString = new StringBuilder("SELECT a FROM Message a WHERE a.");
-
+        String myValue = value;
         if (!value.equals("")) {
             switch (column) {
                 case "edNumber", "edAuthor", "edReceiver", "directoryVersion" -> queryString.append(column + " = ?1");
                 default -> {
-                    value = "%" + value + "%";
+                    myValue = "%" + value + "%";
                     queryString.append(column + " LIKE ?1");
                 }
             }
 
-            if (!deleted)
+            if (!deleted) {
                 queryString.append(" AND a.deleted = false");
+            }
 
             if (!dateFrom.equals("")) {
                 queryString.append(" AND a." + columnDate + " BETWEEN ?2 AND ?3");
                 query = entityManager.createQuery(queryString.toString())
-                        .setParameter(1, value)
+                        .setParameter(1, myValue)
                         .setParameter(2, LocalDate.parse(dateFrom))
                         .setParameter(3, LocalDate.parse(dateBy));
-            } else
+            } else {
                 query = entityManager.createQuery(queryString.toString())
-                        .setParameter(1, value);
+                        .setParameter(1, myValue);
+            }
         } else {
             if (!dateFrom.equals("")) {
                 queryString.append(columnDate + " BETWEEN ?1 AND ?2");
 
-                if (!deleted)
+                if (!deleted) {
                     queryString.append(" AND a.deleted = false");
-
+                }
                 query = entityManager.createQuery(queryString.toString())
                         .setParameter(1, LocalDate.parse(dateFrom))
                         .setParameter(2, LocalDate.parse(dateBy));
             } else {
-                if (!deleted)
+                if (!deleted) {
                     query = entityManager.createQuery("SELECT a FROM Message a WHERE a.deleted = false");
-                else
+                } else {
                     query = entityManager.createQuery("SELECT a FROM Message a");
+                }
             }
         }
 
@@ -211,6 +217,7 @@ public class MessageServiceImpl implements MessageService {
 
         return newMessage;
     }
+
     private void checkFile(String name) {
         if (fileService.checkFileExist(name)) {
             log.warn("Ошибка при добавлении файла: файл уже существует");

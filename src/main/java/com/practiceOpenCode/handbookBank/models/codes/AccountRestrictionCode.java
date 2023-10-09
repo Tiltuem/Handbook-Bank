@@ -19,7 +19,7 @@ import javax.validation.constraints.Size;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @NoArgsConstructor
-public class AccountRestrictionCode extends AbstractCode{
+public class AccountRestrictionCode extends AbstractCode {
     @Column(unique = true)
     @Size(min = 4, max = 4, message = "Ошибка: неверное количество символов")
     @NotBlank(message = "Ошибка: введите код")
@@ -28,7 +28,6 @@ public class AccountRestrictionCode extends AbstractCode{
     private String code;
 
     public AccountRestrictionCode(String code) {
-        super();
         this.code = code;
     }
 }

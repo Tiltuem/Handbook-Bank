@@ -25,13 +25,15 @@ public class ImportController {
     MessageService messageService;
     @Autowired
     FileService fileService;
+    private static final int SIZE_PAGE = 5;
 
     @GetMapping("/{page}")
     public String getAllFiles(@PathVariable int page, Model model) {
-        Page<FileInfo> files = fileService.getAllFiles(PageRequest.of(page, 5, Sort.by("id")));
+        Page<FileInfo> files = fileService.getAllFiles(PageRequest.of(page, SIZE_PAGE, Sort.by("id")));
 
-        if (page > files.getTotalPages())
+        if (page > files.getTotalPages()) {
             throw new NotFoundPageException("Страница не найдена");
+        }
 
         model.addAttribute("files", files);
         model.addAttribute("maxPage", files.getTotalPages() - 1);

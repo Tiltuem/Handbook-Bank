@@ -67,6 +67,7 @@ public class JavaConfig {
 
         return unmarshaller;
     }
+
     private void setAdapter(Unmarshaller unmarshaller) {
         unmarshaller.setAdapter(new AccountRestrictionCodeAdapter(repositoryAccountRestrictionCode));
         unmarshaller.setAdapter(new AccountStatusCodeAdapter(repositoryAccountStatusCode));

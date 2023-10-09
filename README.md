@@ -1,3 +1,4 @@
+![Build Status](https://github.com/Tiltuem/Handbook-Bank/actions/workflows/build.yml/badge.svg)
 # Справочник сведений ЦБ РФ о кредитно-финансовых учреждениях
 
 ## Техническое задание

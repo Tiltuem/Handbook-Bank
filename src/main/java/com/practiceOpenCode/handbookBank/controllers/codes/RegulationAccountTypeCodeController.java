@@ -25,19 +25,21 @@ import java.util.Objects;
 public class RegulationAccountTypeCodeController {
     @Autowired
     AbstractCodeService<RegulationAccountTypeCode> regulationAccountTypeCodeService;
+    private static final int SIZE_PAGE = 5;
 
     @GetMapping("/{page}")
-    public String getAllRegulationAccountTypeCode(@RequestParam(name = "code", required = false) String code,
-                                                  @RequestParam(name = "deleted", defaultValue = "false") Boolean showDeleted,
+    public String getAllRegulationAccountTypeCode(@RequestParam(required = false) String code,
+                                                  @RequestParam(defaultValue = "false") Boolean deleted,
                                                   @PathVariable int page,
                                                   Model model) {
-        Page<RegulationAccountTypeCode> codes =
-                regulationAccountTypeCodeService.getAllCodes(PageRequest.of(page, 5, Sort.by("id")), code, showDeleted);
+        Page<RegulationAccountTypeCode> codes = regulationAccountTypeCodeService
+                .getAllCodes(PageRequest.of(page, SIZE_PAGE, Sort.by("id")), code, deleted);
 
-        if (codes.isEmpty() && Objects.isNull(code))
+        if (codes.isEmpty() && Objects.isNull(code)) {
             throw new NotFoundPageException("Страница не найдена");
+        }
 
-        setModel(model, codes, new RegulationAccountTypeCode());
+        setModel(new RegulationAccountTypeCode(), codes, model);
         model.addAttribute("search", code);
 
         return "codes/regulationAccountType";
@@ -61,11 +63,11 @@ public class RegulationAccountTypeCodeController {
         }
 
         Page<RegulationAccountTypeCode> codes =
-                regulationAccountTypeCodeService.getAllCodes(PageRequest.of(0, 5, Sort.by("id")), null, null);
+                regulationAccountTypeCodeService.getAllCodes(PageRequest.of(0, SIZE_PAGE, Sort.by("id")), null, null);
 
         model.addAttribute("page", 0);
         model.addAttribute("bindingResult", bindingResult);
-        setModel(model, codes, regulationAccountType);
+        setModel(regulationAccountType, codes, model);
 
         return "codes/regulationAccountType";
     }
@@ -84,8 +86,9 @@ public class RegulationAccountTypeCodeController {
     public String updateRegulationAccountTypeCode(@RequestParam long id,
                                                   @RequestParam String newCode,
                                                   @RequestParam String page) {
-        if (regulationAccountTypeCodeService.getByCode(newCode) != null)
-            throw new DuplicateFileException("Ошибка: данный код уже существует") ;
+        if (regulationAccountTypeCodeService.getByCode(newCode) != null) {
+            throw new DuplicateFileException("Ошибка: данный код уже существует");
+        }
 
 
         RegulationAccountTypeCode regulationAccountType = regulationAccountTypeCodeService.getById(id);
@@ -105,7 +108,9 @@ public class RegulationAccountTypeCodeController {
         return "redirect:/codes/regulationAccountType/0";
     }
 
-    private void setModel(Model model, Page<RegulationAccountTypeCode> codes, RegulationAccountTypeCode regulationAccountTypeCode) {
+    private void setModel(RegulationAccountTypeCode regulationAccountTypeCode,
+                          Page<RegulationAccountTypeCode> codes,
+                          Model model) {
         model.addAttribute("codes", codes);
         model.addAttribute("regulationAccountTypeCode", regulationAccountTypeCode);
     }

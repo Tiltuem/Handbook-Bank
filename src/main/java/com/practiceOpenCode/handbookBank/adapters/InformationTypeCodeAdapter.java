@@ -18,13 +18,18 @@ public class InformationTypeCodeAdapter extends XmlAdapter<String, InformationTy
     public InformationTypeCode unmarshal(String code) throws Exception {
         for (InformationTypeCode informationTypeCode : informationTypeCodeList) {
             if (informationTypeCode.getCode().equals(code)) {
-                if(!informationTypeCode.getDeleted())  return informationTypeCode;
-                else
-                    throw new NoSuchCodeException("Ошибка: код '" + code + "' удалён.\nДля получения файла восстановите этот код в ограничения операций по счету");
+                if (!informationTypeCode.getDeleted()) {
+                    return informationTypeCode;
+                } else {
+                    throw new NoSuchCodeException("Ошибка: код '" + code
+                            + "' удалён.\nДля получения файла восстановите этот код в ограничения операций по счету");
+                }
             }
         }
-        throw new NoSuchCodeException("Ошибка: код '" + code + "' отсутствует.\nДля получения файла добавьте этот код в ограничения операций по счету");
+        throw new NoSuchCodeException("Ошибка: код '" + code
+                            + "' отсутствует.\nДля получения файла добавьте этот код в ограничения операций по счету");
     }
+
     @Override
     public String marshal(InformationTypeCode informationTypeCode) throws Exception {
         return informationTypeCode.getCode();

@@ -22,7 +22,7 @@ import java.util.Date;
 @XmlType(name = "SWBIC")
 @EntityListeners(AuditingEntityListener.class)
 @Data
-public class SWBICs {
+public class Swbics {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -49,7 +49,7 @@ public class SWBICs {
 
     private Boolean deleted;
 
-    public SWBICs() {
+    public Swbics() {
         this.deleted = false;
     }
 }

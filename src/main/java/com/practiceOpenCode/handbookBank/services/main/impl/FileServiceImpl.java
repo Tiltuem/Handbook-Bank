@@ -36,6 +36,7 @@ public class FileServiceImpl implements FileService {
     private static final String END_URL_DOWNLOAD = "ED01OSBR.zip";
     private static final String PATH_TO_STORAGE = "src/main/resources/storage/";
     private static final String START_LINK = "file:///";
+    private static final String EXTENSION = ".xml";
 
     @Override
     public String download(String date) {
@@ -56,8 +57,9 @@ public class FileServiceImpl implements FileService {
         try (ZipInputStream zin = new ZipInputStream(new FileInputStream(nameFileZip))) {
             ZipEntry entry;
             String pathToFile;
+            entry = zin.getNextEntry();
 
-            if (!Objects.isNull(entry = zin.getNextEntry())&&entry.getName().endsWith(".xml")) {
+            if (!Objects.isNull(entry) && entry.getName().endsWith(EXTENSION)) {
                 pathToFile = PATH_TO_STORAGE + entry.getName();
 
                 FileOutputStream fout = new FileOutputStream(pathToFile);

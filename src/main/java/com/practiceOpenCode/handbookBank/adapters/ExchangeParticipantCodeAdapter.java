@@ -18,12 +18,16 @@ public class ExchangeParticipantCodeAdapter extends XmlAdapter<String, ExchangeP
     public ExchangeParticipantCode unmarshal(String code) throws Exception {
         for (ExchangeParticipantCode exchangeParticipantCode : exchangeParticipantCodeList) {
             if (exchangeParticipantCode.getCode().equals(code)) {
-                if(!exchangeParticipantCode.getDeleted())  return exchangeParticipantCode;
-                else
-                    throw new NoSuchCodeException("Ошибка: код '" + code + "' удалён.\nДля получения файла восстановите этот код в ограничения операций по счету");
+                if (!exchangeParticipantCode.getDeleted()) {
+                    return exchangeParticipantCode;
+                } else {
+                    throw new NoSuchCodeException("Ошибка: код '" + code
+                            + "' удалён.\nДля получения файла восстановите этот код в ограничения операций по счету");
+                }
             }
         }
-        throw new NoSuchCodeException("Ошибка: код '" + code + "' отсутствует.\nДля получения файла добавьте этот код в ограничения операций по счету");
+        throw new NoSuchCodeException("Ошибка: код '" + code
+                            + "' отсутствует.\nДля получения файла добавьте этот код в ограничения операций по счету");
     }
 
     @Override

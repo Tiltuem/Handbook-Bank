@@ -5,5 +5,6 @@ import com.practiceOpenCode.handbookBank.repositories.codes.CreationReasonCodeRe
 import org.springframework.stereotype.Service;
 
 @Service
-public class CreationReasonCodeServiceImpl extends AbstractCodeServiceImpl<CreationReasonCode, CreationReasonCodeRepository> {
+public class CreationReasonCodeServiceImpl
+        extends AbstractCodeServiceImpl<CreationReasonCode, CreationReasonCodeRepository> {
 }

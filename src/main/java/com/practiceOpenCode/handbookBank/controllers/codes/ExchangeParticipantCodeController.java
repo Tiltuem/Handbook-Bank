@@ -25,19 +25,21 @@ import java.util.Objects;
 public class ExchangeParticipantCodeController {
     @Autowired
     AbstractCodeService<ExchangeParticipantCode> exchangeParticipantCodeService;
+    private static final int SIZE_PAGE = 5;
 
     @GetMapping("/{page}")
-    public String getAllExchangeParticipantCode(@RequestParam(name = "code", required = false) String code,
-                                                @RequestParam(name = "deleted", defaultValue = "false") Boolean showDeleted,
+    public String getAllExchangeParticipantCode(@RequestParam(required = false) String code,
+                                                @RequestParam(defaultValue = "false") Boolean deleted,
                                                 @PathVariable int page,
                                                 Model model) {
-        Page<ExchangeParticipantCode> codes =
-                exchangeParticipantCodeService.getAllCodes(PageRequest.of(page, 5, Sort.by("id")), code, showDeleted);
+        Page<ExchangeParticipantCode> codes = exchangeParticipantCodeService
+                .getAllCodes(PageRequest.of(page, SIZE_PAGE, Sort.by("id")), code, deleted);
 
-        if (codes.isEmpty() && Objects.isNull(code))
+        if (codes.isEmpty() && Objects.isNull(code)) {
             throw new NotFoundPageException("Страница не найдена");
+        }
 
-        setModel(model, codes, new ExchangeParticipantCode());
+        setModel(new ExchangeParticipantCode(), codes, model);
         model.addAttribute("search", code);
 
         return "codes/exchangeParticipant";
@@ -45,7 +47,9 @@ public class ExchangeParticipantCodeController {
 
     @PostMapping("/add")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public String addNewExchangeParticipantCode(@Valid ExchangeParticipantCode exchangeParticipantCode, BindingResult bindingResult, Model model) {
+    public String addNewExchangeParticipantCode(@Valid ExchangeParticipantCode exchangeParticipantCode,
+                                                BindingResult bindingResult,
+                                                Model model) {
         if (exchangeParticipantCodeService.getByCode(exchangeParticipantCode.getCode()) != null) {
             log.warn("Ошибка при добавлении кода: данный код уже существует");
             bindingResult.addError(new ObjectError("exchangeParticipantCode", "Ошибка: данный код уже существует"));
@@ -59,11 +63,11 @@ public class ExchangeParticipantCodeController {
         }
 
         Page<ExchangeParticipantCode> codes =
-                exchangeParticipantCodeService.getAllCodes(PageRequest.of(0, 5, Sort.by("id")), null, null);
+                exchangeParticipantCodeService.getAllCodes(PageRequest.of(0, SIZE_PAGE, Sort.by("id")), null, null);
 
         model.addAttribute("page", 0);
         model.addAttribute("bindingResult", bindingResult);
-        setModel(model, codes, exchangeParticipantCode);
+        setModel(exchangeParticipantCode, codes, model);
 
         return "codes/exchangeParticipant";
     }
@@ -83,7 +87,7 @@ public class ExchangeParticipantCodeController {
                                                 @RequestParam String newCode,
                                                 @RequestParam String page) {
         if (exchangeParticipantCodeService.getByCode(newCode) != null) {
-            throw new DuplicateFileException("Ошибка: данный код уже существует") ;
+            throw new DuplicateFileException("Ошибка: данный код уже существует");
         }
 
         ExchangeParticipantCode exchangeParticipantCode = exchangeParticipantCodeService.getById(id);
@@ -103,7 +107,9 @@ public class ExchangeParticipantCodeController {
         return "redirect:/codes/exchangeParticipant/0";
     }
 
-    private void setModel(Model model, Page<ExchangeParticipantCode> codes, ExchangeParticipantCode exchangeParticipantCode) {
+    private void setModel(ExchangeParticipantCode exchangeParticipantCode,
+                          Page<ExchangeParticipantCode> codes,
+                          Model model) {
         model.addAttribute("codes", codes);
         model.addAttribute("exchangeParticipantCode", exchangeParticipantCode);
     }

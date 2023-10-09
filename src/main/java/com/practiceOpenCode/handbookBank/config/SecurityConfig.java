@@ -29,7 +29,8 @@ public class SecurityConfig {
                 .csrf().disable()
                 .cors().disable()
                 .authorizeRequests()
-                .antMatchers("/", "/registration", "/css/**", "/webjars/**", "/login", "/login-error", "/auth", "/signup").permitAll()
+                .antMatchers("/", "/registration", "/css/**", "/webjars/**",
+                        "/login", "/login-error", "/auth", "/signup").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -69,7 +70,8 @@ public class SecurityConfig {
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+    public AuthenticationManager authenticationManager(
+            AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
 }

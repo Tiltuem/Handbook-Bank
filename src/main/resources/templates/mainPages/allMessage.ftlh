@@ -30,7 +30,7 @@
                             <option value="directoryVersion">Номер версии Справочника</option>
                         </select>
                         <div class="checkbox">
-                            <input id="checkbox1" class="checkbox__input" type="checkbox" name="showDeleted">
+                            <input id="checkbox1" class="checkbox__input" type="checkbox" name="deleted">
                             <label for="checkbox1" class="checkbox__label">
                                 <span class="checkbox__custom"></span>
                                 Показать удалённые

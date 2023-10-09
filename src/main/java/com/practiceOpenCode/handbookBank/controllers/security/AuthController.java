@@ -23,6 +23,7 @@ public class AuthController {
         model.addAttribute("error", true);
         return "authorization/login";
     }
+
     @GetMapping("/access-error")
     public String accessError() {
         return "errors/accessError";

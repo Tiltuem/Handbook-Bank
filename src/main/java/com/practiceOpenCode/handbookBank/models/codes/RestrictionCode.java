@@ -27,7 +27,6 @@ public class RestrictionCode extends AbstractCode {
     private String code;
 
     public RestrictionCode(String code) {
-        super();
         this.code = code;
     }
 }

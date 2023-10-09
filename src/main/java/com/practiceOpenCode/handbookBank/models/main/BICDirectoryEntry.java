@@ -55,7 +55,7 @@ public class BICDirectoryEntry {
 
     @OneToMany(cascade = CascadeType.PERSIST)
     @XmlElement(name = "SWBICS", namespace = "urn:cbr-ru:ed:v2.0")
-    private List<SWBICs> SWBICs;
+    private List<Swbics> swbics;
 
     private Boolean deleted;
 

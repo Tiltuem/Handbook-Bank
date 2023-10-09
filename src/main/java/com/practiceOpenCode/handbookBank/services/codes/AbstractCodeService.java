@@ -10,10 +10,16 @@ import java.util.List;
 @Service
 public interface AbstractCodeService<E extends AbstractCode> {
     List<E> getAllCodeList();
-    Page<E> getAllCodes(Pageable pageable, String code, Boolean showDeleted);
-    void save (E code);
+
+    Page<E> getAllCodes(Pageable pageable, String code, Boolean deleted);
+
+    void save(E code);
+
     void deleteById(long id);
+
     E getById(long id);
+
     void recoveryById(long id);
+
     E getByCode(String code);
 }

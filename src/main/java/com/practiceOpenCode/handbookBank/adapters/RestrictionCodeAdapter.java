@@ -18,12 +18,16 @@ public class RestrictionCodeAdapter extends XmlAdapter<String, RestrictionCode> 
     public RestrictionCode unmarshal(String code) throws Exception {
         for (RestrictionCode restrictionCode : restrictionCodeList) {
             if (restrictionCode.getCode().equals(code)) {
-                if(!restrictionCode.getDeleted())  return restrictionCode;
-                else
-                    throw new NoSuchCodeException("Ошибка: код '" + code + "' удалён.\nДля получения файла восстановите этот код в ограничения операций по счету");
+                if (!restrictionCode.getDeleted()) {
+                    return restrictionCode;
+                } else {
+                    throw new NoSuchCodeException("Ошибка: код '" + code
+                            + "' удалён.\nДля получения файла восстановите этот код в ограничения операций по счету");
+                }
             }
         }
-        throw new NoSuchCodeException("Ошибка: код '" + code + "' отсутствует.\nДля получения файла добавьте этот код в ограничения операций по счету");
+        throw new NoSuchCodeException("Ошибка: код '" + code
+                            + "' отсутствует.\nДля получения файла добавьте этот код в ограничения операций по счету");
     }
 
     @Override

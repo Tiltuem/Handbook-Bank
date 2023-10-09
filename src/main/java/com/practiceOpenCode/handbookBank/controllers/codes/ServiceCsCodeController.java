@@ -25,17 +25,19 @@ import java.util.Objects;
 public class ServiceCsCodeController {
     @Autowired
     AbstractCodeService<ServiceCsCode> serviceCsCodeService;
+    private static final int SIZE_PAGE = 5;
 
     @GetMapping("/{page}")
-    public String getAllServiceCsCode(@RequestParam(name = "code", required = false) String code,
-                                      @RequestParam(name = "deleted", defaultValue = "false") Boolean showDeleted,
+    public String getAllServiceCsCode(@RequestParam(required = false) String code,
+                                      @RequestParam(defaultValue = "false") Boolean deleted,
                                       @PathVariable int page,
                                       Model model) {
         Page<ServiceCsCode> codes =
-                serviceCsCodeService.getAllCodes(PageRequest.of(page, 5, Sort.by("id")), code, showDeleted);
+                serviceCsCodeService.getAllCodes(PageRequest.of(page, SIZE_PAGE, Sort.by("id")), code, deleted);
 
-        if (codes.isEmpty() && Objects.isNull(code))
+        if (codes.isEmpty() && Objects.isNull(code)) {
             throw new NotFoundPageException("Страница не найдена");
+        }
 
         setModel(model, codes, new ServiceCsCode());
         model.addAttribute("search", code);
@@ -61,7 +63,7 @@ public class ServiceCsCodeController {
         }
 
         Page<ServiceCsCode> codes =
-                serviceCsCodeService.getAllCodes(PageRequest.of(0, 5, Sort.by("id")), null, null);
+                serviceCsCodeService.getAllCodes(PageRequest.of(0, SIZE_PAGE, Sort.by("id")), null, null);
 
         model.addAttribute("page", 0);
         model.addAttribute("bindingResult", bindingResult);
@@ -84,8 +86,9 @@ public class ServiceCsCodeController {
     public String updateServiceCsCode(@RequestParam long id,
                                       @RequestParam String newCode,
                                       @RequestParam String page) {
-        if (serviceCsCodeService.getByCode(newCode) != null)
-            throw new DuplicateFileException("Ошибка: данный код уже существует") ;
+        if (serviceCsCodeService.getByCode(newCode) != null) {
+            throw new DuplicateFileException("Ошибка: данный код уже существует");
+        }
 
         ServiceCsCode serviceCsCode = serviceCsCodeService.getById(id);
         serviceCsCode.setCode(newCode);

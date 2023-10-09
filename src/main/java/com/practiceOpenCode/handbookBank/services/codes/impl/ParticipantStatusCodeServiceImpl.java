@@ -5,5 +5,6 @@ import com.practiceOpenCode.handbookBank.repositories.codes.ParticipantStatusCod
 import org.springframework.stereotype.Service;
 
 @Service
-public class ParticipantStatusCodeServiceImpl extends AbstractCodeServiceImpl<ParticipantStatusCode, ParticipantStatusCodeRepository> {
+public class ParticipantStatusCodeServiceImpl
+        extends AbstractCodeServiceImpl<ParticipantStatusCode, ParticipantStatusCodeRepository> {
 }

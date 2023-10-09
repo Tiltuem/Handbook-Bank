@@ -9,5 +9,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ParticipantInfoRepository extends JpaRepository<ParticipantInfo, Long> {
     Page<ParticipantInfo> findAll(Pageable pageable);
+
     ParticipantInfo findById(long id);
 }

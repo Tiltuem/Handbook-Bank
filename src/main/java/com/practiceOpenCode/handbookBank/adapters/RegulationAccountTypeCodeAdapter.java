@@ -18,12 +18,16 @@ public class RegulationAccountTypeCodeAdapter extends XmlAdapter<String, Regulat
     public RegulationAccountTypeCode unmarshal(String code) throws Exception {
         for (RegulationAccountTypeCode regulationAccountTypeCode : regulationAccountTypeCodeList) {
             if (regulationAccountTypeCode.getCode().equals(code)) {
-                if(!regulationAccountTypeCode.getDeleted())  return regulationAccountTypeCode;
-                else
-                    throw new NoSuchCodeException("Ошибка: код '" + code + "' удалён.\nДля получения файла восстановите этот код в ограничения операций по счету");
+                if (!regulationAccountTypeCode.getDeleted()) {
+                    return regulationAccountTypeCode;
+                } else {
+                    throw new NoSuchCodeException("Ошибка: код '" + code
+                            + "' удалён.\nДля получения файла восстановите этот код в ограничения операций по счету");
+                }
             }
         }
-        throw new NoSuchCodeException("Ошибка: код '" + code + "' отсутствует.\nДля получения файла добавьте этот код в ограничения операций по счету");
+        throw new NoSuchCodeException("Ошибка: код '" + code
+                            + "' отсутствует.\nДля получения файла добавьте этот код в ограничения операций по счету");
     }
 
     @Override

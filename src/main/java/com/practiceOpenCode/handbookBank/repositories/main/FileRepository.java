@@ -9,6 +9,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface FileRepository extends JpaRepository<FileInfo, Long> {
     Page<FileInfo> findAllByDeleted(Pageable pageable, Boolean deleted);
+
     FileInfo findById(long id);
+
     FileInfo findByName(String name);
 }

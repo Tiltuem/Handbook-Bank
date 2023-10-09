@@ -6,5 +6,6 @@ import org.springframework.stereotype.Service;
 
 
 @Service
-public class AccountRestrictionCodeServiceImpl extends AbstractCodeServiceImpl<AccountRestrictionCode, AccountRestrictionCodeRepository> {
+public class AccountRestrictionCodeServiceImpl extends
+        AbstractCodeServiceImpl<AccountRestrictionCode, AccountRestrictionCodeRepository> {
 }

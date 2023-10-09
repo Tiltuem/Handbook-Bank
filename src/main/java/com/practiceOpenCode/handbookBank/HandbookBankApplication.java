@@ -9,10 +9,10 @@ import static java.util.Collections.singletonList;
 
 @SpringBootApplication
 public class HandbookBankApplication {
-
     public static void main(String[] args) {
         SpringApplication.run(HandbookBankApplication.class, args);
     }
+
     public HandbookBankApplication(FreeMarkerConfigurer freeMarkerConfigurer) {
         freeMarkerConfigurer.getTaglibFactory().setClasspathTlds(singletonList("/META-INF/security.tld"));
     }

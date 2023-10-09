@@ -8,9 +8,14 @@ import java.util.List;
 @Service
 public interface RestrictionListService {
     List<RestrictionList> getAllRestrictionList();
-    void save (RestrictionList restrictionList);
-    void update (RestrictionList restrictionList);
+
+    void save(RestrictionList restrictionList);
+
+    void update(RestrictionList restrictionList);
+
     void deleteById(long id);
+
     RestrictionList getById(long id);
+
     void recoveryById(long id);
 }

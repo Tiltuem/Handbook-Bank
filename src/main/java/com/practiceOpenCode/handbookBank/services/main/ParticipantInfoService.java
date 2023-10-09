@@ -9,7 +9,10 @@ import org.springframework.stereotype.Service;
 @Service
 public interface ParticipantInfoService {
     Page<ParticipantInfo> getAllParticipants(Pageable pageable);
-    void save (ParticipantInfo participantInfo);
+
+    void save(ParticipantInfo participantInfo);
+
     void deleteById(long id);
+
     void updateById(long id, RestrictionList restrictionList);
 }

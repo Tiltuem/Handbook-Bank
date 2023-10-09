@@ -7,17 +7,17 @@ import java.time.format.DateTimeFormatter;
 
 public class LocalDateTimeAdapter extends XmlAdapter<String, LocalDateTime> {
 
-    private static final DateTimeFormatter formatter =
+    private static final DateTimeFormatter FORMATTER =
             DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'");
 
     @Override
     public String marshal(LocalDateTime localDate) {
-        return localDate.format(formatter);
+        return localDate.format(FORMATTER);
     }
 
     @Override
     public LocalDateTime unmarshal(String localDateString) throws ParseException {
-        return LocalDateTime.parse(localDateString, formatter);
+        return LocalDateTime.parse(localDateString, FORMATTER);
     }
 
 }

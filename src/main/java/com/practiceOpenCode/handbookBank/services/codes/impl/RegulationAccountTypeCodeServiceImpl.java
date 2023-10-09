@@ -5,5 +5,6 @@ import com.practiceOpenCode.handbookBank.repositories.codes.RegulationAccountTyp
 import org.springframework.stereotype.Service;
 
 @Service
-public class RegulationAccountTypeCodeServiceImpl extends AbstractCodeServiceImpl<RegulationAccountTypeCode, RegulationAccountTypeCodeRepository> {
+public class RegulationAccountTypeCodeServiceImpl
+        extends AbstractCodeServiceImpl<RegulationAccountTypeCode, RegulationAccountTypeCodeRepository> {
 }
