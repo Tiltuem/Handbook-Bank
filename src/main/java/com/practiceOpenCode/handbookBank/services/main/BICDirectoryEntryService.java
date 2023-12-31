@@ -6,9 +6,7 @@ import com.practiceOpenCode.handbookBank.models.main.ParticipantInfo;
 import com.practiceOpenCode.handbookBank.models.main.Swbics;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
 
-@Service
 public interface BICDirectoryEntryService {
     void updateById(long id, Swbics swbics);
 

@@ -26,6 +26,7 @@ public class ParticipantTypeCodeAdapter extends XmlAdapter<String, ParticipantTy
                 }
             }
         }
+
         throw new NoSuchCodeException("Ошибка: код '" + code
                             + "' отсутствует.\nВосстановите код в ограничения операций по счету");
     }

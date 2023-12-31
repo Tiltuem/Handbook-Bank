@@ -3,11 +3,9 @@ package com.practiceOpenCode.handbookBank.services.codes;
 import com.practiceOpenCode.handbookBank.models.codes.AbstractCode;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
 public interface AbstractCodeService<E extends AbstractCode> {
     List<E> getAllCodeList();
 

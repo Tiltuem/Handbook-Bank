@@ -3,13 +3,13 @@ package com.practiceOpenCode.handbookBank.services.main.impl;
 import com.practiceOpenCode.handbookBank.models.main.Accounts;
 import com.practiceOpenCode.handbookBank.repositories.main.AccountsRepository;
 import com.practiceOpenCode.handbookBank.services.main.AccountsService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class AccountsServiceImpl implements AccountsService {
-    @Autowired
-    private AccountsRepository repository;
+    private final AccountsRepository repository;
 
     @Override
     public void save(Accounts account) {

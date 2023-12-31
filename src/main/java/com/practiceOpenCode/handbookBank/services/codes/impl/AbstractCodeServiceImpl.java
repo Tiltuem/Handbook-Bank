@@ -3,7 +3,7 @@ package com.practiceOpenCode.handbookBank.services.codes.impl;
 import com.practiceOpenCode.handbookBank.models.codes.AbstractCode;
 import com.practiceOpenCode.handbookBank.repositories.codes.AbstractCodeRepository;
 import com.practiceOpenCode.handbookBank.services.codes.AbstractCodeService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -12,10 +12,10 @@ import java.util.List;
 import java.util.Objects;
 
 @Service
+@RequiredArgsConstructor
 public abstract class AbstractCodeServiceImpl<E extends AbstractCode, T extends AbstractCodeRepository<E>>
         implements AbstractCodeService<E> {
-    @Autowired
-    protected T repository;
+    protected  T repository;
 
     @Override
     public List<E> getAllCodeList() {

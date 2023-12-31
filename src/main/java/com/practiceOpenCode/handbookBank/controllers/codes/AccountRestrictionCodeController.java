@@ -4,8 +4,8 @@ import com.practiceOpenCode.handbookBank.exceptions.DuplicateFileException;
 import com.practiceOpenCode.handbookBank.exceptions.NotFoundPageException;
 import com.practiceOpenCode.handbookBank.models.codes.AccountRestrictionCode;
 import com.practiceOpenCode.handbookBank.services.codes.AbstractCodeService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -22,10 +22,10 @@ import java.util.Objects;
 
 @Controller
 @RequestMapping("/codes/accountRestriction")
+@RequiredArgsConstructor
 @Slf4j
 public class AccountRestrictionCodeController {
-    @Autowired
-    AbstractCodeService<AccountRestrictionCode> accountRestrictionCodeService;
+    private final AbstractCodeService<AccountRestrictionCode> accountRestrictionCodeService;
     private static final int SIZE_PAGE = 5;
 
     @GetMapping("/{page}")

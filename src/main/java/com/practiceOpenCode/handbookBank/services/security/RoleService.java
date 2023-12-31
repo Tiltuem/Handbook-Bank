@@ -1,7 +1,8 @@
 package com.practiceOpenCode.handbookBank.services.security;
 
-import org.springframework.stereotype.Service;
 
-@Service
+import com.practiceOpenCode.handbookBank.models.security.Role;
+
 public interface RoleService {
+    Role getUserRole();
 }

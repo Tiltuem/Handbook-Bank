@@ -26,6 +26,7 @@ public class RegulationAccountTypeCodeAdapter extends XmlAdapter<String, Regulat
                 }
             }
         }
+
         throw new NoSuchCodeException("Ошибка: код '" + code
                             + "' отсутствует.\nДля получения файла добавьте этот код в ограничения операций по счету");
     }

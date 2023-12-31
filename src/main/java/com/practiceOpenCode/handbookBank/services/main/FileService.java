@@ -4,12 +4,10 @@ import com.practiceOpenCode.handbookBank.models.main.FileInfo;
 import com.practiceOpenCode.handbookBank.models.main.Message;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.IOException;
 
-@Service
 public interface FileService {
     String download(String date) throws IOException;
 

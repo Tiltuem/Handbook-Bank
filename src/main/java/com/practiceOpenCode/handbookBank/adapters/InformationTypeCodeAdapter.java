@@ -26,6 +26,7 @@ public class InformationTypeCodeAdapter extends XmlAdapter<String, InformationTy
                 }
             }
         }
+
         throw new NoSuchCodeException("Ошибка: код '" + code
                             + "' отсутствует.\nДля получения файла добавьте этот код в ограничения операций по счету");
     }

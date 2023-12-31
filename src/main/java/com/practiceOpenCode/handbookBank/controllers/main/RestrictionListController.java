@@ -5,8 +5,8 @@ import com.practiceOpenCode.handbookBank.models.main.RestrictionList;
 import com.practiceOpenCode.handbookBank.services.codes.AbstractCodeService;
 import com.practiceOpenCode.handbookBank.services.main.ParticipantInfoService;
 import com.practiceOpenCode.handbookBank.services.main.RestrictionListService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,14 +18,12 @@ import javax.validation.Valid;
 @Controller
 @RequestMapping("/message-{messageId}/entry-{entryId}")
 @PreAuthorize("hasAuthority('ROLE_USER') or hasAuthority('ROLE_ADMIN')")
+@RequiredArgsConstructor
 @Slf4j
 public class RestrictionListController {
-    @Autowired
-    RestrictionListService restrictionListService;
-    @Autowired
-    ParticipantInfoService participantInfoService;
-    @Autowired
-    AbstractCodeService<RestrictionCode> restrictionCodeService;
+    private final RestrictionListService restrictionListService;
+    private final ParticipantInfoService participantInfoService;
+    private final AbstractCodeService<RestrictionCode> restrictionCodeService;
 
     @GetMapping("/restriction-list-edit")
     public String getRestrictionListById(@RequestParam long id,

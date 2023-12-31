@@ -4,8 +4,8 @@ import com.practiceOpenCode.handbookBank.exceptions.NotFoundPageException;
 import com.practiceOpenCode.handbookBank.models.main.FileInfo;
 import com.practiceOpenCode.handbookBank.services.main.FileService;
 import com.practiceOpenCode.handbookBank.services.main.MessageService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -19,12 +19,11 @@ import org.springframework.web.multipart.MultipartFile;
 @Controller
 @RequestMapping("/import")
 @PreAuthorize("hasAuthority('ROLE_USER') or hasAuthority('ROLE_ADMIN')")
+@RequiredArgsConstructor
 @Slf4j
 public class ImportController {
-    @Autowired
-    MessageService messageService;
-    @Autowired
-    FileService fileService;
+    private final MessageService messageService;
+    private final FileService fileService;
     private static final int SIZE_PAGE = 5;
 
     @GetMapping("/{page}")

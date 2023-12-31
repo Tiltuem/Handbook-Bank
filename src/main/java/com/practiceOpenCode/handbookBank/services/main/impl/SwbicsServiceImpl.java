@@ -3,15 +3,15 @@ package com.practiceOpenCode.handbookBank.services.main.impl;
 import com.practiceOpenCode.handbookBank.models.main.Swbics;
 import com.practiceOpenCode.handbookBank.repositories.main.SwbicsRepository;
 import com.practiceOpenCode.handbookBank.services.main.SwbicsService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class SwbicsServiceImpl implements SwbicsService {
-    @Autowired
-    private SwbicsRepository repository;
+    private final SwbicsRepository repository;
 
     @Override
     public List<Swbics> getAllSwbics() {

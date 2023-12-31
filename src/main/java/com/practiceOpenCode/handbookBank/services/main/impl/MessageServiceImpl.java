@@ -11,7 +11,6 @@ import com.practiceOpenCode.handbookBank.services.main.MessageService;
 import com.practiceOpenCode.handbookBank.services.security.impl.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -35,13 +34,10 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 public class MessageServiceImpl implements MessageService {
-    @Autowired
-    private MessageRepository repository;
+    private final MessageRepository repository;
 
-    @Autowired
-    private FileService fileService;
-    @Autowired
-    private UserServiceImpl userService;
+    private final FileService fileService;
+    private final UserServiceImpl userService;
 
     @PersistenceContext
     EntityManager entityManager;

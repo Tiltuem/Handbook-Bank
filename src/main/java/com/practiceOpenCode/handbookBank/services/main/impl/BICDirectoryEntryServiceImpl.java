@@ -8,7 +8,7 @@ import com.practiceOpenCode.handbookBank.models.main.Swbics;
 import com.practiceOpenCode.handbookBank.repositories.main.BICDirectoryEntryRepository;
 import com.practiceOpenCode.handbookBank.services.codes.AbstractCodeService;
 import com.practiceOpenCode.handbookBank.services.main.BICDirectoryEntryService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -24,21 +24,16 @@ import java.util.Objects;
 
 
 @Service
+@RequiredArgsConstructor
 public class BICDirectoryEntryServiceImpl implements BICDirectoryEntryService {
     @PersistenceContext
     EntityManager entityManager;
-    @Autowired
-    private BICDirectoryEntryRepository repository;
-    @Autowired
-    private AbstractCodeService<ParticipantTypeCode> participantTypeCodeService;
-    @Autowired
-    private AbstractCodeService<ServiceCsCode> serviceCsCodeService;
-    @Autowired
-    private AbstractCodeService<ExchangeParticipantCode> exchangeParticipantCodeService;
-    @Autowired
-    private AbstractCodeService<ParticipantStatusCode> participantStatusCodeService;
-    @Autowired
-    private AbstractCodeService<ChangeTypeCode> changeTypeCodeService;
+    private final BICDirectoryEntryRepository repository;
+    private final AbstractCodeService<ParticipantTypeCode> participantTypeCodeService;
+    private final AbstractCodeService<ServiceCsCode> serviceCsCodeService;
+    private final AbstractCodeService<ExchangeParticipantCode> exchangeParticipantCodeService;
+    private final AbstractCodeService<ParticipantStatusCode> participantStatusCodeService;
+    private final AbstractCodeService<ChangeTypeCode> changeTypeCodeService;
 
     @Override
     public void updateById(long id, Swbics swbics) {

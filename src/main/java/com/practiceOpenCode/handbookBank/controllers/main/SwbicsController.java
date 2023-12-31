@@ -4,8 +4,8 @@ package com.practiceOpenCode.handbookBank.controllers.main;
 import com.practiceOpenCode.handbookBank.models.main.Swbics;
 import com.practiceOpenCode.handbookBank.services.main.BICDirectoryEntryService;
 import com.practiceOpenCode.handbookBank.services.main.SwbicsService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,12 +17,11 @@ import javax.validation.Valid;
 @Controller
 @RequestMapping("/message-{messageId}/entry-{entryId}")
 @PreAuthorize("hasAuthority('ROLE_USER') or hasAuthority('ROLE_ADMIN')")
+@RequiredArgsConstructor
 @Slf4j
 public class SwbicsController {
-    @Autowired
-    SwbicsService swbicsService;
-    @Autowired
-    BICDirectoryEntryService bicDirectoryEntryService;
+    private final SwbicsService swbicsService;
+    private final BICDirectoryEntryService bicDirectoryEntryService;
 
 
     @GetMapping("/swbics-edit")

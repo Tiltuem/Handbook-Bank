@@ -6,8 +6,8 @@ import com.practiceOpenCode.handbookBank.models.main.FileInfo;
 import com.practiceOpenCode.handbookBank.models.main.Message;
 import com.practiceOpenCode.handbookBank.repositories.main.FileRepository;
 import com.practiceOpenCode.handbookBank.services.main.FileService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -26,12 +26,11 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 @Service
+@RequiredArgsConstructor
 @Slf4j
 public class FileServiceImpl implements FileService {
-    @Autowired
-    private FileRepository repository;
-    @Autowired
-    private Unmarshaller unmarshaller;
+    private final FileRepository repository;
+    private final Unmarshaller unmarshaller;
     private static final String START_URL_DOWNLOAD = "https://cbr.ru/vfs/mcirabis/BIKNew/";
     private static final String END_URL_DOWNLOAD = "ED01OSBR.zip";
     private static final String PATH_TO_STORAGE = "src/main/resources/storage/";

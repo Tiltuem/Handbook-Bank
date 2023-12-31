@@ -19,6 +19,7 @@ public class GlobalControllerExceptionHandler {
             UnauthorizedException.class})
     public String handleCustomException(Exception exception, Model model) {
         model.addAttribute("message", exception.getMessage());
+
         return "errors/customError";
     }
 
@@ -26,6 +27,7 @@ public class GlobalControllerExceptionHandler {
     @ExceptionHandler(value = NotFoundPageException.class)
     public String handleNotFoundPage(Model model) {
         model.addAttribute("message", "Страница не найдена");
+
         return "errors/customError";
     }
 }

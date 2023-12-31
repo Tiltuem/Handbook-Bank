@@ -6,8 +6,8 @@ import com.practiceOpenCode.handbookBank.models.main.BICDirectoryEntry;
 import com.practiceOpenCode.handbookBank.models.main.ParticipantInfo;
 import com.practiceOpenCode.handbookBank.services.codes.AbstractCodeService;
 import com.practiceOpenCode.handbookBank.services.main.BICDirectoryEntryService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -22,20 +22,15 @@ import javax.validation.Valid;
 @Controller
 @RequestMapping("/message-{messageId}/directory-entry")
 @PreAuthorize("hasAuthority('ROLE_USER') or hasAuthority('ROLE_ADMIN')")
+@RequiredArgsConstructor
 @Slf4j
 public class EntryController {
-    @Autowired
-    private BICDirectoryEntryService bicDirectoryEntryService;
-    @Autowired
-    private AbstractCodeService<ParticipantTypeCode> participantTypeCodeService;
-    @Autowired
-    private AbstractCodeService<ServiceCsCode> serviceCsCodeService;
-    @Autowired
-    private AbstractCodeService<ExchangeParticipantCode> exchangeParticipantCodeService;
-    @Autowired
-    private AbstractCodeService<ParticipantStatusCode> participantStatusCodeService;
-    @Autowired
-    private AbstractCodeService<ChangeTypeCode> changeTypeCodeService;
+    private final BICDirectoryEntryService bicDirectoryEntryService;
+    private final AbstractCodeService<ParticipantTypeCode> participantTypeCodeService;
+    private final AbstractCodeService<ServiceCsCode> serviceCsCodeService;
+    private final AbstractCodeService<ExchangeParticipantCode> exchangeParticipantCodeService;
+    private final AbstractCodeService<ParticipantStatusCode> participantStatusCodeService;
+    private final AbstractCodeService<ChangeTypeCode> changeTypeCodeService;
     private static final int SIZE_PAGE = 10;
 
     @GetMapping("/{page}")

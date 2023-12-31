@@ -10,9 +10,7 @@ import java.util.List;
 
 
 public class AccountStatusCodeAdapter extends XmlAdapter<String, AccountStatusCode> {
-
     private final List<AccountStatusCode> accountStatusCodeList;
-
 
     public AccountStatusCodeAdapter(AbstractCodeRepository<AccountStatusCode> repository) {
         accountStatusCodeList = repository.findAll();
@@ -30,6 +28,7 @@ public class AccountStatusCodeAdapter extends XmlAdapter<String, AccountStatusCo
                 }
             }
         }
+
         throw new NoSuchCodeException("Ошибка: код '" + code
                 + "' удалён.\nДля получения файла восстановите этот код в ограничения операций по счету");
     }

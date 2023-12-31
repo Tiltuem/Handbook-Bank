@@ -26,6 +26,7 @@ public class ParticipantStatusCodeAdapter extends XmlAdapter<String, Participant
                 }
             }
         }
+
         throw new NoSuchCodeException("Ошибка: код '" + code
                             + "' отсутствует.\nДля получения файла добавьте этот код в ограничения операций по счету");
     }

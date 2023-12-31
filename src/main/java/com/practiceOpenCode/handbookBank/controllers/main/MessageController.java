@@ -3,8 +3,8 @@ package com.practiceOpenCode.handbookBank.controllers.main;
 import com.practiceOpenCode.handbookBank.exceptions.NotFoundPageException;
 import com.practiceOpenCode.handbookBank.models.main.Message;
 import com.practiceOpenCode.handbookBank.services.main.MessageService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -16,10 +16,10 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @RequestMapping("/messages")
 @PreAuthorize("hasAuthority('ROLE_USER') or hasAuthority('ROLE_ADMIN')")
+@RequiredArgsConstructor
 @Slf4j
 public class MessageController {
-    @Autowired
-    MessageService messageService;
+    private final MessageService messageService;
     private static final int SIZE_PAGE = 10;
 
     @GetMapping("/{page}")

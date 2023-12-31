@@ -3,15 +3,15 @@ package com.practiceOpenCode.handbookBank.services.main.impl;
 import com.practiceOpenCode.handbookBank.models.main.AccountRestrictionList;
 import com.practiceOpenCode.handbookBank.repositories.main.AccountRestrictionListRepository;
 import com.practiceOpenCode.handbookBank.services.main.AccountRestrictionListService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class AccountRestrictionListServiceImpl implements AccountRestrictionListService {
-    @Autowired
-    private AccountRestrictionListRepository repository;
+    private final AccountRestrictionListRepository repository;
 
     @Override
     public List<AccountRestrictionList> getAllAccounts() {

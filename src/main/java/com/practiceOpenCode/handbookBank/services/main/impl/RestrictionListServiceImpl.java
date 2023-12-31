@@ -3,15 +3,15 @@ package com.practiceOpenCode.handbookBank.services.main.impl;
 import com.practiceOpenCode.handbookBank.models.main.RestrictionList;
 import com.practiceOpenCode.handbookBank.repositories.main.RestrictionListRepository;
 import com.practiceOpenCode.handbookBank.services.main.RestrictionListService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class RestrictionListServiceImpl implements RestrictionListService {
-    @Autowired
-    private RestrictionListRepository repository;
+    private final RestrictionListRepository repository;
 
     @Override
     public List<RestrictionList> getAllRestrictionList() {

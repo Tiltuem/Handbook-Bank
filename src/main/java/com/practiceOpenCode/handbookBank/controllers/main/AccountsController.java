@@ -6,8 +6,8 @@ import com.practiceOpenCode.handbookBank.models.main.Accounts;
 import com.practiceOpenCode.handbookBank.services.codes.AbstractCodeService;
 import com.practiceOpenCode.handbookBank.services.main.AccountsService;
 import com.practiceOpenCode.handbookBank.services.main.BICDirectoryEntryService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,16 +19,13 @@ import javax.validation.Valid;
 @Controller
 @RequestMapping("/message-{messageId}/entry-{entryId}")
 @PreAuthorize("hasAuthority('ROLE_USER') or hasAuthority('ROLE_ADMIN')")
+@RequiredArgsConstructor
 @Slf4j
 public class AccountsController {
-    @Autowired
-    AccountsService accountsService;
-    @Autowired
-    BICDirectoryEntryService bicDirectoryEntryService;
-    @Autowired
-    AbstractCodeService<RegulationAccountTypeCode> regulationAccountTypeCodeService;
-    @Autowired
-    AbstractCodeService<AccountStatusCode> accountStatusCodeService;
+    private final AccountsService accountsService;
+    private final BICDirectoryEntryService bicDirectoryEntryService;
+    private final AbstractCodeService<RegulationAccountTypeCode> regulationAccountTypeCodeService;
+    private final AbstractCodeService<AccountStatusCode> accountStatusCodeService;
 
     @GetMapping("/account-edit")
     public String getAccountById(@RequestParam long id,
